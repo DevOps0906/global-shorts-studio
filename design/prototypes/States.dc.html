@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>글로벌쇼츠 스튜디오 — 화면 상태</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0B0D}
+a{color:inherit;text-decoration:none}
+@keyframes shimmer{0%{opacity:.55}50%{opacity:1}100%{opacity:.55}}
+.app{--bg:#0B0B0D;--panel:#141518;--card:#1C1D21;--card2:#232429;--line:#2A2B31;--text:#F4F4F5;--sub:#A1A1AA;--accent:#FFD83D;--pink:#FF5C9E;--ok:#22C55E;--danger:#E5484D;font-family:'Noto Sans KR',system-ui,sans-serif;color:var(--text);background:var(--bg);min-height:100vh;font-size:14px;line-height:1.55}
+.util{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 24px;border-bottom:1px solid var(--line);font-size:12px}
+.pill{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 12px;border-radius:999px;border:0;background:var(--card);color:var(--text);font:inherit;font-size:12px;font-weight:500}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px 80px;box-sizing:border-box}
+h1{margin:32px 0 6px;font-size:26px;font-weight:900}
+h1 b{color:var(--accent)}
+.lead{color:var(--sub);margin:0 0 8px;font-size:14px}
+h2{margin:36px 0 12px;font-size:17px}
+h2 small{font-size:12px;color:var(--sub);font-weight:500;margin-left:6px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card .tag{align-self:flex-start;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--card2);color:var(--sub)}
+.card .tag.err{color:var(--danger);border:1px solid var(--danger);background:transparent}
+.card .tag.warn{color:var(--accent);border:1px solid var(--accent);background:transparent}
+.card h3{margin:0;font-size:14px}
+.card .where{font-size:11.5px;color:var(--sub);margin:0}
+.demo{border:1px dashed var(--line);border-radius:12px;padding:14px;background:var(--bg);display:flex;flex-direction:column;gap:10px;min-height:150px;justify-content:center}
+.sk{display:block;border-radius:8px;background:var(--card2);animation:shimmer 1.4s ease-in-out infinite}
+.sk.t{height:12px;width:60%}.sk.s{height:10px;width:40%}.sk.th{aspect-ratio:9/16;width:56px;flex:none}
+.skrow{display:flex;gap:12px;align-items:center}
+.skcol{display:flex;flex-direction:column;gap:8px;flex:1}
+.empty{text-align:center;padding:10px 0}
+.empty p{margin:0 0 12px;color:var(--sub);font-size:13px}
+.msg{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:13px}
+.msg.err{border-color:var(--danger)}
+.msg.warn{border-color:var(--accent)}
+.msg .ic{flex:none;width:22px;height:22px;border-radius:99px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;color:var(--bg);background:var(--danger)}
+.msg.warn .ic{background:var(--accent)}
+.msg b{display:block;font-size:13px}
+.msg span{color:var(--sub);font-size:12px}
+.code{display:inline-block;margin-top:4px;font-family:ui-monospace,Consolas,monospace;font-size:11px;padding:1px 6px;border-radius:6px;background:var(--card2);color:var(--sub)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:0 16px;border-radius:10px;border:1px solid var(--line);background:var(--card2);color:var(--text);font:inherit;font-size:13px;font-weight:700;cursor:pointer;align-self:flex-start}
+.btn.cta{border:0;background:linear-gradient(90deg,var(--accent),var(--pink));color:var(--bg);font-weight:900}
+.btn.dis{opacity:.55;cursor:not-allowed}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.banner{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 14px;border-radius:10px;background:var(--card);border:1px solid var(--danger);font-size:12.5px}
+.toast{align-self:center;padding:11px 18px;border-radius:12px;background:var(--card2);border:1px solid var(--line);color:var(--text);font-size:13px;font-weight:700}
+.field{width:100%;box-sizing:border-box;min-height:56px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--text);font:inherit;font-size:13px;padding:10px 12px}
+.drop{border:1.5px dashed var(--danger);border-radius:14px;background:var(--panel);padding:18px 12px;text-align:center}
+.drop b{display:block;font-size:13px}
+.drop span{font-size:12px;color:var(--sub)}
+.credit{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--sub)}
+.credit b{color:var(--danger)}
+.note{margin:8px 0 0;font-size:12px;color:var(--sub)}
+.bp{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 0}
+.bp span{font-size:11.5px;padding:3px 10px;border-radius:99px;background:var(--card);color:var(--sub)}
+button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:1199px){h1{font-size:22px}h2{font-size:17px}.app{font-size:14px}}
+@media (max-width:767px){.app{font-size:13px}h1{font-size:18px}h2{font-size:15px}.grid{grid-template-columns:minmax(0,1fr)}.util{padding:8px 14px}.wrap{padding:0 14px 60px}}
+@media (prefers-reduced-motion:reduce){.sk{animation:none}}
+</style>
+</helmet>
+<div class="app">
+<div class="util"><div><a class="pill" href="Main.dc.html">← 홈</a></div><div><span class="pill">화면 상태 시안</span></div></div>
+<main class="wrap">
+<h1>화면 <b>상태</b> 모음</h1>
+<p class="lead">기획 13-1 기준. 모든 화면이 로딩 · 빈 상태 · 오류 · 권한 없음을 가지며, 화면 고유 오류는 아래 대표 사례로 보여요.</p>
+<div class="bp"><span>모바일 ~767 · 본문 13 / h1 18 / h2 15</span><span>태블릿 768~1199 · 14 / 22 / 17</span><span>데스크탑 1200~ · 14 / 26 / 17</span></div>
+
+<h2>공통 4상태<small>13-1 · 11-3</small></h2>
+<div class="grid">
+<section class="card" aria-label="로딩">
+<span class="tag">로딩</span>
+<h3>스켈레톤</h3>
+<p class="where">300ms를 넘으면 카드·표 모양 그대로. 버튼 작업은 진행 막대(11-3).</p>
+<div class="demo" role="status" aria-label="불러오는 중">
+<div class="skrow"><span class="sk th"></span><span class="skcol"><span class="sk t"></span><span class="sk s"></span></span></div>
+<div class="skrow"><span class="sk th"></span><span class="skcol"><span class="sk t"></span><span class="sk s"></span></span></div>
+</div>
+</section>
+
+<section class="card" aria-label="빈 상태">
+<span class="tag">빈 상태</span>
+<h3>한 줄 설명 + 버튼 1개</h3>
+<p class="where">예: 새 영상 화면의 내 작업 없음.</p>
+<div class="demo"><div class="empty"><p>아직 작업이 없어요.</p><button type="button" class="btn cta">첫 영상 만들기</button></div></div>
+</section>
+
+<section class="card" aria-label="오류">
+<span class="tag err">오류</span>
+<h3>무엇이 안 됐는지 + 다시 시도 + 오류 코드</h3>
+<p class="where">입력값은 지우지 않는다. 코드는 13-4 기준.</p>
+<div class="demo">
+<div class="msg err" role="alert"><span class="ic" aria-hidden="true">!</span><div><b>소재를 불러오지 못했어요</b><span>잠시 후 다시 시도해 주세요. 다른 영역은 정상이에요.</span><br><span class="code">오류 코드 · UPSTREAM_ERROR</span></div></div>
+<button type="button" class="btn">다시 시도</button>
+</div>
+</section>
+
+<section class="card" aria-label="권한 없음">
+<span class="tag warn">권한 없음</span>
+<h3>메뉴 숨김 + 마이페이지로 이동 + 토스트</h3>
+<p class="where">주소로 직접 들어오면 마이페이지로 보내며 안내해요.</p>
+<div class="demo"><span class="toast" role="status">이 화면은 볼 수 없어요. 마이페이지로 이동했어요.</span></div>
+</section>
+</div>
+
+<h2>화면별 대표 오류<small>13-1 표</small></h2>
+<div class="grid">
+<section class="card" aria-label="편집 자동 저장 실패">
+<span class="tag err">편집 /studio/:id</span>
+<h3>자동 저장 실패 배너</h3>
+<p class="where">상단 배너 + 브라우저에 임시 보관. 편집은 계속할 수 있어요.</p>
+<div class="demo"><div class="banner" role="alert"><span>저장하지 못했어요. 이 브라우저에 임시 보관 중이에요.</span><button type="button" class="btn">다시 저장</button></div></div>
+</section>
+
+<section class="card" aria-label="버전 충돌">
+<span class="tag err">편집 /studio/:id</span>
+<h3>VERSION_CONFLICT</h3>
+<p class="where">다른 탭에서 수정했을 때.</p>
+<div class="demo">
+<div class="msg warn" role="alert"><span class="ic" aria-hidden="true">!</span><div><b>다른 탭에서 먼저 수정했어요</b><span>최신 내용을 불러오면 지금 탭의 변경이 사라질 수 있어요.</span><br><span class="code">오류 코드 · VERSION_CONFLICT</span></div></div>
+<div class="btns"><button type="button" class="btn cta">최신 내용 불러오기</button><button type="button" class="btn">내 변경 유지</button></div>
+</div>
+</section>
+
+<section class="card" aria-label="업로드 오류">
+<span class="tag err">설정 /studio/new</span>
+<h3>업로드 오류 (형식 · 3분 · 500MB)</h3>
+<p class="where">권리 미확인 시 분석 버튼 비활성. 선택한 길이·언어·댓글은 그대로 둬요.</p>
+<div class="demo">
+<div class="drop"><b>영상을 끌어다 놓거나 눌러서 고르기</b><span>MP4 · MOV · WebM · 최대 3분 · 최대 500MB</span></div>
+<div class="msg err" role="alert"><span class="ic" aria-hidden="true">!</span><div><b>파일이 너무 커요 (612MB)</b><span>500MB 이하, 3분 이하 영상으로 다시 골라 주세요.</span><br><span class="code">오류 코드 · FILE_TOO_LARGE</span></div></div>
+<textarea class="field" aria-label="참고 댓글(유지됨)">This is so me at 3am</textarea>
+<button type="button" class="btn cta dis" disabled>분석 시작 (권리 확인 필요)</button>
+</div>
+</section>
+
+<section class="card" aria-label="쿼터 소진">
+<span class="tag err">레이더</span>
+<h3>유튜브 쿼터 소진</h3>
+<p class="where">다음 초기화 시각을 보여 줘요.</p>
+<div class="demo">
+<div class="msg warn" role="alert"><span class="ic" aria-hidden="true">!</span><div><b>오늘 스캔 한도를 모두 썼어요</b><span>다음 초기화 · 오후 4:00 (한국 시간). 저장된 결과는 계속 볼 수 있어요.</span><br><span class="code">오류 코드 · YT_QUOTA_EXCEEDED</span></div></div>
+<button type="button" class="btn dis" disabled>스캔 (초기화 후 가능)</button>
+</div>
+</section>
+
+<section class="card" aria-label="크레딧 부족">
+<span class="tag err">크레딧</span>
+<h3>크레딧 부족</h3>
+<p class="where">비용을 쓰는 작업 직전에 안내. 충전은 마이페이지.</p>
+<div class="demo">
+<div class="credit"><span>필요 크레딧</span><b>1</b></div>
+<div class="credit"><span>보유 크레딧</span><b>0</b></div>
+<div class="msg err" role="alert"><span class="ic" aria-hidden="true">!</span><div><b>크레딧이 부족해요</b><span>충전하면 같은 설정으로 바로 이어갈 수 있어요.</span><br><span class="code">오류 코드 · INSUFFICIENT_CREDITS</span></div></div>
+<div class="btns"><button type="button" class="btn cta">크레딧 충전</button><button type="button" class="btn">닫기</button></div>
+</div>
+</section>
+</div>
+<p class="note">오류 코드 이름은 시안용 예시이며 확정 목록은 기획 13-4를 따라요.</p>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1500}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = {}; }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

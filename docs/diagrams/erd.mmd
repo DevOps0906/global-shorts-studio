@@ -1,0 +1,136 @@
+erDiagram
+  profiles {
+    uuid user_id PK,FK
+    text display_name
+    text role
+    text plan
+    timestamptz approved_at
+    timestamptz created_at
+  }
+  cohort_members {
+    uuid cohort_id PK
+    uuid user_id PK,FK
+    text role
+  }
+  channels {
+    bigint id PK
+    uuid user_id FK
+    text handle
+    text name
+    text grp
+    bigint subs
+    boolean tracking
+    timestamptz last_scan_at
+    timestamptz created_at
+  }
+  projects {
+    uuid id PK
+    uuid user_id FK
+    text type
+    text lang
+    text length_preset
+    bigint source_video_id
+    text source_path
+    text source_sha256
+    text source_url
+    timestamptz source_deleted_at
+    text status
+    timestamptz rights_confirmed_at
+    string more_4_cols
+  }
+  drafts {
+    uuid id PK
+    uuid project_id
+    uuid user_id
+    int version
+    jsonb edit_state
+    text selected_title
+    text selected_script
+    timestamptz updated_at
+  }
+  jobs {
+    uuid id PK
+    uuid user_id FK
+    uuid project_id
+    text kind
+    text status
+    text step_name
+    int attempt_no
+    timestamptz started_at
+    timestamptz finished_at
+    text model
+    int cost_credits
+    timestamptz created_at
+  }
+  job_steps {
+    bigint id PK
+    uuid job_id
+    uuid user_id
+    int step_no
+    text label
+    timestamptz done_at
+  }
+  user_settings {
+    uuid user_id PK,FK
+    text lang
+    text preset
+    text length
+    boolean notify_tg
+    boolean notify_mail
+    boolean big_text
+    boolean autosave
+    boolean warn_low_score
+  }
+  linked_accounts {
+    bigint id PK
+    uuid user_id FK
+    text provider
+    text token_ref
+    text status
+  }
+  credit_ledger {
+    bigint id PK
+    uuid user_id FK
+    int delta
+    text reason
+    uuid job_id
+    int attempt_no
+    text idempotency_key
+    timestamptz created_at
+  }
+  homework_progress {
+    bigint id PK
+    uuid user_id FK
+    int lesson_no
+    text rule_key
+    timestamptz done_at
+  }
+  support_tickets {
+    bigint id PK
+    uuid user_id FK
+    text kind
+    text body
+    text status
+    timestamptz answered_at
+    timestamptz created_at
+  }
+  policy_flags {
+    bigint id PK
+    uuid job_id FK
+    uuid user_id
+    uuid project_id
+    text type
+    timestamptz sent_at
+  }
+  admin_audit_log {
+    bigint id PK
+    uuid admin_id FK
+    text action
+    text target
+    timestamptz at
+  }
+  projects ||--o{ drafts : "project_id"
+  projects ||--o{ jobs : "project_id"
+  jobs ||--o{ job_steps : "job_id"
+  jobs ||--o{ credit_ledger : "job_id"
+  jobs ||--o{ policy_flags : "job_id"
