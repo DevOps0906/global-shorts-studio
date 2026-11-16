@@ -1,0 +1,119 @@
+@import "tailwindcss";
+@import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* 토큰 정본: design/tokens.css · design/tailwind.preset.ts (값 변경 시 함께 수정) */
+@theme {
+  /* 반응형 3구간: 모바일 ~767 / 태블릿 768~1199(md) / 데스크톱 1200~(xl) */
+  --breakpoint-*: initial;
+  --breakpoint-md: 768px;
+  --breakpoint-xl: 1200px;
+
+  --color-bg: #0b0b0d;
+  --color-panel: #141518;
+  --color-card: #1c1d21;
+  --color-card2: #232429;
+  --color-line: #2a2b31;
+  --color-text: #f4f4f5;
+  --color-sub: #a1a1aa;
+  --color-accent: #ffd83d;
+  --color-pink: #ff5c9e;
+  --color-ok: #22c55e;
+  --color-danger: #e5484d;
+
+  --background-image-cta: linear-gradient(90deg, #ffd24d, #ff5c9e);
+
+  --font-sans:
+    "Pretendard Variable", Pretendard, "Noto Sans KR", system-ui, sans-serif;
+
+  /* 구간별 글자 크기 토큰: 값은 아래 :root 의 --fs-* 가 구간마다 바뀐다 */
+  --text-body: var(--fs-body);
+  --text-body--line-height: 1.55;
+  --text-h1: var(--fs-h1);
+  --text-h1--line-height: 1.3;
+  --text-h2: var(--fs-h2);
+  --text-h2--line-height: 1.4;
+
+  --radius-lg: 0.625rem;
+}
+
+:root {
+  --fs-body-base: 13px;
+  --fs-body-scale: 1;
+  --fs-body: calc(var(--fs-body-base) * var(--fs-body-scale));
+  --fs-h1: 18px;
+  --fs-h2: 15px;
+
+  /* shadcn/ui 시맨틱 변수 → 디자인 토큰 (다크 단일 테마) */
+  --background: var(--color-bg);
+  --foreground: var(--color-text);
+  --card-foreground: var(--color-text);
+  --popover: var(--color-card);
+  --popover-foreground: var(--color-text);
+  --primary: var(--color-accent);
+  --primary-foreground: var(--color-bg);
+  --secondary: var(--color-card2);
+  --secondary-foreground: var(--color-text);
+  --muted: var(--color-card2);
+  --muted-foreground: var(--color-sub);
+  --accent-foreground: var(--color-bg);
+  --destructive: var(--color-danger);
+  --border: var(--color-line);
+  --input: var(--color-line);
+  --ring: var(--color-accent);
+  --radius: 0.625rem;
+}
+@media (min-width: 768px) {
+  :root {
+    --fs-body-base: 14px;
+    --fs-h1: 22px;
+    --fs-h2: 17px;
+  }
+}
+@media (min-width: 1200px) {
+  :root {
+    --fs-h1: 26px;
+  }
+}
+/* 큰 글씨 모드: <html class="big-text"> */
+.big-text {
+  --fs-body-scale: 1.2;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-xl: calc(var(--radius) * 1.4);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    line-height: 1.55;
+  }
+}

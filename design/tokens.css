@@ -12,7 +12,7 @@
   --ok: #22c55e;
   --danger: #e5484d;
   --cta: linear-gradient(90deg, #ffd24d, #ff5c9e);
-  --font: 'Noto Sans KR', system-ui, sans-serif;
+  --font: 'Pretendard Variable', Pretendard, 'Noto Sans KR', system-ui, sans-serif; /* 앱은 Pretendard(PLAN 8), 캔버스 시안은 Noto Sans KR 대체 */
 
   /* 모바일 ~767 */
   --fs-body: 13px;

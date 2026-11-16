@@ -10,7 +10,7 @@ const preset: Partial<Config> = {
         sub: '#A1A1AA', accent: '#FFD83D', pink: '#FF5C9E', ok: '#22C55E', danger: '#E5484D',
       },
       backgroundImage: { cta: 'linear-gradient(90deg,#FFD24D,#FF5C9E)' },
-      fontFamily: { sans: ["'Noto Sans KR'", 'system-ui', 'sans-serif'] },
+      fontFamily: { sans: ["'Pretendard Variable'", 'Pretendard', "'Noto Sans KR'", 'system-ui', 'sans-serif'] },
       fontSize: {
         body: ['13px', '1.55'], 'body-md': ['14px', '1.55'],
         h1: ['18px', '1.3'], 'h1-md': ['22px', '1.3'], 'h1-xl': ['26px', '1.3'],

@@ -12,3 +12,6 @@ node_modules/
 *.pfx
 id_rsa*
 id_ed25519*
+/.vercel
+*.tsbuildinfo
+next-env.d.ts
