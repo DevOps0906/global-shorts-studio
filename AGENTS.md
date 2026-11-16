@@ -1,11 +1,11 @@
 # AGENTS.md — global-shorts-studio
 
-> 모든 AI 도구 공통 정본(80줄 이내). Codex 팀 설정: NOMAD `global/nomad/CODEX_TEAM.md`(초기 비활성).
+> 모든 AI 도구 공통 정본(80줄 이내).
 
 ## 1. 무엇인가
 소재 발굴(레이더) → 한·일 쇼츠 제작(스튜디오) → 업로드 → 성과 추적 SaaS. 정본: `docs/PLAN.md`. 앱 코드 아직 없음.
 
-## 2. 스택 (작업 시 최신 stable 확인 후 버전 고정)
+## 2. 스택 (최신 stable 확인 후 버전 고정)
 | 영역 | 선택 | 위치 |
 |---|---|---|
 | 웹 | Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · shadcn/ui · Zustand · Remotion Player | `src/` |
@@ -24,12 +24,12 @@
 - 정책 대응(권리 확인 · 변형도 점수 · 반복 원본 경고, PLAN 7-3)을 빼거나 우회 금지.
 - 문서·커밋·화면 문구는 한국어, 코드 식별자는 영어. 새 의존성은 `secscan license`로 확인(GPL·AGPL 거부).
 
-## 5. 문서 지도 (필요한 장만 읽는다 — `grep -n "^##" docs/PLAN.md`로 목차 먼저)
+## 5. 문서 지도 (목차 먼저, 필요한 장만)
 `docs/PLAN.md`: 3 IA·흐름 · 4 화면 명세 · 5 AI 파이프라인 · 6 데이터 모델 · 7 정책 리스크 · 8 디자인 · 11 메뉴·계정 · 12 일정 · 13 구현 근거
 `design/prototypes/`(시안 9화면) · `design/tokens.css`(토큰 정답) · `tasks/README.md`(작업 표)·`NOW.md`
 
 ## 6. 작업 방식
-`tasks/README.md` 순서대로 하나씩, 작업의 근거·금지를 지키고 완료 조건을 실행으로 확인 후 커밋 `[task-NNN] 요약`.
+`tasks/README.md` 순서대로, 근거·금지 준수, 완료 조건 실행 확인 후 커밋 `[task-NNN] 요약`.
 
 ## 7. 영역 규칙 (규칙 정본은 `.claude/rules/` 한 곳)
 아래 경로를 만들거나 고치기 **전에** 해당 규칙 파일을 읽는다(Claude Code는 `paths:`로 자동 로드).
@@ -39,4 +39,4 @@
 | `worker/**` | `.claude/rules/api.md` |
 | `supabase/**` | `.claude/rules/db.md` |
 | `docs/**` · `design/**` | `.claude/rules/docs.md` |
-- 읽지 않는 파일: `.env*` · lock · `node_modules/` · `.next/` · `dist/` · `build/`.
+- 읽지 않음: `.env*` · lock · `node_modules/` · `.next/` · `dist/`.
