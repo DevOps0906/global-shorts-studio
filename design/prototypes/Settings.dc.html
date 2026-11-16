@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>글로벌쇼츠 스튜디오 — 설정</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0B0D}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+.app{--bg:#0B0B0D;--panel:#141518;--card:#1C1D21;--card2:#232429;--line:#2A2B31;--text:#F4F4F5;--sub:#A1A1AA;--accent:#FFD83D;--pink:#FF5C9E;--ok:#22C55E;--danger:#E5484D;font-family:'Noto Sans KR',system-ui,sans-serif;color:var(--text);background:radial-gradient(1200px 600px at 20% -10%,#2a2412 0%,rgba(11,11,13,0) 60%),var(--bg);min-height:100vh;font-size:14px;line-height:1.55}
+.util{display:flex;align-items:center;padding:8px 20px;border-bottom:1px solid var(--line);font-size:12px}
+.brand{display:inline-flex;align-items:center;gap:8px}.brand .bm{width:22px;height:22px;flex:none}.brand .bt{display:flex;flex-direction:column;line-height:1.05}.brand .bt b{font-size:12px;font-weight:900;letter-spacing:.4px}.brand .bt i{font-style:normal;font-size:9px;color:var(--sub);letter-spacing:1.2px;text-transform:uppercase}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 20px}
+.logo{font-weight:900;font-size:20px}.logo b{color:var(--accent)}
+.topr{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 12px;border-radius:999px;border:0;background:var(--card);color:var(--text);font:inherit;font-size:12px;font-weight:500;cursor:pointer}
+.pill.on{background:var(--accent);color:#111;font-weight:700}
+.pill .dot{width:7px;height:7px;border-radius:99px;background:var(--ok)}
+.wrap{max-width:1040px;margin:0 auto;padding:12px 20px 60px;display:flex;flex-direction:column;gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px}
+.h1{margin:0 0 6px;font-size:26px;font-weight:900}
+.h2{margin:0;font-size:17px;font-weight:900}.h2 small{font-weight:500;color:var(--sub);font-size:12px;margin-left:8px}
+.lead{margin:0;color:var(--sub);font-size:14px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:0 15px;border-radius:999px;border:1.5px solid transparent;background:var(--card);color:var(--text);font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.chip.on{border-color:var(--accent);background:#1f1c10}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:0 18px;border-radius:12px;border:0;background:linear-gradient(90deg,#FFD24D,#FF5C9E);color:#111;font:inherit;font-weight:900;font-size:13.5px;cursor:pointer}
+.btn2{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:9px;border:0;background:var(--card2);color:var(--text);font:inherit;font-weight:700;font-size:12px;cursor:pointer}
+.btn2.dg{color:#ff8a8f}
+.in{width:100%;box-sizing:border-box;min-height:42px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font:inherit;font-size:13px;padding:0 12px}
+textarea.in{min-height:96px;padding:10px 12px;resize:vertical}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{background:var(--card);border-radius:14px;padding:14px}.kpi span{display:block;font-size:11.5px;color:var(--sub)}.kpi b{display:block;font-size:24px;font-weight:900;margin-top:2px}.kpi b.a{color:var(--accent)}
+.list{display:flex;flex-direction:column;gap:8px}
+.item{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:14px;padding:12px 14px;flex-wrap:wrap}
+.item .m{flex:1 1 180px;min-width:0}.item .m b{display:block;font-size:14px}.item .m span{display:block;font-size:12px;color:var(--sub)}
+.item .acts{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.item.off{opacity:.55}
+.tag{display:inline-flex;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:#2a2b31;color:var(--sub)}
+.tag.ok{background:#12301c;color:#4ade80}.tag.run{background:#1f1c10;color:var(--accent)}.tag.bad{background:#3a1517;color:#ff8a8f}
+.sw{width:42px;height:24px;border-radius:99px;border:0;background:#3a3b42;position:relative;cursor:pointer;flex:none;padding:0}
+.sw i{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:99px;background:#fff;transition:left .18s}
+.sw.on{background:var(--ok)}.sw.on i{left:21px}
+.tbox{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;font-size:11.5px;color:var(--sub);font-weight:500;padding:8px 10px;border-bottom:1px solid var(--line)}td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.lbl{display:block;font-size:12px;color:var(--sub);margin:12px 0 6px}
+.faq{display:flex;justify-content:space-between;width:100%;text-align:left;min-height:46px;align-items:center;padding:0 14px;border:0;border-radius:12px;background:var(--card);color:var(--text);font:inherit;font-weight:700;font-size:13.5px;cursor:pointer}
+.ans{display:none;margin:6px 6px 8px;color:var(--sub);font-size:13px}.ans.open{display:block}
+.center{max-width:440px;margin:60px auto 0;text-align:center}
+.muted{color:var(--sub);font-size:12px}
+@media (max-width:1199px){.h1{font-size:22px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:767px){.app{font-size:13px}.h1{font-size:18px}.h2{font-size:15px}.card{padding:16px}.two{grid-template-columns:minmax(0,1fr)}.brand .bt{display:none}.kpi b{font-size:20px}.wrap{padding:8px 12px 48px}.top{padding:10px 12px}.util{padding:8px 12px}}
+
+button,.pill,.chip,.tile,.btn2,.mini,.type,.cta,.ghost,.save,.upl,.ring,.seg,.th,.col,.lnk,.run,.hc{transition:transform .15s ease,filter .15s ease,background-color .15s ease,border-color .15s ease,box-shadow .2s ease}
+.pill:hover,.chip:hover,.btn2:hover,.mini:hover,.tile:hover,.th:hover,.col:hover,.ring:hover,.ghost:hover{filter:brightness(1.18);transform:translateY(-1px)}
+.cta:hover,.save:hover,.upl:hover,.run:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 8px 22px rgba(255,92,158,.28)}
+.type:hover,.hc:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(0,0,0,.4)}
+button:active,.pill:active,.cta:active,.chip:active,.tile:active,.btn2:active,.type:active,.save:active,.run:active,.upl:active,.ring:active,.th:active,.col:active{transform:scale(.96)!important;filter:brightness(.95)}
+button:focus-visible,a:focus-visible{outline:2px solid #FFD83D;outline-offset:2px}
+button:disabled{cursor:wait;opacity:.55;transform:none!important}
+.pill.sel{box-shadow:inset 0 0 0 1.5px #FFD83D;color:#FFD83D}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);max-width:calc(100vw - 32px);padding:11px 18px;border-radius:12px;background:#26272d;border:1px solid #3a3b42;color:#F4F4F5;font-size:13px;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,.5);z-index:50;animation:toastin .25s ease}
+@keyframes toastin{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
+.pg{width:100%;max-width:420px;margin:14px auto 6px;text-align:left}
+.pg .tx{display:flex;justify-content:space-between;font-size:11.5px;color:#A1A1AA;margin-bottom:6px}
+.pg .tx b{color:#FFD83D;font-weight:900}
+.pgr{display:block;width:100%;height:10px;border:0;border-radius:99px;overflow:hidden;appearance:none;-webkit-appearance:none;background:#2a2b31}
+.pgr::-webkit-progress-bar{background:#2a2b31;border-radius:99px}
+.pgr::-webkit-progress-value{border-radius:99px;background:repeating-linear-gradient(135deg,rgba(255,255,255,.3) 0 8px,rgba(255,255,255,0) 8px 16px),linear-gradient(90deg,#FFD24D,#FF5C9E);background-size:32px 32px,100% 100%;animation:pstripe .8s linear infinite;transition:width .5s ease}
+.pgr::-moz-progress-bar{border-radius:99px;background:repeating-linear-gradient(135deg,rgba(255,255,255,.3) 0 8px,rgba(255,255,255,0) 8px 16px),linear-gradient(90deg,#FFD24D,#FF5C9E);background-size:32px 32px,100% 100%;animation:pstripe .8s linear infinite}
+@keyframes pstripe{to{background-position:32px 0,0 0}}
+@media (prefers-reduced-motion:reduce){.pgr::-webkit-progress-value,.pgr::-moz-progress-bar{animation:none}.type:hover,.hc:hover,.pill:hover{transform:none}}
+</style>
+</helmet>
+<div class="app">
+<div class="util"><span class="brand" title="NOMAD AI Factory"><svg class="bm" viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFD24D"/><stop offset="1" stop-color="#FF5C9E"/></linearGradient></defs><rect width="32" height="32" rx="9" fill="url(#bg2)"/><circle cx="16" cy="16" r="8.5" fill="none" stroke="#0B0B0D" stroke-width="1.8"/><ellipse cx="16" cy="16" rx="3.6" ry="8.5" fill="none" stroke="#0B0B0D" stroke-width="1.4"/><path d="M7.5 16h17" stroke="#0B0B0D" stroke-width="1.4"/><path d="M14 12.6v6.8l5.6-3.4z" fill="#0B0B0D"/></svg><span class="bt"><b>NOMAD</b><i>AI Factory</i></span></span></div>
+<header class="top"><a class="logo" href="Main.dc.html">글로벌쇼츠 <b>스튜디오</b></a><nav class="topr" aria-label="상단 메뉴"><a class="pill" href="Main.dc.html">새 영상</a><a class="pill" href="Radar.dc.html">레이더</a><a class="pill" href="Saved.dc.html">저장 채널 399</a><a class="pill" href="Support.dc.html">고객문의</a><a class="pill on" href="Settings.dc.html" aria-current="page">설정<span class="dot"></span></a><a class="pill" href="Admin.dc.html">관리 페이지</a><a class="pill" href="MyPage.dc.html">마이페이지</a><a class="pill" href="Login.dc.html">로그아웃</a></nav></header>
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{ false }}"><div class="toast" role="status">{{toast}}</div></sc-if>
+<main class="wrap">
+<section class="card"><h1 class="h1">설정</h1><p class="lead">기본값을 정해 두면 새 영상을 만들 때마다 다시 고르지 않아도 돼요.</p></section>
+<section class="card">
+<h2 class="h2">제작 기본값</h2>
+<span class="lbl">기본 언어</span><div class="chips"><sc-for list="{{langChips}}" as="c" hint-placeholder-count="3"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div>
+<span class="lbl">기본 프리셋</span><div class="chips"><sc-for list="{{presetChips}}" as="c" hint-placeholder-count="3"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div>
+<span class="lbl">기본 영상 길이</span><div class="chips"><sc-for list="{{lenChips}}" as="c" hint-placeholder-count="4"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div>
+</section>
+<section class="card">
+<h2 class="h2">알림·편의</h2>
+<div class="list" style="margin-top: 12px">
+<sc-for list="{{toggles}}" as="t" hint-placeholder-count="5"><div class="item"><div class="m"><b>{{t.label}}</b><span>{{t.desc}}</span></div><button type="button" class="sw {{t.cls}}" role="switch" aria-label="{{t.label}}" onClick="{{t.flip}}"><i></i></button></div></sc-for>
+</div>
+</section>
+<section class="card">
+<h2 class="h2">화면 크기 미리보기</h2>
+<p class="muted">큰 글씨 모드를 켜면 아래 글자가 커져요. (시니어 사용자용)</p>
+<p style="font-size: {{previewSize}}px; margin: 8px 0 0">이 글씨 크기로 모든 화면이 표시돼요.</p>
+</section>
+<section class="card">
+<div class="row" style="margin: 0"><div class="chips"><button type="button" class="btn" onClick="{{save}}" disabled="{{saving}}">{{saveLabel}}</button><button type="button" class="btn2" onClick="{{reset}}">기본값으로 되돌리기</button></div><span class="muted">{{savedTxt}}</span></div>
+<sc-if value="{{hasSave}}" hint-placeholder-val="{{ false }}"><div class="pg" style="margin-left: 0"><div class="tx"><span>설정 저장 중…</span><b>{{savePct}}%</b></div><progress class="pgr" max="100" value="{{savePct}}"></progress></div></sc-if>
+</section>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1300}}'>
+var DEF = { lang: 'ko', preset: 'brand', len: 'keep', tg: true, mail: false, big: false, auto: true, warn: true };
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = Object.assign({ save: -1, saved: '아직 저장하지 않은 변경이 없어요.', toast: '' }, DEF); this.tt = null; this.ts = null; }
+  componentWillUnmount() { clearTimeout(this.tt); clearInterval(this.ts); }
+  say(m) { var s = this; clearTimeout(this.tt); this.setState({ toast: m }); this.tt = setTimeout(function () { s.setState({ toast: '' }); }, 2200); }
+  chips(list, key) { var self = this; return list.map(function (o) { return { label: o.l, cls: self.state[key] === o.v ? 'on' : '', pick: function () { var p = { saved: '저장하지 않은 변경이 있어요.' }; p[key] = o.v; self.setState(p); } }; }); }
+  renderVals() {
+    var self = this, st = this.state;
+    var T = [{ k: 'tg', l: '텔레그램 알림', d: '떡상 소재와 작업 완료를 알려줘요' }, { k: 'mail', l: '이메일 주간 요약', d: '매주 월요일 성과 요약을 보내요' }, { k: 'big', l: '큰 글씨 모드', d: '글자와 버튼을 크게 보여줘요' }, { k: 'auto', l: '자동 저장', d: '고치면 3초 뒤 자동으로 저장해요' }, { k: 'warn', l: '변형도 낮음 경고', d: '60점 미만이면 업로드 전에 알려줘요' }];
+    return {
+      langChips: this.chips([{ l: '한국어', v: 'ko' }, { l: '일본어', v: 'ja' }, { l: '한·일 동시', v: 'both' }], 'lang'),
+      presetChips: this.chips([{ l: '내 채널 기본', v: 'brand' }, { l: '쇼핑 쇼츠', v: 'shop' }, { l: '일본 채널', v: 'jp' }], 'preset'),
+      lenChips: this.chips([{ l: '원본 유지', v: 'keep' }, { l: '짧게', v: 'short' }, { l: '보통', v: 'mid' }, { l: '길게', v: 'long' }], 'len'),
+      toggles: T.map(function (t) { return { label: t.l, desc: t.d, cls: st[t.k] ? 'on' : '', flip: function () { var p = { saved: '저장하지 않은 변경이 있어요.' }; p[t.k] = !st[t.k]; self.setState(p); } }; }),
+      previewSize: st.big ? 20 : 14,
+      saving: st.save >= 0, hasSave: st.save >= 0, savePct: Math.max(0, st.save), saveLabel: st.save >= 0 ? '저장 중…' : '설정 저장', savedTxt: st.saved,
+      save: function () {
+        if (self.state.save >= 0) return;
+        clearInterval(self.ts);
+        self.setState({ save: 0 });
+        self.ts = setInterval(function () {
+          var p = Math.min(100, self.state.save + 14 + Math.floor(Math.random() * 20));
+          if (p >= 100) { clearInterval(self.ts); self.setState({ save: -1, saved: '방금 저장했어요.' }); self.say('설정을 저장했어요.'); }
+          else self.setState({ save: p });
+        }, 240);
+      },
+      reset: function () { self.setState(Object.assign({ saved: '기본값으로 되돌렸어요. 저장을 눌러 확정하세요.' }, DEF)); self.say('기본값으로 되돌렸어요.'); },
+      hasToast: !!st.toast, toast: st.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

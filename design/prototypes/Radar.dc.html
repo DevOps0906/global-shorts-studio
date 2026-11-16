@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>글로벌쇼츠 스튜디오 — 떡상 소재 레이더</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0B0D}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+.app{--bg:#0B0B0D;--panel:#141518;--card:#1C1D21;--card2:#232429;--line:#2A2B31;--text:#F4F4F5;--sub:#A1A1AA;--accent:#FFD83D;--pink:#FF5C9E;--ok:#22C55E;font-family:'Noto Sans KR',system-ui,sans-serif;color:var(--text);background:var(--bg);min-height:100vh;font-size:14px;line-height:1.5}
+.util{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:8px 20px;border-bottom:1px solid var(--line);font-size:12px}
+.brand{display:inline-flex;align-items:center;gap:8px;margin-right:6px}.brand .bm{width:22px;height:22px;flex:none}.brand .bt{display:flex;flex-direction:column;line-height:1.05}.brand .bt b{font-size:12px;font-weight:900;letter-spacing:.4px;color:var(--text,#fff)}.brand .bt i{font-style:normal;font-size:9px;color:var(--sub);letter-spacing:1.2px;text-transform:uppercase}
+.pill{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 12px;border-radius:999px;border:0;background:var(--card);color:var(--text);font:inherit;font-size:12px;font-weight:500;cursor:pointer}
+.pill.on{background:var(--accent);color:#111;font-weight:700}
+.pill .dot{width:7px;height:7px;border-radius:99px;background:var(--ok)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 20px}
+.logo{font-weight:900;font-size:20px}
+.logo b{color:var(--accent)}
+.topr{display:flex;gap:6px;flex-wrap:wrap}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px 80px;box-sizing:border-box;display:flex;flex-direction:column;gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px}
+.h1{margin:0;font-size:18px}
+.lead{margin:4px 0 0;color:var(--sub);font-size:13px}
+.frow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:16px}
+.lbl{display:block;font-size:12px;color:var(--sub);font-weight:700;margin-bottom:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;min-height:36px;padding:0 13px;border-radius:999px;border:1.5px solid transparent;background:var(--card);color:var(--text);font:inherit;font-size:12.5px;font-weight:700;cursor:pointer}
+.chip.on{border-color:var(--accent);background:#1f1c10}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.sched{font-size:12px;color:var(--sub)}
+.run{display:inline-flex;align-items:center;gap:6px;min-height:42px;padding:0 20px;border-radius:12px;border:0;background:linear-gradient(90deg,#FFD24D,#FF5C9E);color:#111;font:inherit;font-weight:900;font-size:13.5px;cursor:pointer}
+.rhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.rhead h2{margin:0;font-size:15px}
+.rhead small{color:var(--sub);font-weight:500;margin-left:6px;font-size:12px}
+.meta{font-size:12px;color:var(--sub);margin:8px 0 14px}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.vc{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:6px;display:flex;flex-direction:column;gap:8px}
+.vc.hot{border-color:#8a6d12}
+.vc.made{opacity:.55}
+.th{position:relative;aspect-ratio:9/16;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.bd{position:absolute;display:inline-flex;align-items:center;gap:3px;font-size:10.5px;font-weight:700;padding:2px 6px;border-radius:6px}
+.bd.seen{top:6px;left:6px;background:rgba(0,0,0,.7);color:#fff}
+.bd.new{top:6px;left:6px;background:var(--pink);color:#fff}
+.bd.m{top:6px;right:6px;background:#FEF3C7;color:#92400E}
+.bd.kr{bottom:6px;left:6px;background:rgba(34,197,94,.9);color:#05250f}
+.bd.done{bottom:6px;right:6px;background:var(--accent);color:#111}
+.pl{width:36px;height:36px;border-radius:99px;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;color:#111}
+.dur{position:absolute;right:6px;bottom:6px;background:rgba(0,0,0,.7);color:#fff;font-size:10.5px;padding:1px 5px;border-radius:4px}
+.vc h3{margin:0 2px;font-size:12.5px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:35px}
+.ch{margin:0 2px;font-size:11px;color:var(--sub)}
+.st{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;border-top:1px solid var(--line);padding-top:6px}
+.st b{display:block;font-size:13px;font-variant-numeric:tabular-nums}
+.st b.a{color:var(--accent)}
+.st span{font-size:10.5px;color:var(--sub)}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.mk{display:flex;align-items:center;justify-content:center;min-height:34px;border-radius:8px;background:var(--card2);color:var(--text);font-size:11.5px;font-weight:700}
+.mk:hover{background:#2e2f35}
+.flag{min-height:30px;border:0;border-radius:8px;background:transparent;color:var(--sub);font:inherit;font-size:11px;cursor:pointer}
+.perf{width:100%;border-collapse:collapse;font-size:13px;min-width:640px}
+.perf th{text-align:left;font-size:11.5px;color:var(--sub);font-weight:500;padding:8px 10px;border-bottom:1px solid var(--line)}
+.perf td{padding:10px;border-bottom:1px solid var(--line)}
+.perf .up{color:#4ade80;font-weight:700}
+.tbox{overflow-x:auto}
+.note{font-size:11.5px;color:var(--sub);margin:10px 0 0}
+@media (max-width:1199px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.frow{grid-template-columns:1fr 1fr}.h1{font-size:17px}}
+@media (max-width:767px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.frow{grid-template-columns:minmax(0,1fr)}.brand .bt{display:none}.h1{font-size:16px}.card{padding:16px}.vc h3{font-size:12px}}
+
+button,.pill,.chip,.tile,.btn2,.mini,.type,.cta,.ghost,.save,.upl,.ring,.seg,.th,.col,.lnk,.run,.hc{transition:transform .15s ease,filter .15s ease,background-color .15s ease,border-color .15s ease,box-shadow .2s ease}
+.pill:hover,.chip:hover,.btn2:hover,.mini:hover,.tile:hover,.th:hover,.col:hover,.ring:hover,.ghost:hover{filter:brightness(1.18);transform:translateY(-1px)}
+.cta:hover,.save:hover,.upl:hover,.run:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 8px 22px rgba(255,92,158,.28)}
+.type:hover,.hc:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(0,0,0,.4)}
+button:active,.pill:active,.cta:active,.chip:active,.tile:active,.btn2:active,.type:active,.save:active,.run:active,.upl:active,.ring:active,.th:active,.col:active{transform:scale(.96)!important;filter:brightness(.95)}
+button:focus-visible,a:focus-visible{outline:2px solid #FFD83D;outline-offset:2px}
+button:disabled{cursor:wait;opacity:.55;transform:none!important}
+.pill.sel{box-shadow:inset 0 0 0 1.5px #FFD83D;color:#FFD83D}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);max-width:calc(100vw - 32px);padding:11px 18px;border-radius:12px;background:#26272d;border:1px solid #3a3b42;color:#F4F4F5;font-size:13px;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,.5);z-index:50;animation:toastin .25s ease}
+@keyframes toastin{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
+.pg{width:100%;max-width:420px;margin:14px auto 6px;text-align:left}
+.pg .tx{display:flex;justify-content:space-between;font-size:11.5px;color:#A1A1AA;margin-bottom:6px}
+.pg .tx b{color:#FFD83D;font-weight:900}
+.pgr{display:block;width:100%;height:10px;border:0;border-radius:99px;overflow:hidden;appearance:none;-webkit-appearance:none;background:#2a2b31}
+.pgr::-webkit-progress-bar{background:#2a2b31;border-radius:99px}
+.pgr::-webkit-progress-value{border-radius:99px;background:repeating-linear-gradient(135deg,rgba(255,255,255,.3) 0 8px,rgba(255,255,255,0) 8px 16px),linear-gradient(90deg,#FFD24D,#FF5C9E);background-size:32px 32px,100% 100%;animation:pstripe .8s linear infinite;transition:width .5s ease}
+.pgr::-moz-progress-bar{border-radius:99px;background:repeating-linear-gradient(135deg,rgba(255,255,255,.3) 0 8px,rgba(255,255,255,0) 8px 16px),linear-gradient(90deg,#FFD24D,#FF5C9E);background-size:32px 32px,100% 100%;animation:pstripe .8s linear infinite}
+@keyframes pstripe{to{background-position:32px 0,0 0}}
+@media (prefers-reduced-motion:reduce){.pgr::-webkit-progress-value,.pgr::-moz-progress-bar{animation:none}.type:hover,.hc:hover,.pill:hover{transform:none}}
+</style>
+</helmet>
+<div class="app">
+<div class="util"><span class="brand" title="NOMAD AI Factory"><svg class="bm" viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFD24D"/><stop offset="1" stop-color="#FF5C9E"/></linearGradient></defs><rect width="32" height="32" rx="9" fill="url(#bg2)"/><circle cx="16" cy="16" r="8.5" fill="none" stroke="#0B0B0D" stroke-width="1.8"/><ellipse cx="16" cy="16" rx="3.6" ry="8.5" fill="none" stroke="#0B0B0D" stroke-width="1.4"/><path d="M7.5 16h17" stroke="#0B0B0D" stroke-width="1.4"/><path d="M14 12.6v6.8l5.6-3.4z" fill="#0B0B0D"/></svg><span class="bt"><b>NOMAD</b><i>AI Factory</i></span></span></div>
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{ false }}"><div class="toast" role="status">{{toast}}</div></sc-if>
+<header class="top">
+<a class="logo" href="Main.dc.html">글로벌쇼츠 <b>스튜디오</b></a>
+<nav class="topr" aria-label="상단 메뉴"><a class="pill" href="Main.dc.html">새 영상</a><a class="pill on" href="Radar.dc.html" aria-current="page">레이더</a><a class="pill" href="Saved.dc.html">저장 채널 399</a><a class="pill" href="Support.dc.html">고객문의</a><a class="pill" href="Settings.dc.html">설정<span class="dot"></span></a><a class="pill" href="Admin.dc.html">관리 페이지</a><a class="pill" href="MyPage.dc.html">마이페이지</a><a class="pill" href="Login.dc.html">로그아웃</a></nav>
+</header>
+<main class="wrap">
+<section class="card" aria-labelledby="rd-h">
+<h1 id="rd-h" class="h1">떡상 소재 레이더</h1>
+<p class="lead">저장한 레퍼런스 채널에서 평소보다 크게 터진 영상만 모았어요. 마음에 드는 소재는 바로 스튜디오로 보내세요.</p>
+<div class="frow">
+<div><span class="lbl">그룹</span><div class="chips"><sc-for list="{{groupChips}}" as="c" hint-placeholder-count="3"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div></div>
+<div><span class="lbl">시간</span><div class="chips"><sc-for list="{{hourChips}}" as="c" hint-placeholder-count="4"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div></div>
+<div><span class="lbl">떡상 배율</span><div class="chips"><sc-for list="{{multChips}}" as="c" hint-placeholder-count="4"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div></div>
+</div>
+<div class="bar"><span class="sched">예약 스캔 1시간마다 · 다음 오후 10:00 · 새 소재가 나오면 텔레그램 알림</span><button type="button" class="run" onClick="{{run}}"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"></path></svg>추적 시작</button></div>
+</section>
+
+<section class="card" aria-labelledby="res-h">
+<div class="rhead"><h2 id="res-h">추적 결과<small>{{count}}건</small></h2>
+<div class="chips"><sc-for list="{{sortChips}}" as="c" hint-placeholder-count="5"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div></div>
+<p class="meta">{{metaLine}}</p>
+<div class="grid">
+<sc-for list="{{rows}}" as="v" hint-placeholder-count="10">
+<article class="vc {{v.cls}}">
+<div class="th" style="background: {{v.bg}}">
+<span class="bd {{v.badgeCls}}">{{v.badge}}</span>
+<span class="bd m">{{v.multTxt}}</span>
+<sc-if value="{{v.fresh}}" hint-placeholder-val="{{ false }}"><span class="bd kr">국내 미등장</span></sc-if>
+<sc-if value="{{v.made}}" hint-placeholder-val="{{ false }}"><span class="bd done">제작함</span></sc-if>
+<span class="pl" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"></path></svg></span>
+</div>
+<h3>{{v.title}}</h3>
+<p class="ch">{{v.channel}} · 구독자 {{v.subs}}</p>
+<div class="st"><div><b>{{v.views}}</b><span>조회수</span></div><div><b>{{v.hours}}</b><span>경과</span></div><div><b class="a">{{v.multTxt}}</b><span>떡상배율</span></div></div>
+<div class="acts"><a class="mk" href="Main.dc.html">영상형으로</a><a class="mk" href="Main.dc.html">대본형으로</a></div>
+<button type="button" class="flag" onClick="{{v.toggle}}">{{v.flagTxt}}</button>
+</article>
+</sc-for>
+</div>
+</section>
+
+<section class="card" aria-labelledby="pf-h">
+<div class="rhead"><h2 id="pf-h">성과 추적<small>내가 올린 영상 · 원본 대비</small></h2><span class="sched">업로드 후 48시간 기준 · 샘플 데이터</span></div>
+<div class="tbox" style="margin-top: 12px">
+<table class="perf">
+<thead><tr><th>내 영상</th><th>채널</th><th>원본 소재</th><th>조회수</th><th>내 채널 평소 대비</th><th>제목 유형</th></tr></thead>
+<tbody>
+<sc-for list="{{perf}}" as="p" hint-placeholder-count="4"><tr><td>{{p.title}}</td><td>{{p.ch}}</td><td>{{p.src}}</td><td>{{p.views}}</td><td class="up">{{p.mult}}</td><td>{{p.hook}}</td></tr></sc-for>
+</tbody>
+</table>
+</div>
+<p class="note">잘된 영상의 제목 유형은 다음 제목 3안을 만들 때 예시로 자동 반영돼요.</p>
+</section>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1500}}'>
+var V = [
+  { id: 1, title: 'Cat refuses to leave the Christmas tree', channel: 'PawTwist', subs: 42000, views: 2780000, hours: 60, mult: 571.5, group: 'ref200', seen: true, fresh: true, dur: '0:14', bg: 'linear-gradient(160deg,#7a5b3a,#2b2016)' },
+  { id: 2, title: 'Mom lines the family up against the wall', channel: 'HomeLaughs', subs: 76000, views: 4040000, hours: 41, mult: 149.6, group: 'ref200', seen: true, fresh: false, dur: '0:22', bg: 'linear-gradient(160deg,#b7a99a,#4a4038)' },
+  { id: 3, title: 'Tiny glasses made for a doll', channel: 'MiniMaker', subs: 23000, views: 200000, hours: 22, mult: 48.2, group: 'ref', seen: false, fresh: true, dur: '0:31', bg: 'linear-gradient(160deg,#7d8f5a,#2d3520)' },
+  { id: 4, title: 'Girl finds her lost bird at the pet shop', channel: 'FeatherNest', subs: 37000, views: 310000, hours: 35, mult: 27.4, group: 'ref', seen: false, fresh: true, dur: '0:27', bg: 'linear-gradient(160deg,#c88aa0,#3f2a33)' },
+  { id: 5, title: 'Rhino beetle opens its wings', channel: 'BugLens', subs: 79000, views: 960000, hours: 58, mult: 13.7, group: 'ref200', seen: true, fresh: false, dur: '0:16', bg: 'linear-gradient(160deg,#8a5a2b,#231509)' },
+  { id: 6, title: 'Bowling balls shatter, then rebuild', channel: 'BounceLab', subs: 36000, views: 8570000, hours: 46, mult: 12.4, group: 'ref', seen: false, fresh: false, dur: '0:18', bg: 'linear-gradient(160deg,#2dd4bf,#0f766e)' },
+  { id: 7, title: 'Puppy meets a cucumber for the first time', channel: 'DoggoDaily', subs: 88000, views: 1210000, hours: 18, mult: 11.2, group: 'ref', seen: false, fresh: true, dur: '0:12', bg: 'linear-gradient(160deg,#e8b06a,#6b4a22)' },
+  { id: 8, title: 'Nobody uses the space under the stairs like this', channel: 'BuildBrain', subs: 25000, views: 274000, hours: 82, mult: 10.0, group: 'ref200', seen: true, fresh: false, dur: '0:58', bg: 'linear-gradient(160deg,#a16207,#3f2a08)' },
+  { id: 9, title: 'Grandma reacts to her first VR headset', channel: 'FamilyFun', subs: 140000, views: 690000, hours: 30, mult: 6.8, group: 'ref200', seen: false, fresh: true, dur: '0:24', bg: 'linear-gradient(160deg,#6366f1,#1e1b4b)' },
+  { id: 10, title: 'Parrot was NOT happy with this juice', channel: 'FeatherNest', subs: 37000, views: 438000, hours: 60, mult: 5.2, group: 'ref', seen: true, fresh: false, dur: '0:11', bg: 'linear-gradient(160deg,#9ca3af,#374151)' }
+];
+var GROUPS = { all: 399, ref: 100, ref200: 299 };
+function fmt(n) { if (n >= 10000) return (Math.round(n / 1000) / 10) + '만'; return Number(n).toLocaleString('ko-KR'); }
+function now() { var d = new Date(); var h = d.getHours(); return (d.getMonth() + 1) + '.' + d.getDate() + '. ' + (h < 12 ? '오전 ' : '오후 ') + (h % 12 || 12) + ':' + String(d.getMinutes()).padStart(2, '0'); }
+
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { group: 'all', hours: 120, mult: 5, sort: 'mult', made: { 2: true }, runs: 1, runAt: '11.15. 오후 9:48', menu: '', toast: '', scan: -1 }; }
+  componentWillUnmount() { clearTimeout(this.toastT); clearInterval(this.scanT); }
+  navTo(key, msg) {
+    var self = this;
+    clearTimeout(this.toastT);
+    this.setState({ menu: key, toast: msg });
+    this.toastT = setTimeout(function () { self.setState({ toast: '' }); }, 2200);
+  }
+  chips(list, key) { var self = this; return list.map(function (o) { return { label: o.l, cls: self.state[key] === o.v ? 'on' : '', pick: function () { var p = {}; p[key] = o.v; self.setState(p); } }; }); }
+  renderVals() {
+    var self = this, st = this.state;
+    var rows = V.filter(function (v) { return (st.group === 'all' || v.group === st.group) && v.hours <= st.hours && v.mult >= st.mult; });
+    var sorters = { mult: function (a, b) { return b.mult - a.mult; }, recent: function (a, b) { return a.hours - b.hours; }, pop: function (a, b) { return b.views - a.views; }, subs: function (a, b) { return b.subs - a.subs; }, fresh: function (a, b) { return (b.fresh ? 1 : 0) - (a.fresh ? 1 : 0) || b.mult - a.mult; } };
+    rows = rows.slice().sort(sorters[st.sort]);
+    var newCount = rows.filter(function (v) { return st.runs > 1 ? false : !v.seen; }).length;
+    return {
+      groupChips: this.chips([{ l: '전체', v: 'all' }, { l: '레퍼런스채널', v: 'ref' }, { l: '레퍼런스채널200', v: 'ref200' }], 'group'),
+      hourChips: this.chips([{ l: '24시간', v: 24 }, { l: '72시간', v: 72 }, { l: '120시간', v: 120 }, { l: '10일', v: 240 }], 'hours'),
+      multChips: this.chips([{ l: '전체', v: 0 }, { l: '5배+', v: 5 }, { l: '10배+', v: 10 }, { l: '50배+', v: 50 }], 'mult'),
+      sortChips: this.chips([{ l: '떡상순', v: 'mult' }, { l: '국내 미등장 먼저', v: 'fresh' }, { l: '최신순', v: 'recent' }, { l: '인기순', v: 'pop' }, { l: '구독자순', v: 'subs' }], 'sort'),
+      mc: { support: st.menu === 'support' ? 'sel' : '', settings: st.menu === 'settings' ? 'sel' : '', admin: st.menu === 'admin' ? 'sel' : '', my: st.menu === 'my' ? 'sel' : '', saved: st.menu === 'saved' ? 'sel' : '' },
+      navSupport: function () { self.navTo('support', '고객문의 창을 열었어요. (샘플)'); },
+      navSettings: function () { self.navTo('settings', '설정 화면을 열었어요. (샘플)'); },
+      navAdmin: function () { self.navTo('admin', '관리 페이지로 이동해요. (샘플)'); },
+      navMy: function () { self.navTo('my', '마이페이지로 이동해요. (샘플)'); },
+      navSaved: function () { self.navTo('saved', '저장 채널 399개 목록을 열었어요. (샘플)'); },
+      navLogout: function () { self.navTo('logout', '로그아웃했어요. 다시 로그인해 주세요. (샘플)'); },
+      hasToast: !!st.toast, toast: st.toast,
+      scanning: st.scan >= 0, scanPct: Math.max(0, st.scan), runLabel: st.scan >= 0 ? '스캔 중…' : '추적 시작', busy: st.scan >= 0,
+      run: function () {
+        if (self.state.scan >= 0) return;
+        clearInterval(self.scanT);
+        self.setState({ scan: 0 });
+        self.scanT = setInterval(function () {
+          var p = Math.min(100, self.state.scan + 5 + Math.floor(Math.random() * 12));
+          if (p >= 100) { clearInterval(self.scanT); self.setState({ scan: 100 }); setTimeout(function () { self.setState({ scan: -1, runs: self.state.runs + 1, runAt: now() }); self.navTo('', '스캔 완료 — 결과를 새로 불러왔어요.'); }, 450); }
+          else self.setState({ scan: p });
+        }, 300);
+      },
+      count: rows.length,
+      metaLine: st.runAt + ' 기준 · 대상 채널 ' + GROUPS[st.group] + '개 · ' + rows.length + '건 (새 영상 ' + newCount + '건) · 이미 모아 둔 스냅샷만 읽어 추가 비용이 없어요 · 샘플 데이터',
+      rows: rows.map(function (v) {
+        var isNew = st.runs > 1 ? false : !v.seen;
+        var made = !!st.made[v.id];
+        return {
+          title: v.title, channel: v.channel, subs: fmt(v.subs), views: fmt(v.views), hours: v.hours + '시간', multTxt: v.mult.toFixed(1) + 'x',
+          bg: v.bg, fresh: v.fresh, made: made, cls: (v.mult >= 10 ? 'hot ' : '') + (made ? 'made' : ''),
+          badge: isNew ? 'NEW' : '지난 스캔에도 있었음', badgeCls: isNew ? 'new' : 'seen',
+          flagTxt: made ? '제작 표시 지우기' : '만든 소재로 표시',
+          toggle: function () { var m = Object.assign({}, self.state.made); m[v.id] = !made; self.setState({ made: m }); }
+        };
+      }),
+      perf: [
+        { title: '트리 지키는 집사 VS 트리 접수한 고양이', ch: '고양이 쇼츠 (KR)', src: 'PawTwist', views: '12.4만', mult: '8.3x', hook: '대비형' },
+        { title: 'ツリーを守る飼い主 VS 占領した猫', ch: 'ねこショート (JP)', src: 'PawTwist', views: '31.2만', mult: '14.1x', hook: '대비형' },
+        { title: '장수풍뎅이 날개가 다 들어가는 이유', ch: '고양이 쇼츠 (KR)', src: 'BugLens', views: '4.1만', mult: '2.7x', hook: '호기심형' },
+        { title: '이 각도 보면 이미 속은 거임', ch: '고양이 쇼츠 (KR)', src: 'BounceLab', views: '1.9만', mult: '1.2x', hook: '도발형' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

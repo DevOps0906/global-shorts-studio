@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>글로벌쇼츠 스튜디오 — 홈</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0B0D}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+@keyframes spin{to{transform:rotate(360deg)}}
+.app{--bg:#0B0B0D;--panel:#141518;--card:#1C1D21;--card2:#232429;--line:#2A2B31;--text:#F4F4F5;--sub:#A1A1AA;--accent:#FFD83D;--pink:#FF5C9E;--ok:#22C55E;--danger:#E5484D;font-family:'Noto Sans KR',system-ui,sans-serif;color:var(--text);background:radial-gradient(1200px 600px at 20% -10%,#2a2412 0%,rgba(11,11,13,0) 60%),var(--bg);min-height:100vh;font-size:14px;line-height:1.55}
+.util{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 24px;border-bottom:1px solid var(--line);font-size:12px}
+.util .l,.util .r{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 12px;border-radius:999px;border:0;background:var(--card);color:var(--text);font:inherit;font-size:12px;font-weight:500;cursor:pointer}
+.pill .dot{width:7px;height:7px;border-radius:99px;background:var(--ok)}
+.brand{display:inline-flex;align-items:center;gap:8px;margin-right:6px}.brand .bm{width:22px;height:22px;flex:none}.brand .bt{display:flex;flex-direction:column;line-height:1.05}.brand .bt b{font-size:12px;font-weight:900;letter-spacing:.4px;color:var(--text,#fff)}.brand .bt i{font-style:normal;font-size:9px;color:var(--sub);letter-spacing:1.2px;text-transform:uppercase}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px;box-sizing:border-box}
+.logo{font-weight:900;letter-spacing:-.5px;font-size:30px;line-height:1.1}
+.logo b{color:var(--accent);font-weight:900}
+.hero{text-align:center;padding:40px 0 8px}
+.hero p{color:var(--sub);margin:10px 0 0;font-size:14px}
+.q{text-align:center;font-weight:700;font-size:15px;margin:32px 0 16px}
+.types{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.type{display:flex;gap:18px;align-items:center;text-align:left;padding:18px;border-radius:18px;background:var(--panel);border:1.5px solid var(--line);color:var(--text);font:inherit;cursor:pointer}
+.type:hover{border-color:var(--accent)}
+.phone{flex:none;width:112px;aspect-ratio:9/16;border-radius:12px;background:#000;overflow:hidden;display:flex;flex-direction:column}
+.phone .tt{padding:8px 6px 6px;text-align:center;font-weight:900;font-size:11px;line-height:1.25}
+.phone .tt span{color:var(--accent)}
+.phone .tt mark{background:var(--accent);color:#111;padding:0 3px}
+.phone .vid{flex:1}
+.type .h3{display:block;margin:0 0 4px;font-size:19px;font-weight:700}
+.type strong{display:block;font-size:13px;margin-bottom:8px}
+.type .p{display:block;margin:0;color:var(--sub);font-size:12.5px}
+.sec{margin-top:40px}
+.sechead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
+.sechead h2{margin:0;font-size:15px}
+.sechead h2 small{font-size:12px;color:var(--sub);font-weight:500;margin-left:6px}
+.more{color:var(--accent);font-size:13px;font-weight:500}
+.hot{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.hc{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:6px;display:flex;flex-direction:column;gap:8px}
+.ht{position:relative;aspect-ratio:9/16;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.ht .m{position:absolute;top:6px;right:6px;display:inline-flex;align-items:center;gap:3px;background:#FEF3C7;color:#92400E;font-size:11px;font-weight:700;padding:2px 6px;border-radius:6px}
+.ht .n{position:absolute;top:6px;left:6px;background:var(--pink);color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px}
+.ht .pl{width:30px;height:30px;border-radius:99px;background:rgba(255,255,255,.88);display:flex;align-items:center;justify-content:center;color:#111}
+.hc h4{margin:0 2px;font-size:12px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:34px}
+.hc .meta{margin:0 2px;font-size:11px;color:var(--sub)}
+.hc .acts{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.mini{min-height:32px;border:0;border-radius:8px;background:var(--card2);color:var(--text);font:inherit;font-size:11.5px;font-weight:700;cursor:pointer}
+.mini:hover{background:#2e2f35}
+.jobs{display:flex;flex-direction:column;gap:8px}
+.job{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;background:var(--panel);border:1px solid var(--line)}
+.job b{display:block;font-size:13.5px}
+.job span{font-size:11.5px;color:var(--sub)}
+.job .st{font-size:11px;padding:2px 8px;border-radius:99px;background:var(--card2);color:var(--sub);margin-left:6px}
+.job .st.up{background:rgba(34,197,94,.15);color:#86EFAC}
+.del{border:0;background:transparent;color:var(--sub);font:inherit;font-size:12px;cursor:pointer;min-height:36px;padding:0 6px}
+.hint{color:var(--sub);font-size:12px;margin:8px 0 0}
+.back{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;color:var(--sub);font:inherit;font-size:13px;cursor:pointer;min-height:36px}
+.setup{max-width:520px;margin:0 auto;padding:8px 0 80px}
+.lbl{display:block;font-weight:700;font-size:13px;margin:22px 0 10px}
+.lbl small{color:var(--sub);font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 16px;border-radius:999px;border:1.5px solid transparent;background:var(--card);color:var(--text);font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.chip small{color:var(--sub);font-weight:500;font-size:11px}
+.chip.on{border-color:var(--accent);background:#1f1c10}
+.chip .new{font-size:10px;background:var(--pink);color:#fff;padding:1px 5px;border-radius:5px}
+textarea{width:100%;min-height:76px;box-sizing:border-box;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--text);font:inherit;font-size:13px;padding:12px;resize:vertical}
+textarea::placeholder{color:#8b8b93}
+.src{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;background:var(--panel);border:1px solid var(--line);margin-top:18px}
+.src .th{width:44px;aspect-ratio:9/16;border-radius:6px;flex:none}
+.src b{display:block;font-size:13px}
+.src span{font-size:11.5px;color:var(--sub)}
+.rights{display:flex;gap:10px;align-items:flex-start;margin-top:20px;padding:14px;border-radius:12px;background:#17150c;border:1px solid #3a3213;font-size:12.5px;cursor:pointer}
+.rights input{width:18px;height:18px;accent-color:var(--accent);margin-top:2px;flex:none}
+.rights small{display:block;color:var(--sub);margin-top:4px}
+.drop{margin-top:20px;width:100%;border:1.5px dashed #3a3b42;border-radius:16px;background:var(--panel);padding:40px 16px;text-align:center;color:var(--text);font:inherit;cursor:pointer}
+.drop.dis{opacity:.55;cursor:not-allowed}
+.plus{width:48px;height:48px;border-radius:99px;margin:0 auto 12px;background:linear-gradient(135deg,#FFD24D,#FF5C9E);display:flex;align-items:center;justify-content:center;color:#111}
+.drop b{display:block;font-size:14px}
+.drop span{display:block;font-size:12px;color:var(--sub);margin-top:4px}
+.warn{color:#FCA5A5;font-size:12px;margin:8px 0 0;text-align:center}
+.center{text-align:center;padding:24px 0 80px}
+.spinner{width:34px;height:34px;border-radius:99px;margin:0 auto;border:3px solid #2a2b31;border-top-color:var(--accent);border-right-color:var(--pink);animation:spin 1s linear infinite}
+.stepno{color:var(--accent);font-size:12px;font-weight:700;margin-top:14px}
+.center h2{margin:4px 0;font-size:18px}
+.center .d{color:var(--sub);font-size:13px;margin:0}
+.stepper{display:flex;justify-content:center;gap:56px;margin:28px 0 20px;flex-wrap:wrap}
+.sp{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11.5px;color:var(--sub)}
+.sp i{font-style:normal;width:28px;height:28px;border-radius:99px;display:flex;align-items:center;justify-content:center;background:var(--card);border:1.5px solid var(--line);font-size:12px;font-weight:700;color:var(--sub)}
+.sp.done i{color:var(--accent);border-color:#3a3213;background:#1f1c10}
+.sp.cur i{border-color:var(--accent);color:var(--accent)}
+.sp.cur{color:var(--accent);font-weight:700}
+.logs{max-width:420px;margin:0 auto;display:flex;flex-direction:column;gap:6px;text-align:left}
+.lg{display:flex;justify-content:space-between;font-size:12.5px;color:var(--sub)}
+.lg.ok{color:#d4d4d8}
+.lg.run{color:var(--text)}
+.fname{margin-top:22px;font-size:12.5px;color:#d4d4d8}
+.srv{display:inline-flex;gap:8px;align-items:center;margin-top:10px;font-size:12px;color:#86EFAC;background:rgba(34,197,94,.1);padding:6px 12px;border-radius:99px}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 26px;border-radius:12px;background:linear-gradient(90deg,#FFD24D,#FF5C9E);color:#111;font-weight:900;font-size:14px;border:0;cursor:pointer;margin-top:22px}
+.ghost{display:inline-flex;min-height:40px;align-items:center;padding:0 16px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--text);font:inherit;font-size:13px;font-weight:700;cursor:pointer;margin-top:18px}
+@media (max-width:1199px){.hot{grid-template-columns:repeat(3,minmax(0,1fr))}.logo{font-size:24px}.type .h3{font-size:17px}}
+@media (max-width:767px){.types{grid-template-columns:minmax(0,1fr)}.hot{display:flex;overflow-x:auto;gap:10px}.hc{flex:0 0 150px}.logo{font-size:20px}.util{padding:8px 14px}.brand .bt{display:none}.stepper{gap:22px}.type .h3{font-size:16px}.type .p{font-size:12px}.q{font-size:14px}.center h2{font-size:16px}}
+
+button,.pill,.chip,.tile,.btn2,.mini,.type,.cta,.ghost,.save,.upl,.ring,.seg,.th,.col,.lnk,.run,.hc{transition:transform .15s ease,filter .15s ease,background-color .15s ease,border-color .15s ease,box-shadow .2s ease}
+.pill:hover,.chip:hover,.btn2:hover,.mini:hover,.tile:hover,.th:hover,.col:hover,.ring:hover,.ghost:hover{filter:brightness(1.18);transform:translateY(-1px)}
+.cta:hover,.save:hover,.upl:hover,.run:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 8px 22px rgba(255,92,158,.28)}
+.type:hover,.hc:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(0,0,0,.4)}
+button:active,.pill:active,.cta:active,.chip:active,.tile:active,.btn2:active,.type:active,.save:active,.run:active,.upl:active,.ring:active,.th:active,.col:active{transform:scale(.96)!important;filter:brightness(.95)}
+button:focus-visible,a:focus-visible{outline:2px solid #FFD83D;outline-offset:2px}
+button:disabled{cursor:wait;opacity:.55;transform:none!important}
+.pill.sel{box-shadow:inset 0 0 0 1.5px #FFD83D;color:#FFD83D}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);max-width:calc(100vw - 32px);padding:11px 18px;border-radius:12px;background:#26272d;border:1px solid #3a3b42;color:#F4F4F5;font-size:13px;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,.5);z-index:50;animation:toastin .25s ease}
+@keyframes toastin{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
+.pg{width:100%;max-width:420px;margin:14px auto 6px;text-align:left}
+.pg .tx{display:flex;justify-content:space-between;font-size:11.5px;color:#A1A1AA;margin-bottom:6px}
+.pg .tx b{color:#FFD83D;font-weight:900}
+.pgr{display:block;width:100%;height:10px;border:0;border-radius:99px;overflow:hidden;appearance:none;-webkit-appearance:none;background:#2a2b31}
+.pgr::-webkit-progress-bar{background:#2a2b31;border-radius:99px}
+.pgr::-webkit-progress-value{border-radius:99px;background:repeating-linear-gradient(135deg,rgba(255,255,255,.3) 0 8px,rgba(255,255,255,0) 8px 16px),linear-gradient(90deg,#FFD24D,#FF5C9E);background-size:32px 32px,100% 100%;animation:pstripe .8s linear infinite;transition:width .5s ease}
+.pgr::-moz-progress-bar{border-radius:99px;background:repeating-linear-gradient(135deg,rgba(255,255,255,.3) 0 8px,rgba(255,255,255,0) 8px 16px),linear-gradient(90deg,#FFD24D,#FF5C9E);background-size:32px 32px,100% 100%;animation:pstripe .8s linear infinite}
+@keyframes pstripe{to{background-position:32px 0,0 0}}
+@media (prefers-reduced-motion:reduce){.pgr::-webkit-progress-value,.pgr::-moz-progress-bar{animation:none}.type:hover,.hc:hover,.pill:hover{transform:none}}
+</style>
+</helmet>
+<div class="app">
+<div class="util">
+<div class="l"><span class="brand" title="NOMAD AI Factory"><svg class="bm" viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="bg0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFD24D"/><stop offset="1" stop-color="#FF5C9E"/></linearGradient></defs><rect width="32" height="32" rx="9" fill="url(#bg0)"/><circle cx="16" cy="16" r="8.5" fill="none" stroke="#0B0B0D" stroke-width="1.8"/><ellipse cx="16" cy="16" rx="3.6" ry="8.5" fill="none" stroke="#0B0B0D" stroke-width="1.4"/><path d="M7.5 16h17" stroke="#0B0B0D" stroke-width="1.4"/><path d="M14 12.6v6.8l5.6-3.4z" fill="#0B0B0D"/></svg><span class="bt"><b>NOMAD</b><i>AI Factory</i></span></span></div>
+<div class="r"><a class="pill" href="Radar.dc.html">레이더</a><a class="pill" href="Support.dc.html">고객문의</a><a class="pill" href="Settings.dc.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>설정<span class="dot"></span></a><a class="pill" href="Admin.dc.html">관리 페이지</a><a class="pill" href="MyPage.dc.html">마이페이지</a><a class="pill" href="Login.dc.html">로그아웃</a></div>
+</div>
+
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{ false }}"><div class="toast" role="status">{{toast}}</div></sc-if>
+<sc-if value="{{isHome}}" hint-placeholder-val="{{ true }}">
+<main class="wrap">
+<div class="hero">
+<div class="logo">글로벌쇼츠 <b>스튜디오</b></div>
+<p>떡상 소재를 찾고, 원본 하나로 제목·대본·자막·컷 편집까지</p>
+</div>
+<h1 class="q">어떤 쇼츠를 만들까요?</h1>
+<div class="types">
+<button type="button" class="type" onClick="{{pickVideo}}">
+<span class="phone" aria-hidden="true"><span class="tt">눈치 하나로<br><span>살아남은 강아지</span></span><span class="vid" style="background: linear-gradient(160deg,#9a6a2f,#3b2a17)"></span></span>
+<span><span class="h3">영상형</span><strong>장면의 재미를 살리고 싶어요</strong><span class="p">영상만 봐도 재밌는 영상에 짧은 자막으로 웃음·공감·센스를 더해요.</span></span>
+</button>
+<button type="button" class="type" onClick="{{pickScript}}">
+<span class="phone" aria-hidden="true"><span class="tt">이 새가<br><mark>벽에 붙는 이유</mark></span><span class="vid" style="background: linear-gradient(160deg,#5b7a8f,#22323d)"></span></span>
+<span><span class="h3">대본형</span><strong>이유와 이야기를 알려주고 싶어요</strong><span class="p">영상만 보면 이해가 안 가는 영상에 상황·원리·배경을 풀어 몰입하게 해요.</span></span>
+</button>
+</div>
+
+<section class="sec" aria-labelledby="hot-h">
+<div class="sechead"><h2 id="hot-h">레이더가 찾은 오늘의 떡상 소재<small>저장 채널 299개 · 오후 9:00 스캔</small></h2><a class="more" href="Radar.dc.html">전체 보기 →</a></div>
+<div class="hot">
+<sc-for list="{{hot}}" as="h" hint-placeholder-count="5">
+<article class="hc">
+<div class="ht" style="background: {{h.bg}}">
+<sc-if value="{{h.fresh}}" hint-placeholder-val="{{ true }}"><span class="n">국내 미등장</span></sc-if>
+<span class="m"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2c1 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3 0-3-1-6 1-9.5z"></path></svg>{{h.mult}}</span>
+<span class="pl" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"></path></svg></span>
+</div>
+<h4>{{h.title}}</h4>
+<p class="meta">{{h.channel}} · {{h.views}} · {{h.hours}}</p>
+<div class="acts"><button type="button" class="mini" onClick="{{h.asVideo}}">영상형으로</button><button type="button" class="mini" onClick="{{h.asScript}}">대본형으로</button></div>
+</article>
+</sc-for>
+</div>
+</section>
+
+<section class="sec" aria-labelledby="job-h" style="padding-bottom: 80px">
+<div class="sechead"><h2 id="job-h">내 작업<small>Starter 플랜 · 최근 30개 보관</small></h2></div>
+<div class="jobs">
+<sc-for list="{{jobs}}" as="j" hint-placeholder-count="4">
+<div class="job">
+<div><b>{{j.title}}<span class="st {{j.stCls}}">{{j.status}}</span></b><span>{{j.meta}}</span></div>
+<div style="display: flex; gap: 4px; align-items: center"><a class="del" href="Editor.dc.html">열기</a><button type="button" class="del" onClick="{{j.remove}}">지우기</button></div>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{noJobs}}" hint-placeholder-val="{{ false }}"><p class="hint">아직 작업이 없어요. 위에서 유형을 고르면 시작돼요.</p></sc-if>
+</section>
+</main>
+</sc-if>
+
+<sc-if value="{{isSetup}}" hint-placeholder-val="{{ false }}">
+<main class="wrap">
+<div class="hero" style="padding-top: 28px"><div class="logo">글로벌쇼츠 <b>스튜디오</b></div></div>
+<div class="setup">
+<div style="text-align: center"><button type="button" class="back" onClick="{{goHome}}">← {{typeName}} · 유형 바꾸기</button></div>
+<p class="hint" style="text-align: center">길이·언어를 고른 뒤 맨 아래에서 영상을 고르세요. PC는 화면 어디에나 끌어다 놓아도 바로 시작해요.</p>
+<sc-if value="{{hasSource}}" hint-placeholder-val="{{ false }}">
+<div class="src"><span class="th" style="background: {{srcBg}}"></span><div><b>레이더 소재 · {{srcTitle}}</b><span>{{srcMeta}} · 원본 댓글 20개를 불러왔어요</span></div></div>
+</sc-if>
+<span class="lbl">길이</span>
+<div class="chips"><sc-for list="{{lenChips}}" as="c" hint-placeholder-count="4"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}} <small>{{c.sub}}</small></button></sc-for></div>
+<span class="lbl">언어</span>
+<div class="chips"><sc-for list="{{langChips}}" as="c" hint-placeholder-count="3"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}<sc-if value="{{c.isNew}}" hint-placeholder-val="{{ false }}"><span class="new">NEW</span></sc-if></button></sc-for></div>
+<label class="lbl" for="cmt">참고할 원본 댓글 <small>(선택)</small></label>
+<textarea id="cmt" placeholder="원본 영상의 댓글을 붙여넣으면 대본·댓글 반응에 참고해요" value="{{comments}}" onChange="{{onComments}}"></textarea>
+<span class="lbl">스타일 프리셋 <small>(생성 후에도 바꿀 수 있어요)</small></span>
+<div class="chips"><sc-for list="{{presetChips}}" as="c" hint-placeholder-count="3"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div>
+<label class="rights"><input type="checkbox" checked="{{rights}}" onChange="{{toggleRights}}"><span>이 영상을 편집·게시할 권리가 있어요 <small>직접 촬영했거나, 원작자에게 허락을 받았거나, 라이선스가 있는 영상만 올려 주세요. 원본 출처는 작업에 기록돼요.</small></span></label>
+<button type="button" class="drop {{dropCls}}" onClick="{{start}}">
+<span class="plus" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></span>
+<span style="display: block; font-weight: 700; font-size: 14px">눌러서 원본 영상 고르기</span>
+<span>(PC는 화면 어디에나 끌어다 놓아도 돼요 · 최대 3분, 500MB)</span>
+<span>고르면 제목·대본·컷 편집까지 알아서 만들어요</span>
+</button>
+<sc-if value="{{showWarn}}" hint-placeholder-val="{{ false }}"><p class="warn">먼저 권리 확인에 체크해 주세요.</p></sc-if>
+</div>
+</main>
+</sc-if>
+
+<sc-if value="{{isRun}}" hint-placeholder-val="{{ false }}">
+<main class="wrap center">
+<sc-if value="{{running}}" hint-placeholder-val="{{ true }}"><div class="spinner" aria-hidden="true"></div></sc-if>
+<p class="stepno">{{stepNo}} / 4 단계</p>
+<h2>{{stepTitle}}</h2>
+<p class="d">{{stepDesc}}</p>
+<div class="pg" role="progressbar" aria-valuemin="0" aria-valuemax="100"><div class="tx"><span>전체 진행률</span><b>{{pctTxt}}</b><span>{{etaTxt}}</span></div><progress class="pgr" max="100" value="{{pct}}"></progress></div>
+<div class="stepper">
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="4"><div class="sp {{s.cls}}"><i>{{s.mark}}</i>{{s.label}}</div></sc-for>
+</div>
+<div class="logs" role="status">
+<sc-for list="{{logs}}" as="l" hint-placeholder-count="4"><div class="lg {{l.cls}}"><span>{{l.label}}</span><span>{{l.sec}}</span></div></sc-for>
+</div>
+<p class="fname">{{fileName}}</p>
+<p class="hint">완성 후 컷·자막·스타일을 자유롭게 고칠 수 있어요.</p>
+<span class="srv"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>창을 닫아도 서버에서 계속 진행돼요 · 끝나면 텔레그램으로 알려드려요</span>
+<div>
+<sc-if value="{{finished}}" hint-placeholder-val="{{ false }}"><a class="cta" href="Editor.dc.html">편집 화면 열기 →</a></sc-if>
+</div>
+<div><button type="button" class="ghost" onClick="{{cancel}}">취소 · 영상 다시 선택</button></div>
+</main>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1500}}'>
+var HOT = [
+  { id: 'h1', title: 'Cat refuses to leave the Christmas tree', channel: 'PawTwist', views: '278만', hours: '60시간', mult: '571.5x', bg: 'linear-gradient(160deg,#7a5b3a,#2b2016)', fresh: true },
+  { id: 'h2', title: 'Mom lines the family up against the wall', channel: 'HomeLaughs', views: '404만', hours: '41시간', mult: '149.6x', bg: 'linear-gradient(160deg,#b7a99a,#4a4038)', fresh: false },
+  { id: 'h3', title: 'Tiny glasses made for a doll', channel: 'MiniMaker', views: '20만', hours: '22시간', mult: '48.2x', bg: 'linear-gradient(160deg,#7d8f5a,#2d3520)', fresh: true },
+  { id: 'h4', title: 'Girl finds her lost bird at the pet shop', channel: 'FeatherNest', views: '31만', hours: '35시간', mult: '27.4x', bg: 'linear-gradient(160deg,#c88aa0,#3f2a33)', fresh: true },
+  { id: 'h5', title: 'Rhino beetle opens its wings', channel: 'BugLens', views: '96만', hours: '58시간', mult: '13.7x', bg: 'linear-gradient(160deg,#8a5a2b,#231509)', fresh: false }
+];
+var JOBS = [
+  { id: 1, title: '트리 지키는 집사 VS 트리 접수한 고양이', meta: '영상형 · 한국어 · 11.15. 오후 06:48 · xmas_cat.mp4', status: '편집 중', stCls: '' },
+  { id: 2, title: 'ツリーを守る飼い主 VS 占領した猫', meta: '영상형 · 일본어 · 11.15. 오후 06:52 · xmas_cat.mp4', status: '업로드됨', stCls: 'up' },
+  { id: 3, title: '장수풍뎅이 날개가 다 들어가는 이유', meta: '대본형 · 한국어 · 11.13. 오후 02:16 · beetle.mp4', status: '업로드됨', stCls: 'up' },
+  { id: 4, title: '이 각도 보면 이미 속은 거임', meta: '영상형 · 한국어 · 11.12. 오후 11:19 · domino.mp4', status: '편집 중', stCls: '' }
+];
+var LOGS = [
+  { g: 0, label: '영상 확인', sec: '0초' },
+  { g: 0, label: '효과음 시점 분석', sec: '1초' },
+  { g: 1, label: '장면·틀·모자이크 프레임 추출', sec: '4초' },
+  { g: 1, label: '장면 분석', sec: '2초' },
+  { g: 1, label: '장면 경계 정밀 분석', sec: '1초' },
+  { g: 1, label: '영상 틀 분석', sec: '1초' },
+  { g: 2, label: 'AI 화면·음성 분석 준비', sec: '5초' },
+  { g: 2, label: 'AI 제목 3안·대본 3안 생성', sec: '26초' },
+  { g: 3, label: '밝은 전환 화면 제거', sec: '1초' },
+  { g: 3, label: '기본 템플릿·스타일 적용', sec: '1초' }
+];
+var STEP_T = ['영상 확인 중...', '장면 분석 중...', '제목·대본 생성 중...', '편집 마무리 중...'];
+var STEP_D = ['파일 형식과 길이를 확인하고 있어요.', '장면이 바뀌는 지점을 찾고 있어요.', '결과가 오면 컷과 자막을 함께 보여드릴게요.', '컷 경계와 화면 구도를 정리하고 있어요.'];
+var STEP_L = ['영상 확인', '장면 분석', '제목·대본 생성', '편집 마무리'];
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 'home', type: 'video', len: 'keep', lang: 'ko', preset: 'brand', comments: '', rights: false, warn: false, source: null, jobs: JOBS.slice(), done: 0, menu: '', toast: '' };
+    this.timer = null; this.toastT = null;
+  }
+  componentWillUnmount() { if (this.timer) clearTimeout(this.timer); clearTimeout(this.toastT); }
+  navTo(key, msg) {
+    var self = this;
+    clearTimeout(this.toastT);
+    this.setState({ menu: key, toast: msg });
+    this.toastT = setTimeout(function () { self.setState({ toast: '' }); }, 2200);
+  }
+  tick() {
+    var self = this;
+    if (this.state.done >= LOGS.length) return;
+    this.timer = setTimeout(function () { self.setState({ done: self.state.done + 1 }); self.tick(); }, 800);
+  }
+  go(type, source) {
+    var c = '';
+    if (source) c = 'This is so me at 3am\nThe tree never stood a chance\nMy cat did the exact same thing lol';
+    this.setState({ step: 'setup', type: type, source: source || null, comments: c, warn: false });
+  }
+  chips(list, key) {
+    var self = this;
+    return list.map(function (o) { return { label: o.l, sub: o.s || '', isNew: !!o.n, cls: self.state[key] === o.v ? 'on' : '', pick: function () { var p = {}; p[key] = o.v; self.setState(p); } }; });
+  }
+  renderVals() {
+    var self = this, st = this.state;
+    var done = st.done, total = LOGS.length;
+    var finished = done >= total;
+    var curG = finished ? 3 : LOGS[done].g;
+    var src = st.source;
+    return {
+      pct: finished ? 100 : Math.max(5, Math.round(done / total * 100)),
+      pctTxt: (finished ? 100 : Math.max(5, Math.round(done / total * 100))) + '%',
+      etaTxt: finished ? '완료' : '남은 시간 약 ' + Math.max(1, Math.round((total - done) * 0.8)) + '초',
+      mc: { support: st.menu === 'support' ? 'sel' : '', settings: st.menu === 'settings' ? 'sel' : '', admin: st.menu === 'admin' ? 'sel' : '', my: st.menu === 'my' ? 'sel' : '', saved: st.menu === 'saved' ? 'sel' : '' },
+      navSupport: function () { self.navTo('support', '고객문의 창을 열었어요. (샘플)'); },
+      navSettings: function () { self.navTo('settings', '설정 화면을 열었어요. (샘플)'); },
+      navAdmin: function () { self.navTo('admin', '관리 페이지로 이동해요. (샘플)'); },
+      navMy: function () { self.navTo('my', '마이페이지로 이동해요. (샘플)'); },
+      navSaved: function () { self.navTo('saved', '저장 채널 399개 목록을 열었어요. (샘플)'); },
+      navLogout: function () { self.navTo('logout', '로그아웃했어요. 다시 로그인해 주세요. (샘플)'); },
+      hasToast: !!st.toast, toast: st.toast,
+      isHome: st.step === 'home', isSetup: st.step === 'setup', isRun: st.step === 'run',
+      pickVideo: function () { self.go('video'); }, pickScript: function () { self.go('script'); },
+      hot: HOT.map(function (h) { return Object.assign({}, h, { asVideo: function () { self.go('video', h); }, asScript: function () { self.go('script', h); } }); }),
+      jobs: st.jobs.map(function (j) { return Object.assign({}, j, { remove: function () { self.setState({ jobs: self.state.jobs.filter(function (x) { return x.id !== j.id; }) }); } }); }),
+      noJobs: st.jobs.length === 0,
+      goHome: function () { self.setState({ step: 'home' }); },
+      typeName: st.type === 'video' ? '영상형' : '대본형',
+      hasSource: !!src, srcTitle: src ? src.title : '', srcMeta: src ? src.channel + ' · ' + src.views + ' · 떡상 ' + src.mult : '', srcBg: src ? src.bg : '#222',
+      lenChips: this.chips([{ l: '원본 길이 유지', s: '원본 전체', v: 'keep' }, { l: '짧게', s: '권장 10~15초', v: 'short' }, { l: '보통', s: '권장 15~25초', v: 'mid' }, { l: '길게', s: '권장 25~30초', v: 'long' }], 'len'),
+      langChips: this.chips([{ l: '한국어', v: 'ko' }, { l: '일본어', v: 'ja' }, { l: '한·일 동시 제작', v: 'both', n: true }], 'lang'),
+      presetChips: this.chips([{ l: '내 채널 기본', v: 'brand' }, { l: '쇼핑 쇼츠', v: 'shop' }, { l: '일본 채널', v: 'jp' }], 'preset'),
+      comments: st.comments, onComments: function (e) { self.setState({ comments: e.target.value }); },
+      rights: st.rights, toggleRights: function () { self.setState({ rights: !st.rights, warn: false }); },
+      dropCls: st.rights ? '' : 'dis', showWarn: st.warn,
+      start: function () {
+        if (!self.state.rights) { self.setState({ warn: true }); return; }
+        self.setState({ step: 'run', done: 0 }); self.tick();
+      },
+      running: !finished, finished: finished,
+      stepNo: curG + 1, stepTitle: finished ? '편집 준비 완료' : STEP_T[curG], stepDesc: finished ? '제목 3안과 대본 3안이 준비됐어요.' : STEP_D[curG],
+      steps: STEP_L.map(function (l, i) { var isDone = finished || i < curG; return { label: l, mark: isDone ? '✓' : String(i + 1), cls: isDone ? 'done' : (i === curG ? 'cur' : '') }; }),
+      logs: LOGS.slice(0, Math.min(total, done + 1)).map(function (l, i) { var ok = i < done; return { label: (ok ? '✓ · ' : '진행 중 · ') + l.label, sec: ok ? l.sec : '', cls: ok ? 'ok' : 'run' }; }),
+      fileName: src ? src.channel + ' — ' + src.title + '.mp4' : 'xmas_cat.mp4',
+      cancel: function () { if (self.timer) clearTimeout(self.timer); self.setState({ step: 'setup', done: 0 }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

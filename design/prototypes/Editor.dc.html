@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>글로벌쇼츠 스튜디오 — 편집</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;family=Black+Han+Sans&amp;family=Do+Hyeon&amp;family=Jua&amp;family=Gothic+A1:wght@700;900&amp;family=Gowun+Dodum&amp;family=Noto+Sans+JP:wght@700;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0B0D}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+@keyframes popin{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@keyframes typein{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.app{--bg:#0B0B0D;--panel:#141518;--card:#1C1D21;--card2:#232429;--line:#2A2B31;--text:#F4F4F5;--sub:#A1A1AA;--accent:#FFD83D;--pink:#FF5C9E;--ok:#22C55E;--danger:#E5484D;font-family:'Noto Sans KR',system-ui,sans-serif;color:var(--text);background:var(--bg);min-height:100vh;font-size:13px;line-height:1.5}
+.util{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:8px 20px;border-bottom:1px solid var(--line);font-size:12px}
+.brand{display:inline-flex;align-items:center;gap:8px;margin-right:6px}.brand .bm{width:22px;height:22px;flex:none}.brand .bt{display:flex;flex-direction:column;line-height:1.05}.brand .bt b{font-size:12px;font-weight:900;letter-spacing:.4px;color:var(--text,#fff)}.brand .bt i{font-style:normal;font-size:9px;color:var(--sub);letter-spacing:1.2px;text-transform:uppercase}
+.pill{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 12px;border-radius:999px;border:0;background:var(--card);color:var(--text);font:inherit;font-size:12px;font-weight:500;cursor:pointer}
+.pill .dot{width:7px;height:7px;border-radius:99px;background:var(--ok)}
+.pill.ghost{background:transparent;color:var(--sub)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 20px}
+.logo{display:flex;align-items:center;gap:8px;font-weight:900;font-size:20px;letter-spacing:-.3px}
+.logo b{color:var(--accent)}
+.badge{font-size:11px;font-weight:700;background:var(--accent);color:#111;padding:2px 8px;border-radius:6px}
+.topr{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:300px minmax(0,1fr) minmax(0,1.1fr);grid-template-areas:"left mid right";gap:18px;padding:4px 20px 60px;max-width:1400px;margin:0 auto;box-sizing:border-box}
+.left{grid-area:left;display:flex;flex-direction:column;gap:12px;min-width:0}
+.mid{grid-area:mid;min-width:0}
+.right{grid-area:right;min-width:0}
+.phone{position:relative;width:300px;height:533px;border-radius:22px;overflow:hidden;background:#000;border:6px solid #1d1e22;box-sizing:content-box;margin:0 auto}
+.band{position:absolute;left:0;right:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 12px;box-sizing:border-box;line-height:1.22;font-weight:900;text-align:center}
+.band span{display:inline}
+.vid{position:absolute;left:0;right:0;overflow:hidden}
+.scene{position:absolute;inset:0}
+.scene svg{width:100%;height:100%;display:block}
+.cap{position:absolute;left:8px;right:8px;text-align:center;font-weight:700;line-height:1.3;z-index:3}
+.cap span{display:inline-block}
+.fx-bounce span{animation:popin .45s ease-out both}
+.fx-type span{animation:typein .8s steps(14) both}
+.mos{position:absolute;z-index:2;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);background:rgba(120,120,120,.35);border-radius:4px}
+.cmt{position:absolute;left:14px;right:14px;z-index:4;display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border-radius:12px;font-size:11px;line-height:1.35;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.cmt .cav{width:22px;height:22px;border-radius:99px;flex:none;background:linear-gradient(135deg,#f9a8d4,#a78bfa)}
+.cmt .cn{font-weight:700;font-size:10px;opacity:.75}
+.cmt.youtube{background:#fff;color:#111}
+.cmt.insta{background:#efefef;color:#111;border-radius:18px}
+.cmt.community{background:#f6f6f2;color:#222;border:1px solid #d8d8cf;border-radius:6px}
+.playbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;width:54px;height:54px;border-radius:99px;border:0;background:rgba(0,0,0,.55);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.segs{display:flex;gap:4px;width:300px;margin:6px auto 0}
+.seg{flex:1;height:22px;border:0;background:transparent;padding:9px 0;cursor:pointer}
+.seg i{display:block;height:4px;border-radius:4px;background:#34353b}
+.seg.on i{background:var(--accent)}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px}
+.box h3{margin:0 0 6px;font-size:13.5px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.chk{display:flex;gap:8px;align-items:center;font-weight:700;font-size:13px;cursor:pointer;min-height:32px}
+.chk input{width:16px;height:16px;accent-color:var(--accent)}
+.muted{color:var(--sub);font-size:11.5px;margin:4px 0 0}
+.costbox{margin-top:8px;background:#101113;border:1px solid var(--line);border-radius:10px;padding:10px;font-size:11.5px;color:var(--sub)}
+.costbox b{color:var(--accent);display:block;margin-bottom:2px;font-size:11.5px}
+.score{display:flex;align-items:baseline;gap:6px}
+.score b{font-size:26px;font-weight:900;font-variant-numeric:tabular-nums}
+.bar{height:6px;border-radius:6px;background:#2a2b31;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#FFD24D,#22C55E)}
+.ck{display:flex;justify-content:space-between;gap:8px;font-size:11.5px;color:var(--sub);padding:3px 0}
+.ck.ok{color:#d4d4d8}
+.ck em{font-style:normal;color:var(--sub)}
+.save{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:12px;border:0;background:linear-gradient(90deg,#FFD24D,#FF5C9E);color:#111;font:inherit;font-weight:900;font-size:14px;cursor:pointer;width:100%}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.btn2{min-height:40px;border-radius:10px;border:0;background:var(--card);color:var(--text);font:inherit;font-weight:700;font-size:12px;cursor:pointer}
+.btn2:hover{background:var(--card2)}
+.upl{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 16px;border-radius:10px;border:0;background:linear-gradient(90deg,#FFB03B,#FF5C9E);color:#111;font:inherit;font-weight:900;font-size:13px;cursor:pointer}
+.sel{width:100%;min-height:36px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--text);font:inherit;font-size:12px;padding:0 8px}
+.msg{font-size:12px;color:#86EFAC;margin:6px 0 0}
+.phead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+.phead h2{margin:0;font-size:14px}
+.links{display:flex;gap:10px;align-items:center}
+.lnk{border:0;background:transparent;color:var(--sub);font:inherit;font-size:12px;cursor:pointer;min-height:32px;padding:0 2px}
+.lnk:disabled{opacity:.4;cursor:default}
+.ring{display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border-radius:999px;border:1.5px solid var(--accent);background:transparent;color:var(--text);font:inherit;font-weight:700;font-size:12px;cursor:pointer}
+.q{font-weight:700;font-size:12.5px;margin:12px 0 8px}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:72px;border-radius:12px;border:1.5px solid transparent;background:var(--card);color:var(--text);font:inherit;font-size:11.5px;font-weight:700;cursor:pointer;text-align:center;padding:6px;line-height:1.25}
+.tile svg{width:18px;height:18px;color:#d4d4d8}
+.tile:hover{background:var(--card2)}
+.tile.on{border-color:var(--accent);background:#1f1c10}
+.tool{margin-top:12px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px}
+.tool h4{margin:0 0 10px;font-size:12.5px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:4px;min-height:36px;padding:0 13px;border-radius:999px;border:1.5px solid transparent;background:var(--card);color:var(--text);font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+.chip.on{border-color:var(--accent);background:#1f1c10}
+.chip small{color:var(--sub);font-weight:500}
+.rowr{display:grid;grid-template-columns:110px minmax(0,1fr) 44px;align-items:center;gap:8px;font-size:12px;margin-top:8px}
+.rowr input[type=range]{width:100%;accent-color:var(--accent)}
+.rowr b{text-align:right;font-variant-numeric:tabular-nums}
+.thumbs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.th{display:flex;flex-direction:column;gap:4px;align-items:center;border:0;background:transparent;color:var(--sub);font:inherit;font-size:11px;cursor:pointer;padding:0}
+.th .tp{width:100%;aspect-ratio:9/12;border-radius:8px;background:#000;border:1.5px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:8px;gap:2px;font-weight:900;font-size:9px;color:#fff;box-sizing:border-box;overflow:hidden}
+.th .tp i{font-style:normal;padding:0 3px}
+.th.on .tp{border-color:var(--accent)}
+.th.on{color:var(--accent);font-weight:700}
+.colors{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.col{display:flex;flex-direction:column;align-items:center;gap:6px;border-radius:12px;border:1.5px solid transparent;background:#000;color:var(--sub);font:inherit;font-size:11px;font-weight:700;cursor:pointer;padding:12px 6px 8px}
+.col .cl{font-weight:900;font-size:13px;color:#fff;line-height:1.25;text-align:center}
+.col .cl i{font-style:normal;padding:0 4px;color:#111;border-radius:4px}
+.col.on{border-color:var(--accent);color:var(--accent)}
+.fonts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fonts label{font-size:11.5px;color:var(--sub);display:flex;flex-direction:column;gap:6px}
+.list{display:flex;flex-direction:column;gap:6px}
+.li{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:var(--card);font-size:12px}
+.tg{min-height:30px;padding:0 10px;border-radius:99px;border:1.5px solid var(--line);background:transparent;color:var(--sub);font:inherit;font-size:11px;font-weight:700;cursor:pointer}
+.tg.on{border-color:var(--accent);color:var(--accent)}
+.voices{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
+.vc{display:flex;gap:8px;align-items:flex-start;text-align:left;padding:8px 10px;border-radius:10px;border:1.5px solid transparent;background:var(--card);color:var(--text);font:inherit;cursor:pointer}
+.vc.on{border-color:var(--accent)}
+.vc b{display:block;font-size:12px}
+.vc span{display:block;font-size:10.5px;color:var(--sub)}
+.vc svg{color:var(--accent);flex:none;margin-top:3px}
+.vcard{margin-top:12px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px}
+.rp{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px}
+.lang{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:#0f1012;border-radius:10px;padding:4px;margin-bottom:12px}
+.lang button{min-height:34px;border:0;border-radius:8px;background:transparent;color:var(--sub);font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+.lang button.on{background:var(--card2);color:var(--text)}
+.lang em{font-style:normal;font-size:9.5px;background:var(--pink);color:#fff;padding:1px 4px;border-radius:4px;margin-left:4px}
+.tc{display:block;width:100%;text-align:left;padding:12px 14px;border-radius:12px;border:1.5px solid transparent;background:var(--card);color:var(--text);font:inherit;cursor:pointer;margin-bottom:8px}
+.tc.on{border-color:var(--accent);background:#1a1810}
+.tc b{display:block;font-size:13.5px;font-weight:900;line-height:1.35}
+.tc b i{font-style:normal;color:var(--accent)}
+.tc small{display:block;font-size:11px;color:var(--sub);margin-top:3px}
+.edit{display:grid;grid-template-columns:62px minmax(0,1fr);gap:8px;align-items:center;background:var(--card);border-radius:10px;padding:6px 10px;margin-top:6px;font-size:11.5px;color:var(--sub)}
+.edit input{width:100%;min-height:32px;border:0;border-radius:6px;background:#101113;color:var(--text);font:inherit;font-size:12.5px;padding:0 8px;box-sizing:border-box}
+.edit em{font-style:normal;font-size:10px;color:var(--accent);margin-left:4px}
+.sh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:16px 0 6px}
+.sh h3{margin:0;font-size:13.5px}
+.sh span{font-size:11.5px;color:var(--sub)}
+.onoff{display:flex;gap:8px;align-items:center;background:var(--card);border-radius:12px;padding:10px 12px;margin:10px 0}
+.onoff b{font-size:12px;margin-right:6px}
+.cut{display:grid;grid-template-columns:18px 44px minmax(0,1fr) 30px;gap:8px;align-items:start;padding:10px;border-radius:12px;border:1.5px solid transparent;background:var(--card);margin-bottom:8px}
+.cut.on{border-color:var(--accent)}
+.cut .no{font-size:12px;color:var(--sub);padding-top:6px;text-align:center}
+.cut .ct{width:44px;aspect-ratio:9/16;border-radius:6px}
+.cut input.cap-in{width:100%;min-height:32px;border:0;border-radius:6px;background:#101113;color:var(--text);font:inherit;font-weight:700;font-size:12.5px;padding:0 8px;box-sizing:border-box}
+.cut .sc{font-size:11px;color:var(--sub);margin:6px 0}
+.cut .rw{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.zb{font-size:10px;font-weight:700;background:var(--accent);color:#111;padding:1px 6px;border-radius:4px}
+.cut .acts{display:flex;flex-direction:column;align-items:center;gap:4px}
+.ib{width:30px;height:30px;border-radius:99px;border:0;background:transparent;color:var(--accent);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.ib.okb{background:#1a2e20;color:#4ade80}
+.ib.okb.on{background:var(--ok);color:#06270f}
+.ib.sm{width:24px;height:22px;color:var(--sub)}
+.collapsed{display:flex;justify-content:space-between;align-items:center}
+@media (max-width:1199px){.grid{grid-template-columns:300px minmax(0,1fr);grid-template-areas:"left mid" "left right"}.app{font-size:13px}}
+@media (max-width:767px){.grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"left" "mid" "right";padding:4px 12px 40px}.phone{width:270px;height:480px}.segs{width:270px}.tiles{grid-template-columns:repeat(4,minmax(0,1fr))}.tile{font-size:10.5px;min-height:64px}.brand .bt{display:none}.logo{font-size:18px}.thumbs{grid-template-columns:repeat(3,minmax(0,1fr))}.voices{grid-template-columns:1fr}}
+
+button,.pill,.chip,.tile,.btn2,.mini,.type,.cta,.ghost,.save,.upl,.ring,.seg,.th,.col,.lnk,.run,.hc{transition:transform .15s ease,filter .15s ease,background-color .15s ease,border-color .15s ease,box-shadow .2s ease}
+.pill:hover,.chip:hover,.btn2:hover,.mini:hover,.tile:hover,.th:hover,.col:hover,.ring:hover,.ghost:hover{filter:brightness(1.18);transform:translateY(-1px)}
+.cta:hover,.save:hover,.upl:hover,.run:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 8px 22px rgba(255,92,158,.28)}
+.type:hover,.hc:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(0,0,0,.4)}
+button:active,.pill:active,.cta:active,.chip:active,.tile:active,.btn2:active,.type:active,.save:active,.run:active,.upl:active,.ring:active,.th:active,.col:active{transform:scale(.96)!important;filter:brightness(.95)}
+button:focus-visible,a:focus-visible{outline:2px solid #FFD83D;outline-offset:2px}
+button:disabled{cursor:wait;opacity:.55;transform:none!important}
+.pill.sel{box-shadow:inset 0 0 0 1.5px #FFD83D;color:#FFD83D}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);max-width:calc(100vw - 32px);padding:11px 18px;border-radius:12px;background:#26272d;border:1px solid #3a3b42;color:#F4F4F5;font-size:13px;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,.5);z-index:50;animation:toastin .25s ease}
+@keyframes toastin{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
+.pg{width:100%;max-width:420px;margin:14px auto 6px;text-align:left}
+.pg .tx{display:flex;justify-content:space-between;font-size:11.5px;color:#A1A1AA;margin-bottom:6px}
+.pg .tx b{color:#FFD83D;font-weight:900}
+.pgr{display:block;width:100%;height:10px;border:0;border-radius:99px;overflow:hidden;appearance:none;-webkit-appearance:none;background:#2a2b31}
+.pgr::-webkit-progress-bar{background:#2a2b31;border-radius:99px}
+.pgr::-webkit-progress-value{border-radius:99px;background:repeating-linear-gradient(135deg,rgba(255,255,255,.3) 0 8px,rgba(255,255,255,0) 8px 16px),linear-gradient(90deg,#FFD24D,#FF5C9E);background-size:32px 32px,100% 100%;animation:pstripe .8s linear infinite;transition:width .5s ease}
+.pgr::-moz-progress-bar{border-radius:99px;background:repeating-linear-gradient(135deg,rgba(255,255,255,.3) 0 8px,rgba(255,255,255,0) 8px 16px),linear-gradient(90deg,#FFD24D,#FF5C9E);background-size:32px 32px,100% 100%;animation:pstripe .8s linear infinite}
+@keyframes pstripe{to{background-position:32px 0,0 0}}
+@media (prefers-reduced-motion:reduce){.pgr::-webkit-progress-value,.pgr::-moz-progress-bar{animation:none}.type:hover,.hc:hover,.pill:hover{transform:none}}
+</style>
+</helmet>
+<div class="app">
+<div class="util"><span class="brand" title="NOMAD AI Factory"><svg class="bm" viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFD24D"/><stop offset="1" stop-color="#FF5C9E"/></linearGradient></defs><rect width="32" height="32" rx="9" fill="url(#bg1)"/><circle cx="16" cy="16" r="8.5" fill="none" stroke="#0B0B0D" stroke-width="1.8"/><ellipse cx="16" cy="16" rx="3.6" ry="8.5" fill="none" stroke="#0B0B0D" stroke-width="1.4"/><path d="M7.5 16h17" stroke="#0B0B0D" stroke-width="1.4"/><path d="M14 12.6v6.8l5.6-3.4z" fill="#0B0B0D"/></svg><span class="bt"><b>NOMAD</b><i>AI Factory</i></span></span></div>
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{ false }}"><div class="toast" role="status">{{toast}}</div></sc-if>
+<header class="top">
+<a class="logo" href="Main.dc.html">글로벌쇼츠 <b>스튜디오</b> <span class="badge">{{typeBadge}}</span></a>
+<nav class="topr" aria-label="상단 메뉴"><a class="pill ghost" href="Main.dc.html">새 영상</a><a class="pill" href="Radar.dc.html">레이더</a><a class="pill" href="Support.dc.html">고객문의</a><a class="pill" href="Settings.dc.html">설정<span class="dot"></span></a><a class="pill" href="Admin.dc.html">관리 페이지</a><a class="pill" href="MyPage.dc.html">마이페이지</a><a class="pill" href="Login.dc.html">로그아웃</a></nav>
+</header>
+
+<div class="grid">
+<section class="left" aria-label="미리보기와 저장">
+<div class="phone">
+<div class="band" style="{{topStyle}}">
+<span style="{{l1Style}}">{{line1}}</span>
+<span style="{{l2Style}}">{{line2}}</span>
+</div>
+<div class="vid" style="{{vidStyle}}">
+<div class="scene" style="{{sceneStyle}}">
+<svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+<rect width="300" height="300" fill="{{scene.bg}}"></rect>
+<rect y="230" width="300" height="70" fill="{{scene.floor}}"></rect>
+<polygon points="150,30 95,120 205,120" fill="#1f6b3a"></polygon>
+<polygon points="150,80 80,180 220,180" fill="#227a42"></polygon>
+<polygon points="150,130 65,235 235,235" fill="#26894a"></polygon>
+<rect x="140" y="232" width="20" height="18" fill="#6b4423"></rect>
+<circle cx="120" cy="150" r="7" fill="#e5484d"></circle><circle cx="180" cy="200" r="7" fill="#ffd83d"></circle><circle cx="160" cy="105" r="6" fill="#e5484d"></circle><circle cx="110" cy="215" r="7" fill="#f5f5f5"></circle>
+<rect x="40" y="246" width="220" height="26" rx="6" fill="#cfe9f2" opacity="{{scene.mat}}"></rect>
+<g opacity="{{scene.house}}"><rect x="180" y="200" width="70" height="52" rx="8" fill="#c0392b"></rect><ellipse cx="215" cy="230" rx="20" ry="16" fill="#3b0d08"></ellipse></g>
+<g transform="translate({{scene.catX}} {{scene.catY}})"><ellipse cx="0" cy="18" rx="22" ry="16" fill="#3a3a3a"></ellipse><circle cx="0" cy="-4" r="14" fill="#3a3a3a"></circle><polygon points="-13,-10 -9,-26 -2,-14" fill="#3a3a3a"></polygon><polygon points="13,-10 9,-26 2,-14" fill="#3a3a3a"></polygon><circle cx="-5" cy="-5" r="2.4" fill="#ffd83d"></circle><circle cx="5" cy="-5" r="2.4" fill="#ffd83d"></circle><path d="M20 26 Q34 22 30 6" stroke="#3a3a3a" stroke-width="5" fill="none" stroke-linecap="round"></path></g>
+</svg>
+</div>
+<sc-if value="{{mosLogo}}" hint-placeholder-val="{{ false }}"><span class="mos" style="right: 8px; top: 8px; width: 64px; height: 18px"></span></sc-if>
+<sc-if value="{{mosSub}}" hint-placeholder-val="{{ false }}"><span class="mos" style="left: 10%; right: 10%; bottom: 4px; height: 18px"></span></sc-if>
+<sc-if value="{{mosFace}}" hint-placeholder-val="{{ false }}"><span class="mos" style="left: 40%; top: 18%; width: 22%; height: 22%; border-radius: 50%"></span></sc-if>
+<sc-if value="{{showCmt}}" hint-placeholder-val="{{ false }}">
+<div class="cmt {{cmtStyle}}" style="top: 14px"><span class="cav"></span><div><div class="cn">{{cmtName}}</div><div>{{curComment}}</div></div></div>
+</sc-if>
+<div class="cap {{fxCls}}" style="{{capStyle}}"><span style="{{capSpan}}">{{curCaption}}</span></div>
+</div>
+<sc-if value="{{hasBottom}}" hint-placeholder-val="{{ false }}"><div class="band" style="{{botStyle}}"></div></sc-if>
+<sc-if value="{{notPlaying}}" hint-placeholder-val="{{ true }}">
+<button type="button" class="playbtn" onClick="{{play}}" aria-label="미리보기 재생"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"></path></svg></button>
+</sc-if>
+<sc-if value="{{playing}}" hint-placeholder-val="{{ false }}">
+<button type="button" class="playbtn" style="opacity: .0" onClick="{{stop}}" aria-label="일시정지"></button>
+</sc-if>
+</div>
+<div class="segs" role="group" aria-label="컷 이동">
+<sc-for list="{{segs}}" as="s" hint-placeholder-count="7"><button type="button" class="seg {{s.cls}}" onClick="{{s.pick}}" aria-label="{{s.label}}"><i></i></button></sc-for>
+</div>
+
+<div class="box">
+<label class="chk"><input type="checkbox" checked="{{reorg}}" onChange="{{toggleReorg}}"> 장면·대본 재구성</label>
+<p class="muted">컷 순서·제목·자막·TTS 추천문구를 재구성해 선택한 대본을 바꿔요.</p>
+<div class="costbox"><b>추가 API 비용 발생 · 크레딧 3</b>생성·검증·번역 및 자동 수정 요청에 비용이 발생해요. 검증에 실패해도 과금될 수 있어요.</div>
+<p class="muted">{{reorgMsg}}</p>
+</div>
+
+<div class="box" aria-label="변형도 점수">
+<h3>변형도 점수 <span class="badge" style="background: #FF5C9E; color: #fff">NEW</span></h3>
+<div class="score"><b>{{score}}</b><span class="muted">/ 100 · 권장 60점 이상</span></div>
+<div class="bar"><i style="width: {{scorePct}}"></i></div>
+<sc-for list="{{checks}}" as="c" hint-placeholder-count="6"><div class="ck {{c.cls}}"><span>{{c.mark}} {{c.label}}</span><em>+{{c.pts}}</em></div></sc-for>
+<p class="muted">원본에 더한 내 해설·편집이 많을수록 수익화 심사(재사용 콘텐츠)에 유리해요.</p>
+</div>
+
+<button type="button" class="save" onClick="{{saveVideo}}" disabled="{{busy}}">영상 저장하기</button>
+<div class="g2"><button type="button" class="btn2" onClick="{{saveZip}}" disabled="{{busy}}">캡컷 ZIP 저장</button><button type="button" class="btn2" onClick="{{copyScript}}">대본 복사</button></div>
+<div class="g2"><button type="button" class="btn2" onClick="{{saveSrt}}" disabled="{{busy}}">자막 파일 받기</button><button type="button" class="btn2" onClick="{{makeJa}}" disabled="{{busy}}">일본어판 만들기</button></div>
+<sc-if value="{{hasJob}}" hint-placeholder-val="{{ false }}"><div class="pg" role="progressbar" aria-valuemin="0" aria-valuemax="100"><div class="tx"><span>{{jobLabel}}</span><b>{{jobPct}}%</b></div><progress class="pgr" max="100" value="{{jobPct}}"></progress></div></sc-if>
+<p class="muted">{{saveTxt}}</p>
+<sc-if value="{{hasMsg}}" hint-placeholder-val="{{ false }}"><p class="msg" role="status">{{msg}}</p></sc-if>
+
+<div class="box">
+<h3>내 채널 업로드</h3>
+<label class="muted" for="ch">채널</label>
+<select id="ch" class="sel" value="{{channel}}" onChange="{{onChannel}}"><option value="kr">고양이 쇼츠 (KR)</option><option value="jp">ねこショート (JP)</option></select>
+<label class="muted" for="when" style="display: block; margin-top: 8px">공개 시점</label>
+<select id="when" class="sel" value="{{when}}" onChange="{{onWhen}}"><option value="now">바로 공개</option><option value="t21">오늘 오후 9:00 예약</option><option value="best">레이더 추천 시간대 (오후 7~9시)</option></select>
+<div style="margin-top: 10px"><button type="button" class="upl" onClick="{{upload}}" disabled="{{busy}}">내 채널에 업로드</button></div>
+<p class="muted">제목·설명·해시태그가 자동으로 들어가고, 올린 영상은 레이더 성과 추적에 등록돼요.</p>
+</div>
+</section>
+
+<section class="mid" aria-label="화면 꾸미기">
+<div class="phead"><h2>화면 꾸미기</h2><div class="links"><button type="button" class="lnk" onClick="{{undo}}" disabled="{{noUndo}}">되돌리기</button><button type="button" class="lnk" onClick="{{resetAll}}">처음 값으로</button></div></div>
+<div style="display: flex; justify-content: flex-end"><button type="button" class="ring" onClick="{{toggleRight}}">{{rightToggleLabel}}</button></div>
+<p class="q">무엇을 바꿀까요?</p>
+<div class="tiles">
+<button type="button" class="tile {{tc.preset}}" onClick="{{pick.preset}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"></path></svg>프리셋</button>
+<button type="button" class="tile {{tc.template}}" onClick="{{pick.template}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2"></rect><path d="M6 7h12M6 17h12"></path></svg>템플릿</button>
+<button type="button" class="tile {{tc.titleStyle}}" onClick="{{pick.titleStyle}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1"></rect><rect x="13" y="3" width="8" height="8" rx="1"></rect><rect x="3" y="13" width="8" height="8" rx="1"></rect><rect x="13" y="13" width="8" height="8" rx="1"></rect></svg>제목 스타일</button>
+<button type="button" class="tile {{tc.color}}" onClick="{{pick.color}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"></path></svg>제목 색</button>
+<button type="button" class="tile {{tc.font}}" onClick="{{pick.font}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 5h14M12 5v14M9 19h6"></path></svg>글씨체</button>
+<button type="button" class="tile {{tc.size}}" onClick="{{pick.size}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 6h10M8 6v12M14 11h7M17.5 11v7"></path></svg>글자 크기·배치</button>
+<button type="button" class="tile {{tc.sub}}" onClick="{{pick.sub}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M7 14h10M7 10h6"></path></svg>자막 스타일·효과</button>
+<button type="button" class="tile {{tc.video}}" onClick="{{pick.video}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M10 9l5 3-5 3z"></path></svg>영상 크기·위치</button>
+<button type="button" class="tile {{tc.mosaic}}" onClick="{{pick.mosaic}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 3l18 18M10.6 5.1A10 10 0 0 1 22 12a14 14 0 0 1-3 3.6M6.6 6.6A14 14 0 0 0 2 12s4 7 10 7a10 10 0 0 0 5.4-1.6"></path></svg>모자이크</button>
+<button type="button" class="tile {{tc.comment}}" onClick="{{pick.comment}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"></path></svg>댓글 반응</button>
+<button type="button" class="tile {{tc.sfx}}" onClick="{{pick.sfx}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"></path><path d="M17 9a4 4 0 0 1 0 6"></path></svg>효과음</button>
+<button type="button" class="tile {{tc.voice}}" onClick="{{pick.voice}}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg>목소리</button>
+</div>
+
+<sc-if value="{{tools.preset}}" hint-placeholder-val="{{ false }}">
+<div class="tool"><h4>프리셋 · 채널별 스타일 묶음</h4>
+<div class="chips"><sc-for list="{{presetChips}}" as="c" hint-placeholder-count="4"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div>
+<p class="muted">템플릿·제목 스타일·색·글씨체·자막을 한 번에 바꿔요. 지금 설정을 새 프리셋으로 저장할 수 있어요.</p>
+<div style="margin-top: 8px"><button type="button" class="chip" onClick="{{savePreset}}">+ 지금 설정을 프리셋으로 저장</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{tools.template}}" hint-placeholder-val="{{ true }}">
+<div class="tool"><h4>템플릿 종류</h4>
+<div class="chips"><sc-for list="{{tplChips}}" as="c" hint-placeholder-count="5"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div>
+<p class="muted">화면에서 띠 경계를 위아래로 끌어 조절하세요. 영상 위치·크기는 유지돼요.</p>
+<div class="rowr"><label for="r1">템플릿 크기</label><input id="r1" type="range" min="80" max="130" value="{{tplSize}}" onChange="{{onTplSize}}"><b>{{tplSize}}%</b></div>
+<div class="rowr"><label for="r2">위아래 이동</label><input id="r2" type="range" min="-10" max="10" value="{{tplMove}}" onChange="{{onTplMove}}"><b>{{tplMove}}%</b></div>
+<div class="rowr"><label for="r3">상단 크기</label><input id="r3" type="range" min="12" max="34" value="{{topSize}}" onChange="{{onTopSize}}"><b>{{topSize}}%</b></div>
+<sc-if value="{{hasBottom}}" hint-placeholder-val="{{ false }}"><div class="rowr"><label for="r4">하단 크기</label><input id="r4" type="range" min="8" max="34" value="{{botSize}}" onChange="{{onBotSize}}"><b>{{botSize}}%</b></div></sc-if>
+<div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px"><button type="button" class="chip" onClick="{{resetTpl}}">템플릿 크기·위치 초기화</button><label class="chip" for="tplfile" style="cursor: pointer">내 템플릿 업로드 (PNG·JPG·WebP)</label><input id="tplfile" type="file" accept="image/png,image/jpeg,image/webp" style="position: absolute; left: -9999px" onChange="{{onTplFile}}"></div>
+<p class="muted">9:16 투명 PNG를 사용하세요. 투명한 부분에 영상이 보여요. {{tplFileName}}</p>
+</div>
+</sc-if>
+
+<sc-if value="{{tools.titleStyle}}" hint-placeholder-val="{{ false }}">
+<div class="tool"><h4>추천 스타일</h4>
+<div class="thumbs"><sc-for list="{{styleThumbs}}" as="t" hint-placeholder-count="7"><button type="button" class="th {{t.cls}}" onClick="{{t.pick}}"><span class="tp"><i style="{{t.s1}}">트리 지키는 집사</i><i style="{{t.s2}}">VS 고양이</i></span>{{t.mark}}{{t.label}}</button></sc-for></div>
+</div>
+</sc-if>
+
+<sc-if value="{{tools.color}}" hint-placeholder-val="{{ false }}">
+<div class="tool"><h4>제목 색</h4>
+<div class="colors"><sc-for list="{{colorChips}}" as="c" hint-placeholder-count="6"><button type="button" class="col {{c.cls}}" onClick="{{c.pick}}"><span class="cl"><i style="background: {{c.hex}}">트리 지키는 집사</i><br>VS 고양이</span>{{c.label}}</button></sc-for></div>
+</div>
+</sc-if>
+
+<sc-if value="{{tools.font}}" hint-placeholder-val="{{ false }}">
+<div class="tool"><h4>글씨체</h4>
+<div class="fonts">
+<label>제목 글씨체<select class="sel" value="{{titleFont}}" onChange="{{onTitleFont}}"><sc-for list="{{fontOpts}}" as="f" hint-placeholder-count="6"><option value="{{f.v}}">{{f.l}}</option></sc-for></select></label>
+<label>자막 글씨체<select class="sel" value="{{subFont}}" onChange="{{onSubFont}}"><sc-for list="{{fontOpts}}" as="f" hint-placeholder-count="6"><option value="{{f.v}}">{{f.l}}</option></sc-for></select></label>
+</div>
+<p class="muted">일본어판에서는 같은 굵기의 일본어 글꼴로 자동 대체돼요.</p>
+</div>
+</sc-if>
+
+<sc-if value="{{tools.size}}" hint-placeholder-val="{{ false }}">
+<div class="tool"><h4>글자 크기·배치</h4>
+<div class="rowr"><label for="r5">제목 크기</label><input id="r5" type="range" min="18" max="34" value="{{titleSize}}" onChange="{{onTitleSize}}"><b>{{titleSize}}px</b></div>
+<div class="rowr"><label for="r6">자막 크기</label><input id="r6" type="range" min="12" max="24" value="{{subSize}}" onChange="{{onSubSize}}"><b>{{subSize}}px</b></div>
+<p class="q">자막 위치</p>
+<div class="chips"><sc-for list="{{posChips}}" as="c" hint-placeholder-count="3"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div>
+</div>
+</sc-if>
+
+<sc-if value="{{tools.sub}}" hint-placeholder-val="{{ false }}">
+<div class="tool"><h4>자막 스타일</h4>
+<div class="chips"><sc-for list="{{subChips}}" as="c" hint-placeholder-count="4"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div>
+<p class="q">등장 효과</p>
+<div class="chips"><sc-for list="{{fxChips}}" as="c" hint-placeholder-count="3"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div>
+</div>
+</sc-if>
+
+<sc-if value="{{tools.video}}" hint-placeholder-val="{{ false }}">
+<div class="tool"><h4>영상 크기·위치</h4>
+<div class="rowr"><label for="r7">영상 확대</label><input id="r7" type="range" min="100" max="200" value="{{zoom}}" onChange="{{onZoom}}"><b>{{zoom}}%</b></div>
+<div class="rowr"><label for="r8">위아래 위치</label><input id="r8" type="range" min="-20" max="20" value="{{videoY}}" onChange="{{onVideoY}}"><b>{{videoY}}%</b></div>
+<p class="muted">컷별 확대는 오른쪽 컷 카드의 "대상 확대"가 따로 적용돼요.</p>
+</div>
+</sc-if>
+
+<sc-if value="{{tools.mosaic}}" hint-placeholder-val="{{ false }}">
+<div class="tool"><h4>모자이크 · 분석에서 찾은 영역</h4>
+<div class="list"><sc-for list="{{mosList}}" as="m" hint-placeholder-count="3"><div class="li"><span>{{m.label}}</span><button type="button" class="tg {{m.cls}}" onClick="{{m.toggle}}">{{m.state}}</button></div></sc-for></div>
+<p class="muted">원본 채널 로고·자막과 일반인 얼굴은 가리는 것을 권해요.</p>
+</div>
+</sc-if>
+
+<sc-if value="{{tools.comment}}" hint-placeholder-val="{{ false }}">
+<div class="tool"><h4>댓글 반응 스타일</h4>
+<div class="chips"><sc-for list="{{cmtStyleChips}}" as="c" hint-placeholder-count="3"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div>
+<div class="chips" style="margin-top: 8px"><sc-for list="{{cmtOnChips}}" as="c" hint-placeholder-count="2"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div>
+<p class="q">댓글 뜰 때 소리</p>
+<div class="chips"><sc-for list="{{cmtSoundChips}}" as="c" hint-placeholder-count="5"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div>
+<div class="list" style="margin-top: 10px"><sc-for list="{{cmtList}}" as="m" hint-placeholder-count="1"><div class="li"><span style="color: #a1a1aa">{{m.cut}}번 컷</span><span style="flex: 1">{{m.text}}</span><button type="button" class="tg" onClick="{{m.remove}}">삭제</button></div></sc-for></div>
+<div style="margin-top: 8px"><button type="button" class="chip" onClick="{{addCmt}}">+ 지금 컷({{curNo}}번)에 댓글 넣기</button></div>
+<p class="muted">레이더에서 가져온 원본 인기 댓글 중 하나를 골라 넣어요.</p>
+</div>
+</sc-if>
+
+<sc-if value="{{tools.sfx}}" hint-placeholder-val="{{ false }}">
+<div class="tool"><h4>효과음 · 자동으로 찾은 시점</h4>
+<div class="list"><sc-for list="{{sfxList}}" as="s" hint-placeholder-count="3"><div class="li"><span>{{s.at}} · {{s.cut}}번 컷</span><div class="chips"><sc-for list="{{s.opts}}" as="o" hint-placeholder-count="4"><button type="button" class="tg {{o.cls}}" onClick="{{o.pick}}">{{o.label}}</button></sc-for></div></div></sc-for></div>
+</div>
+</sc-if>
+
+<sc-if value="{{tools.voice}}" hint-placeholder-val="{{ false }}">
+<div class="tool"><h4>원본 영상 소리</h4>
+<div class="chips"><sc-for list="{{origChips}}" as="c" hint-placeholder-count="2"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div>
+<p class="muted">전체 컷의 원본 소리만 꺼요. 목소리·효과음은 유지돼요.</p>
+<p class="q">목소리 넣기</p>
+<div class="chips"><sc-for list="{{voiceOnChips}}" as="c" hint-placeholder-count="2"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div>
+<div class="rowr" style="grid-template-columns: 110px 120px 1fr"><label for="spd">목소리 속도</label><select id="spd" class="sel" value="{{speed}}" onChange="{{onSpeed}}"><option value="0.9">0.9배</option><option value="1">1배</option><option value="1.1">1.1배</option><option value="1.2">1.2배</option></select><span class="muted" style="margin: 0">속도를 바꾸면 음성을 다시 생성해요.</span></div>
+<p class="q">음성 엔진</p>
+<div class="chips"><button type="button" class="chip on">Typecast</button><button type="button" class="chip">ElevenLabs <small>일본어·영어</small></button></div>
+<p class="q">목소리 고르기 · ▶로 미리 듣기</p>
+<div class="chips"><sc-for list="{{voiceTabs}}" as="c" hint-placeholder-count="2"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div>
+<div class="voices"><sc-for list="{{voices}}" as="v" hint-placeholder-count="6"><button type="button" class="vc {{v.cls}}" onClick="{{v.pick}}"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"></path></svg><span><b>{{v.mark}}{{v.name}}</b><span>{{v.tags}}</span></span></button></sc-for></div>
+</div>
+</sc-if>
+
+<div class="vcard">
+<h4 style="margin: 0 0 4px; font-size: 12.5px">목소리 (Typecast · {{voiceName}})</h4>
+<p class="muted">음성을 생성한 뒤 각 대본 옆 ▶ 버튼으로 미리 들을 수 있어요.</p>
+<div style="margin-top: 10px"><button type="button" class="ring" onClick="{{genVoice}}" disabled="{{busy}}">{{genLabel}}</button></div>
+<p class="muted">한 줄마다 Typecast 크레딧이 들어요. 컷보다 길면 빠르게 한 번 더 만들어요.</p>
+</div>
+</section>
+
+<section class="right" aria-label="제목과 대본">
+<div class="rp">
+<sc-if value="{{rightOpen}}" hint-placeholder-val="{{ true }}">
+<div class="phead"><h2>제목 · 대본</h2><button type="button" class="lnk" onClick="{{toggleRight}}">접기</button></div>
+<div class="lang" role="group" aria-label="언어"><button type="button" class="{{langKo}}" onClick="{{toKo}}">한국어</button><button type="button" class="{{langJa}}" onClick="{{toJa}}">일본어판<em>NEW</em></button></div>
+<sc-if value="{{isJa}}" hint-placeholder-val="{{ false }}"><p class="muted" style="margin: -4px 0 10px">제목·자막·목소리만 일본 쇼츠 화법으로 다시 썼어요. 스타일과 컷은 한국어판과 같아요.</p></sc-if>
+<div class="sh" style="margin-top: 4px"><h3>제목</h3></div>
+<sc-for list="{{titles}}" as="t" hint-placeholder-count="3"><button type="button" class="tc {{t.cls}}" onClick="{{t.pick}}"><b>{{t.l1}} <i>{{t.l2}}</i></b><small>{{t.reason}}</small></button></sc-for>
+<button type="button" class="lnk" onClick="{{toggleMore}}">{{moreLabel}}</button>
+<div class="sh"><h3>고른 제목 고치기</h3></div>
+<label class="edit">첫 줄<input value="{{selL1}}" onChange="{{onL1}}" aria-label="제목 첫 줄"></label>
+<label class="edit"><span>둘째 줄<em>강조색</em></span><input value="{{selL2}}" onChange="{{onL2}}" aria-label="제목 둘째 줄"></label>
+
+<div class="sh"><h3>대본 <span>{{cutCount}}컷 · {{dur}}초</span></h3><span>목소리 {{voiceLines}}/{{cutCount}}줄</span></div>
+<p class="muted" style="margin: 0 0 8px">대본 후보 바꿔도 고친 자막은 후보마다 남아 있어요</p>
+<div class="chips"><sc-for list="{{scriptChips}}" as="c" hint-placeholder-count="3"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div>
+<div class="onoff"><b>전체 원본 소리</b><sc-for list="{{allOrigChips}}" as="c" hint-placeholder-count="2"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for><span class="muted" style="margin: 0">아래에서 컷마다 원본 소리를 고를 수 있어요.</span></div>
+<sc-for list="{{cuts}}" as="c" hint-placeholder-count="7">
+<div class="cut {{c.cls}}">
+<span class="no">{{c.no}}</span>
+<span class="ct" style="background: {{c.bg}}"></span>
+<div>
+<input class="cap-in" value="{{c.caption}}" onChange="{{c.onCaption}}" aria-label="{{c.capLabel}}">
+<p class="sc">화면: {{c.scene}}</p>
+<div class="rw">
+<button type="button" class="tg {{c.origCls}}" onClick="{{c.toggleOrig}}">원본 소리 {{c.origTxt}}</button>
+<select class="sel" style="width: auto; min-height: 30px" value="{{c.voice}}" onChange="{{c.onVoice}}" aria-label="컷 목소리"><option value="hanna">기본 (한나)</option><option value="sehee">세희</option><option value="eunkyung">은경</option><option value="changsu">박창수</option><option value="jihoon">지훈</option></select>
+<sc-if value="{{c.zoomed}}" hint-placeholder-val="{{ false }}"><span class="zb">대상 확대 {{c.zoomTxt}}</span></sc-if>
+</div>
+</div>
+<div class="acts">
+<button type="button" class="ib" onClick="{{c.play}}" aria-label="이 컷 미리보기"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"></path></svg></button>
+<button type="button" class="ib okb {{c.okCls}}" onClick="{{c.toggleOk}}" aria-label="컷 확정"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg></button>
+<button type="button" class="ib sm" onClick="{{c.up}}" aria-label="위로"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 6l7 10H5z"></path></svg></button>
+<button type="button" class="ib sm" onClick="{{c.down}}" aria-label="아래로"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 18L5 8h14z"></path></svg></button>
+</div>
+</div>
+</sc-for>
+</sc-if>
+<sc-if value="{{rightClosed}}" hint-placeholder-val="{{ false }}">
+<div class="collapsed"><h2 style="margin: 0; font-size: 14px">제목 · 대본</h2><button type="button" class="ring" onClick="{{toggleRight}}">펼치기</button></div>
+</sc-if>
+</div>
+</section>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+var CUTS = [
+  { d: 3.0, scene: '집사가 트리 아래에 투명한 가시 매트를 펼친다', bg: '#3b2f25', floor: '#7a5a3c', catX: -60, catY: 250, mat: 1, house: 0, zoom: 1 },
+  { d: 2.6, scene: '매트의 돌기가 가까이 보인다', bg: '#2f2a24', floor: '#7a5a3c', catX: -60, catY: 250, mat: 1, house: 0, zoom: 1.5 },
+  { d: 3.2, scene: '고양이가 매트를 사뿐히 건너 트리 밑으로 들어간다', bg: '#3b2f25', floor: '#7a5a3c', catX: 150, catY: 228, mat: 1, house: 0, zoom: 1 },
+  { d: 2.8, scene: '고양이가 빨간 장식 공을 앞발로 툭 친다', bg: '#352a20', floor: '#7a5a3c', catX: 112, catY: 196, mat: 0.4, house: 0, zoom: 1.2 },
+  { d: 3.0, scene: '다른 집, 트리 아래에 빨간 고양이 집이 놓여 있다', bg: '#2a2f3b', floor: '#8a6a4a', catX: -60, catY: 250, mat: 0, house: 1, zoom: 1 },
+  { d: 2.7, scene: '두 집의 트리 아래가 위아래로 나란히 보인다', bg: '#302c2c', floor: '#7f6044', catX: 90, catY: 236, mat: 0.6, house: 1, zoom: 1 },
+  { d: 2.9, scene: '고양이가 고양이 집 안에서 눈을 감는다', bg: '#2a2f3b', floor: '#8a6a4a', catX: 214, catY: 214, mat: 0, house: 1, zoom: 1.1 }
+];
+var SCRIPTS = {
+  ko: [
+    { label: '1. AI 추천 · 집사 vs 고양이 대결', caps: ['트리 밑, 막을까 내줄까?', '가시 매트까지 깔았는데', '고양이는 3초 만에 통과', '장식 공은 이미 장난감', '옆집은 아예 집을 넣어줌', '같은 트리, 다른 대접', '결론: 트리 밑은 고양이 거'] },
+    { label: '2. 트리 장식의 진짜 용도 발견', caps: ['트리 장식, 누구를 위한 걸까?', '사람 눈엔 안전장치', '고양이 눈엔 징검다리', '빨간 공은 사냥감 1호', '아예 장식 대신 집을 두면?', '트리가 놀이터로 변신', '이게 진짜 트리 활용법'] },
+    { label: '3. 트리 아래를 부동산으로 보는 관점', caps: ['트리 밑 원룸, 입주 경쟁', '보안 시설: 가시 매트', '입주자 무단 침입 성공', '인테리어 소품 파손 중', '옆 단지는 풀옵션 분양', '같은 평수, 다른 시세', '최종 입주자: 고양이'] }
+  ],
+  ja: [
+    { label: '1. AI推薦 · 飼い主 vs 猫', caps: ['ツリーの下、守る？譲る？', 'トゲマットまで敷いたのに', '猫は3秒で突破', 'オーナメントはもうおもちゃ', '隣の家は猫ハウスを設置', '同じツリー、違う扱い', '結論：ツリーの下は猫のもの'] },
+    { label: '2. オーナメントの本当の使い道', caps: ['ツリーの飾り、誰のため？', '人には安全対策', '猫には飛び石', '赤い玉は獲物1号', '飾りの代わりに家を置いたら？', 'ツリーが遊び場に', 'これが本当のツリー活用法'] },
+    { label: '3. ツリー下を物件として見ると', caps: ['ツリー下ワンルーム、入居争い', 'セキュリティ：トゲマット', '入居者、無断侵入に成功', 'インテリア破損中', '隣は家具付き物件', '同じ広さ、違う家賃', '最終入居者：猫'] }
+  ]
+};
+var TITLES = {
+  ko: [
+    { l1: '트리 지키는 집사', l2: 'VS 트리 접수한 고양이', reason: '추천 · 한 화면에 두 입장을 대비시켜 끝까지 보게 해요' },
+    { l1: '집사 눈엔 장식인데', l2: '고양이 눈엔 놀이터', reason: '같은 물건을 다르게 보는 반전' },
+    { l1: '올해 트리도', l2: '결국 고양이 차지', reason: '결말을 먼저 보여주는 공감형' },
+    { l1: '가시 매트 깔았더니', l2: '3초 만에 뚫림ㅋㅋ', reason: '실패담으로 웃음을 노리는 유형' },
+    { l1: '트리 밑 입주 경쟁', l2: '최종 승자는?', reason: '질문으로 끝까지 보게 하는 유형' }
+  ],
+  ja: [
+    { l1: 'ツリーを守る飼い主', l2: 'VS 占領した猫', reason: '推薦 · 対比で最後まで見せる' },
+    { l1: '飼い主には飾りでも', l2: '猫には遊び場', reason: '同じ物を違う視点で見る反転' },
+    { l1: '今年のツリーも', l2: '結局猫のもの', reason: '結末を先に見せる共感型' },
+    { l1: 'トゲマットを敷いたら', l2: '3秒で突破された', reason: '失敗談で笑いを取る' },
+    { l1: 'ツリー下の入居争い', l2: '勝者は？', reason: '問いかけで最後まで見せる' }
+  ]
+};
+var COLORS = [
+  { l: '흰 + 노랑', hex: '#FFD83D' }, { l: '흰 + 초록', hex: '#4ADE80' }, { l: '흰 + 하늘', hex: '#38BDF8' },
+  { l: '흰 + 핑크', hex: '#F472B6' }, { l: '흰 + 빨강', hex: '#F87171' }, { l: '흰 + 주황', hex: '#FB923C' }
+];
+var FONTS = [
+  { v: 'Black Han Sans', l: '블랙한산스' }, { v: 'Do Hyeon', l: '도현체' }, { v: 'Jua', l: '주아체' },
+  { v: 'Gothic A1', l: '고딕 A1' }, { v: 'Gowun Dodum', l: '고운돋움' }, { v: 'Noto Sans KR', l: '본고딕' }
+];
+var VOICES = [
+  { id: 'hanna', name: '한나', tags: '여성 · 청년 · Conversational', rec: true },
+  { id: 'sehee', name: '세희', tags: '여성 · 청년 · Documentary', rec: true },
+  { id: 'eunkyung', name: '은경', tags: '여성 · 청년 · Radio/Podcast', rec: true },
+  { id: 'changsu', name: '박창수', tags: '남성 · 청년 · TikTok/Reels/Shorts', rec: true },
+  { id: 'jihoon', name: '지훈', tags: '남성 · 청년 · Conversational', rec: true },
+  { id: 'jinwoo', name: '진우', tags: '남성 · 청년 · Documentary', rec: false },
+  { id: 'sejin', name: '세진', tags: '남성 · 청년 · Audiobook/Storytelling', rec: false },
+  { id: 'dabin', name: '다빈', tags: '여성 · 10대 · Shorts', rec: false }
+];
+var PRESETS = {
+  shop: { template: 'topWhite', titleStyle: 'box', colorIdx: 0, titleFont: 'Do Hyeon', subStyle: 'box' },
+  info: { template: 'topBlack', titleStyle: 'highlight', colorIdx: 2, titleFont: 'Black Han Sans', subStyle: 'stroke' },
+  jp: { template: 'bothWhite', titleStyle: 'basic', colorIdx: 4, titleFont: 'Gothic A1', subStyle: 'yellow' },
+  brand: { template: 'topBlack', titleStyle: 'basic', colorIdx: 0, titleFont: 'Black Han Sans', subStyle: 'stroke' }
+};
+var STYLE_KEYS = ['preset', 'template', 'tplSize', 'tplMove', 'topSize', 'botSize', 'titleStyle', 'colorIdx', 'titleFont', 'subFont', 'titleSize', 'subSize', 'subPos', 'subStyle', 'subFx', 'zoom', 'videoY', 'mosaic', 'cmtOn', 'cmtStyle', 'cmtSound'];
+var DEFAULTS = { preset: 'brand', template: 'topBlack', tplSize: 100, tplMove: 0, topSize: 22, botSize: 18, titleStyle: 'basic', colorIdx: 0, titleFont: 'Black Han Sans', subFont: 'Do Hyeon', titleSize: 26, subSize: 16, subPos: 'low', subStyle: 'stroke', subFx: 'none', zoom: 100, videoY: 0, mosaic: { logo: true, sub: false, face: false }, cmtOn: true, cmtStyle: 'youtube', cmtSound: 'pop' };
+var PH = 533;
+
+function clone(o) { return JSON.parse(JSON.stringify(o)); }
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    var s = clone(DEFAULTS);
+    this.state = Object.assign(s, {
+      tool: 'template', lang: 'ko', titleIdx: 0, moreTitles: false, scriptIdx: 0,
+      titles: clone(TITLES), scripts: clone(SCRIPTS), edited: false,
+      order: [0, 1, 2, 3, 4, 5, 6], orig: [true, true, true, true, true, true, true], ok: [false, false, false, false, false, false, false],
+      cutVoice: ['hanna', 'hanna', 'hanna', 'hanna', 'hanna', 'hanna', 'hanna'],
+      comments: { ko: { 6: '우리 집도 트리 밑이 고양이 방이에요 ㅋㅋ' }, ja: { 6: 'うちもツリーの下は猫の部屋です笑' } },
+      sfx: [{ at: '0:03', cut: 3, type: 'pop' }, { at: '0:08', cut: 4, type: 'boing' }, { at: '0:17', cut: 7, type: 'sparkle' }],
+      voiceOn: true, origAudio: 'on', speed: '1', voiceId: 'hanna', voiceTab: 'rec', voiceGen: false,
+      cur: 0, playing: false, rightOpen: true, reorg: false, history: [],
+      channel: 'kr', when: 't21', msg: '', saveTxt: '작업 저장됨 · 고치면 3초 뒤 자동 저장 · 처음 화면 ‘내 작업’에서 다시 열기', tplFileName: '', menu: '', toast: '', job: null
+    });
+    this.playT = null; this.saveT = null; this.toastT = null; this.jobT = null; this.jobD = null;
+  }
+  componentWillUnmount() { clearTimeout(this.playT); clearTimeout(this.saveT); clearTimeout(this.toastT); clearInterval(this.jobT); clearTimeout(this.jobD); }
+  navTo(key, msg) {
+    var self = this;
+    clearTimeout(this.toastT);
+    this.setState({ menu: key, toast: msg });
+    this.toastT = setTimeout(function () { self.setState({ toast: '' }); }, 2200);
+  }
+  runJob(label, onDone) {
+    var self = this;
+    if (this.state.job) return;
+    clearInterval(this.jobT);
+    this.setState({ job: { label: label, pct: 0 }, msg: '' });
+    this.jobT = setInterval(function () {
+      var j = self.state.job;
+      if (!j) return;
+      var p = Math.min(100, j.pct + 6 + Math.floor(Math.random() * 14));
+      self.setState({ job: { label: label, pct: p } });
+      if (p >= 100) {
+        clearInterval(self.jobT);
+        self.jobD = setTimeout(function () { self.setState({ job: null }); if (onDone) onDone(); }, 450);
+      }
+    }, 350);
+  }
+  touch(extra) {
+    var self = this;
+    clearTimeout(this.saveT);
+    this.setState(Object.assign({ saveTxt: '저장 중…' }, extra || {}));
+    this.saveT = setTimeout(function () { self.setState({ saveTxt: '작업 저장됨 · 방금' }); }, 1200);
+  }
+  snap() { var st = this.state, o = {}; STYLE_KEYS.forEach(function (k) { o[k] = clone(st[k]); }); return o; }
+  setStyle(patch) { var h = this.state.history.concat([this.snap()]).slice(-30); this.touch(Object.assign({ history: h }, patch)); }
+  playFrom(i) {
+    var self = this;
+    clearTimeout(this.playT);
+    if (i >= CUTS.length) { this.setState({ playing: false, cur: 0 }); return; }
+    this.setState({ cur: i, playing: true });
+    this.playT = setTimeout(function () { self.playFrom(i + 1); }, CUTS[this.state.order[i]].d * 1000);
+  }
+  chips(list, key, styleChange) {
+    var self = this;
+    return list.map(function (o) {
+      return { label: o.l, cls: self.state[key] === o.v ? 'on' : '', pick: function () { var p = {}; p[key] = o.v; if (styleChange) self.setStyle(p); else self.touch(p); } };
+    });
+  }
+  renderVals() {
+    var self = this, st = this.state;
+    var lang = st.lang;
+    var titles = st.titles[lang];
+    var t = titles[st.titleIdx] || titles[0];
+    var script = st.scripts[lang][st.scriptIdx];
+    var cutIdx = st.order[st.cur];
+    var cut = CUTS[cutIdx];
+    var hex = COLORS[st.colorIdx].hex;
+    var tpl = st.template;
+    var whiteBand = tpl === 'topWhite' || tpl === 'bothWhite' || tpl === 'insta';
+    var hasBottom = tpl === 'bothWhite' || tpl === 'bothBlack' || tpl === 'insta';
+    var base = whiteBand ? '#111111' : '#ffffff';
+    var bandBg = whiteBand ? '#ffffff' : '#000000';
+    var topH = Math.round(PH * st.topSize / 100);
+    var botH = hasBottom ? Math.round(PH * st.botSize / 100) : 0;
+    var move = Math.round(PH * st.tplMove / 100);
+    var fs = Math.round(st.titleSize * st.tplSize / 100);
+    var ff = "font-family: '" + st.titleFont + "', 'Noto Sans JP', 'Noto Sans KR', sans-serif; font-size: " + fs + 'px;';
+    var l1 = ff + ' color: ' + base + ';';
+    var l2 = ff + ' color: ' + hex + ';';
+    var ts = st.titleStyle;
+    if (ts === 'box') l2 = ff + ' background: ' + hex + '; color: #111; padding: 0 6px; margin-top: 2px;';
+    if (ts === 'capsule') l1 = ff + ' background: ' + hex + '; color: #111; padding: 0 12px; border-radius: 999px; margin-bottom: 3px;';
+    if (ts === 'highlight') l2 = ff + ' color: ' + base + '; background: linear-gradient(transparent 55%, ' + hex + ' 55%); padding: 0 4px;';
+    if (ts === 'shadow') { l1 += ' text-shadow: 0 3px 0 rgba(0,0,0,.55);'; l2 += ' text-shadow: 0 3px 0 rgba(0,0,0,.55);'; }
+    if (ts === 'outline') { l1 = ff + ' color: #fff; -webkit-text-stroke: 1.5px #111; paint-order: stroke fill;'; l2 = ff + ' color: ' + hex + '; -webkit-text-stroke: 1.5px #111; paint-order: stroke fill;'; }
+    if (ts === 'label') l1 = ff + ' background: #E5484D; color: #fff; padding: 0 8px; font-size: ' + Math.round(fs * 0.7) + 'px; margin-bottom: 4px;';
+    var topStyle = 'top: ' + move + 'px; height: ' + topH + 'px; background: ' + bandBg + ';';
+    var botStyle = 'bottom: 0; height: ' + botH + 'px; background: ' + bandBg + ';';
+    var vidTop = topH + move;
+    var vidStyle = 'top: ' + vidTop + 'px; bottom: ' + botH + 'px;' + (tpl === 'insta' ? ' left: 12px; right: 12px; border-radius: 10px;' : '');
+    var z = (st.zoom / 100) * cut.zoom;
+    var sceneStyle = 'transform: translateY(' + st.videoY + '%) scale(' + z + '); transform-origin: 50% 60%; transition: transform .4s;';
+    var subFF = "font-family: '" + st.subFont + "', 'Noto Sans JP', 'Noto Sans KR', sans-serif; font-size: " + st.subSize + 'px;';
+    var capSpan = subFF + ' color: #fff; text-shadow: -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000;';
+    if (st.subStyle === 'box') capSpan = subFF + ' color: #fff; background: rgba(0,0,0,.78); padding: 2px 8px; border-radius: 4px;';
+    if (st.subStyle === 'yellow') capSpan = subFF + ' color: #FFD83D; text-shadow: -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 1.5px 1.5px 0 #000;';
+    if (st.subStyle === 'pop') capSpan = subFF + ' color: #111; background: #fff; padding: 2px 10px; border-radius: 999px; box-shadow: 0 3px 0 #111;';
+    var capPos = st.subPos === 'low' ? 'bottom: 10%;' : (st.subPos === 'mid' ? 'top: 46%;' : 'top: 8%;');
+    var cmtName = { youtube: '@cat_daily · 2시간 전', insta: 'cat_daily', community: 'ㅇㅇ (익명)' }[st.cmtStyle];
+    var curComment = st.comments[lang][cutIdx];
+    var voiceName = (VOICES.filter(function (v) { return v.id === st.voiceId; })[0] || VOICES[0]).name;
+    var dur = Math.round(CUTS.reduce(function (a, c) { return a + c.d; }, 0));
+    var orderChanged = st.order.join() !== '0,1,2,3,4,5,6';
+    var checks = [
+      { label: '새 제목·자막 사용', pts: 15, ok: true },
+      { label: '자막 직접 고치기', pts: 15, ok: st.edited },
+      { label: '목소리(내레이션) 넣기', pts: 20, ok: st.voiceOn && st.voiceGen },
+      { label: '원본 소리 줄이기', pts: 10, ok: st.origAudio === 'off' || st.orig.indexOf(false) >= 0 },
+      { label: '템플릿·제목 디자인', pts: 10, ok: true },
+      { label: '댓글 반응 넣기', pts: 10, ok: st.cmtOn && Object.keys(st.comments[lang]).length > 0 },
+      { label: '원본 로고·자막 가리기', pts: 10, ok: st.mosaic.logo || st.mosaic.sub },
+      { label: '컷 순서 재구성', pts: 10, ok: orderChanged || st.reorg }
+    ];
+    var score = checks.reduce(function (a, c) { return a + (c.ok ? c.pts : 0); }, 0);
+    var toolKeys = ['preset', 'template', 'titleStyle', 'color', 'font', 'size', 'sub', 'video', 'mosaic', 'comment', 'sfx', 'voice'];
+    var tools = {}, tc = {}, pick = {};
+    toolKeys.forEach(function (k) { tools[k] = st.tool === k; tc[k] = st.tool === k ? 'on' : ''; pick[k] = function () { self.setState({ tool: k }); }; });
+    var titleList = titles.slice(0, st.moreTitles ? 5 : 3);
+    var styleDefs = [{ v: 'basic', l: '기본' }, { v: 'box', l: '박스' }, { v: 'capsule', l: '캡슐' }, { v: 'highlight', l: '형광펜' }, { v: 'shadow', l: '그림자' }, { v: 'outline', l: '테두리' }, { v: 'label', l: '라벨' }];
+    var setCaps = function (ci, val) {
+      var sc = clone(self.state.scripts);
+      sc[self.state.lang][self.state.scriptIdx].caps[ci] = val;
+      self.touch({ scripts: sc, edited: true });
+    };
+    var moveCut = function (pos, dir) {
+      var o = self.state.order.slice(); var j = pos + dir;
+      if (j < 0 || j >= o.length) return;
+      var tmp = o[pos]; o[pos] = o[j]; o[j] = tmp;
+      self.touch({ order: o });
+    };
+    var setTitle = function (field, val) {
+      var tt = clone(self.state.titles); tt[self.state.lang][self.state.titleIdx][field] = val; self.touch({ titles: tt });
+    };
+    return {
+      typeBadge: '영상형',
+      topStyle: topStyle, botStyle: botStyle, vidStyle: vidStyle, sceneStyle: sceneStyle, hasBottom: hasBottom,
+      l1Style: l1, l2Style: l2, line1: t.l1, line2: t.l2,
+      scene: { bg: cut.bg, floor: cut.floor, catX: cut.catX, catY: cut.catY, mat: cut.mat, house: cut.house },
+      mosLogo: st.mosaic.logo, mosSub: st.mosaic.sub, mosFace: st.mosaic.face,
+      showCmt: st.cmtOn && !!curComment, curComment: curComment || '', cmtStyle: st.cmtStyle, cmtName: cmtName,
+      curCaption: script.caps[cutIdx], capSpan: capSpan, capStyle: capPos, fxCls: st.subFx === 'none' ? '' : 'fx-' + st.subFx,
+      playing: st.playing, notPlaying: !st.playing,
+      play: function () { self.playFrom(st.cur); }, stop: function () { clearTimeout(self.playT); self.setState({ playing: false }); },
+      segs: st.order.map(function (c, i) { return { cls: i <= st.cur ? 'on' : '', label: (i + 1) + '번 컷으로 이동', pick: function () { clearTimeout(self.playT); self.setState({ cur: i, playing: false }); } }; }),
+      reorg: st.reorg, toggleReorg: function () { self.touch({ reorg: !st.reorg }); },
+      reorgMsg: st.reorg ? '다음 저장 때 컷 순서·제목·자막·TTS 추천문구를 다시 만들어요 (크레딧 3).' : '현재 편집을 유지합니다.',
+      score: score, scorePct: score + '%',
+      checks: checks.map(function (c) { return { label: c.label, pts: c.pts, mark: c.ok ? '✓' : '○', cls: c.ok ? 'ok' : '' }; }),
+      saveVideo: function () { self.runJob('영상 렌더링 중', function () { self.setState({ msg: '렌더링을 시작했어요. 1분 안팎이면 MP4가 내 작업에 저장돼요. (샘플)' }); }); },
+      saveZip: function () { self.runJob('캡컷 ZIP 만드는 중', function () { self.setState({ msg: '캡컷 ZIP을 만들고 있어요 — 원본·컷별 음성·SRT·제목 PNG·템플릿이 들어가요. (샘플)' }); }); },
+      copyScript: function () { self.setState({ msg: '대본 ' + CUTS.length + '줄을 복사했어요. (샘플)' }); },
+      saveSrt: function () { self.runJob('자막 파일 만드는 중', function () { self.setState({ msg: '자막 파일(SRT)을 만들었어요. (샘플)' }); }); },
+      makeJa: function () { self.runJob('일본어판 번역·음성 만드는 중', function () { self.setState({ lang: 'ja', msg: '일본어판을 만들었어요 — 제목·자막·목소리만 바뀌고 스타일은 그대로예요.' }); }); },
+      mc: { support: st.menu === 'support' ? 'sel' : '', settings: st.menu === 'settings' ? 'sel' : '', admin: st.menu === 'admin' ? 'sel' : '', my: st.menu === 'my' ? 'sel' : '', saved: st.menu === 'saved' ? 'sel' : '' },
+      navSupport: function () { self.navTo('support', '고객문의 창을 열었어요. (샘플)'); },
+      navSettings: function () { self.navTo('settings', '설정 화면을 열었어요. (샘플)'); },
+      navAdmin: function () { self.navTo('admin', '관리 페이지로 이동해요. (샘플)'); },
+      navMy: function () { self.navTo('my', '마이페이지로 이동해요. (샘플)'); },
+      navSaved: function () { self.navTo('saved', '저장 채널 399개 목록을 열었어요. (샘플)'); },
+      navLogout: function () { self.navTo('logout', '로그아웃했어요. 다시 로그인해 주세요. (샘플)'); },
+      hasToast: !!st.toast, toast: st.toast,
+      busy: !!st.job, hasJob: !!st.job, jobLabel: st.job ? st.job.label : '', jobPct: st.job ? st.job.pct : 0,
+      hasMsg: !!st.msg, msg: st.msg, saveTxt: st.saveTxt,
+      channel: st.channel, onChannel: function (e) { self.setState({ channel: e.target.value }); },
+      when: st.when, onWhen: function (e) { self.setState({ when: e.target.value }); },
+      upload: function () { self.runJob('내 채널에 업로드 중', function () { self.setState({ msg: (score < 60 ? '변형도 점수가 ' + score + '점이에요. 목소리·자막 수정을 더하면 수익화 심사에 유리해요. ' : '') + (st.channel === 'kr' ? '고양이 쇼츠(KR)' : 'ねこショート(JP)') + '에 업로드를 예약했어요. (샘플)' }); }); },
+      undo: function () { var h = st.history.slice(); var last = h.pop(); if (!last) return; self.touch(Object.assign({ history: h }, last)); },
+      noUndo: st.history.length === 0,
+      resetAll: function () { self.setStyle(clone(DEFAULTS)); },
+      rightOpen: st.rightOpen, rightClosed: !st.rightOpen, toggleRight: function () { self.setState({ rightOpen: !st.rightOpen }); },
+      rightToggleLabel: st.rightOpen ? '제목·대본 접기' : '제목·대본 펼치기',
+      tc: tc, pick: pick, tools: tools,
+      presetChips: [{ l: '내 채널 기본', v: 'brand' }, { l: '쇼핑 쇼츠', v: 'shop' }, { l: '정보형', v: 'info' }, { l: '일본 채널', v: 'jp' }].map(function (o) {
+        return { label: o.l, cls: st.preset === o.v ? 'on' : '', pick: function () { self.setStyle(Object.assign({ preset: o.v }, PRESETS[o.v])); } };
+      }),
+      savePreset: function () { self.setState({ msg: '지금 설정을 ‘내 프리셋 1’로 저장했어요. (샘플)' }); },
+      tplChips: this.chips([{ l: '상단만 · 흰색', v: 'topWhite' }, { l: '상단만 · 검은색', v: 'topBlack' }, { l: '상단·하단 · 흰색', v: 'bothWhite' }, { l: '상단·하단 · 검은색', v: 'bothBlack' }, { l: '인스타', v: 'insta' }], 'template', true),
+      tplSize: st.tplSize, tplMove: st.tplMove, topSize: st.topSize, botSize: st.botSize,
+      onTplSize: function (e) { self.setStyle({ tplSize: Number(e.target.value) }); },
+      onTplMove: function (e) { self.setStyle({ tplMove: Number(e.target.value) }); },
+      onTopSize: function (e) { self.setStyle({ topSize: Number(e.target.value) }); },
+      onBotSize: function (e) { self.setStyle({ botSize: Number(e.target.value) }); },
+      resetTpl: function () { self.setStyle({ tplSize: 100, tplMove: 0, topSize: 22, botSize: 18 }); },
+      onTplFile: function (e) { var f = e.target.files && e.target.files[0]; self.setState({ tplFileName: f ? '선택한 파일: ' + f.name : '' }); },
+      tplFileName: st.tplFileName || '선택된 파일 없음',
+      styleThumbs: styleDefs.map(function (o) {
+        var s1 = 'color: #fff;', s2 = 'color: ' + hex + ';';
+        if (o.v === 'box') s2 = 'background: ' + hex + '; color: #111;';
+        if (o.v === 'capsule') s1 = 'background: ' + hex + '; color: #111; border-radius: 99px;';
+        if (o.v === 'highlight') s2 = 'color: #fff; background: linear-gradient(transparent 55%, ' + hex + ' 55%);';
+        if (o.v === 'shadow') { s1 += ' text-shadow: 0 2px 0 #555;'; s2 += ' text-shadow: 0 2px 0 #555;'; }
+        if (o.v === 'outline') { s1 = 'color: #fff; -webkit-text-stroke: .6px #f00;'; }
+        if (o.v === 'label') s1 = 'background: #E5484D; color: #fff;';
+        return { label: o.l, s1: s1, s2: s2, cls: st.titleStyle === o.v ? 'on' : '', mark: st.titleStyle === o.v ? '✓ ' : '', pick: function () { self.setStyle({ titleStyle: o.v }); } };
+      }),
+      colorChips: COLORS.map(function (c, i) { return { label: c.l, hex: c.hex, cls: st.colorIdx === i ? 'on' : '', pick: function () { self.setStyle({ colorIdx: i }); } }; }),
+      fontOpts: FONTS, titleFont: st.titleFont, subFont: st.subFont,
+      onTitleFont: function (e) { self.setStyle({ titleFont: e.target.value }); },
+      onSubFont: function (e) { self.setStyle({ subFont: e.target.value }); },
+      titleSize: st.titleSize, subSize: st.subSize,
+      onTitleSize: function (e) { self.setStyle({ titleSize: Number(e.target.value) }); },
+      onSubSize: function (e) { self.setStyle({ subSize: Number(e.target.value) }); },
+      posChips: this.chips([{ l: '아래', v: 'low' }, { l: '가운데', v: 'mid' }, { l: '위', v: 'high' }], 'subPos', true),
+      subChips: this.chips([{ l: '흰 글자 + 테두리', v: 'stroke' }, { l: '검은 박스', v: 'box' }, { l: '노랑 강조', v: 'yellow' }, { l: '말풍선', v: 'pop' }], 'subStyle', true),
+      fxChips: this.chips([{ l: '없음', v: 'none' }, { l: '튀어오르기', v: 'bounce' }, { l: '타자 효과', v: 'type' }], 'subFx', true),
+      zoom: st.zoom, videoY: st.videoY,
+      onZoom: function (e) { self.setStyle({ zoom: Number(e.target.value) }); },
+      onVideoY: function (e) { self.setStyle({ videoY: Number(e.target.value) }); },
+      mosList: [{ k: 'logo', l: '원본 채널 로고 (오른쪽 위 · 전체 구간)' }, { k: 'sub', l: '원본 자막 (아래 · 0:00~0:12)' }, { k: 'face', l: '사람 얼굴 1 (5~6번 컷)' }].map(function (m) {
+        var on = st.mosaic[m.k];
+        return { label: m.l, state: on ? '가리는 중' : '가리기', cls: on ? 'on' : '', toggle: function () { var mo = clone(self.state.mosaic); mo[m.k] = !on; self.setStyle({ mosaic: mo }); } };
+      }),
+      cmtStyleChips: this.chips([{ l: '인스타 스타일', v: 'insta' }, { l: '유튜브 스타일', v: 'youtube' }, { l: '커뮤니티 스타일', v: 'community' }], 'cmtStyle', true),
+      cmtOnChips: this.chips([{ l: '넣기', v: true }, { l: '안 넣기', v: false }], 'cmtOn', true),
+      cmtSoundChips: this.chips([{ l: '없음', v: 'none' }, { l: '메시지 팝', v: 'pop' }, { l: '톡', v: 'tok' }, { l: '반짝', v: 'twinkle' }, { l: '뾰뾰', v: 'beep' }], 'cmtSound', true),
+      cmtList: Object.keys(st.comments[lang]).map(function (k) {
+        var pos = st.order.indexOf(Number(k));
+        return { cut: pos + 1, text: st.comments[lang][k], remove: function () { var c = clone(self.state.comments); delete c[lang][k]; self.touch({ comments: c }); } };
+      }),
+      curNo: st.cur + 1,
+      addCmt: function () { var c = clone(self.state.comments); c[lang][cutIdx] = lang === 'ko' ? '이거 완전 우리 집 얘기ㅋㅋ' : 'これ完全にうちの話w'; self.touch({ comments: c, cmtOn: true }); },
+      sfxList: st.sfx.map(function (s, i) {
+        return { at: s.at, cut: s.cut, opts: [{ l: '뿅', v: 'pop' }, { l: '띠용', v: 'boing' }, { l: '반짝', v: 'sparkle' }, { l: '없음', v: 'none' }].map(function (o) {
+          return { label: o.l, cls: s.type === o.v ? 'on' : '', pick: function () { var x = clone(self.state.sfx); x[i].type = o.v; self.touch({ sfx: x }); } };
+        }) };
+      }),
+      origChips: this.chips([{ l: '켜기', v: 'on' }, { l: '음소거', v: 'off' }], 'origAudio'),
+      voiceOnChips: this.chips([{ l: '넣기', v: true }, { l: '안 넣기', v: false }], 'voiceOn'),
+      speed: st.speed, onSpeed: function (e) { self.touch({ speed: e.target.value, voiceGen: false }); },
+      voiceTabs: [{ l: '추천 9', v: 'rec' }, { l: '전체 목록 보기 446', v: 'all' }].map(function (o) { return { label: o.l, cls: st.voiceTab === o.v ? 'on' : '', pick: function () { self.setState({ voiceTab: o.v }); } }; }),
+      voices: VOICES.filter(function (v) { return st.voiceTab === 'all' || v.rec; }).map(function (v) {
+        return { name: v.name, tags: v.tags, cls: st.voiceId === v.id ? 'on' : '', mark: st.voiceId === v.id ? '✓ ' : '', pick: function () { self.touch({ voiceId: v.id, voiceGen: false }); } };
+      }),
+      voiceName: voiceName,
+      genVoice: function () { self.runJob('음성 생성 중', function () { self.touch({ voiceGen: true, voiceOn: true, msg: '음성 ' + CUTS.length + '줄을 만들었어요. 컷 옆 ▶로 들어 보세요. (샘플)' }); }); },
+      genLabel: st.voiceGen ? '음성 다시 생성 (' + CUTS.length + '줄)' : '음성 생성 (' + CUTS.length + '줄)',
+      langKo: lang === 'ko' ? 'on' : '', langJa: lang === 'ja' ? 'on' : '', isJa: lang === 'ja',
+      toKo: function () { self.setState({ lang: 'ko' }); }, toJa: function () { self.setState({ lang: 'ja' }); },
+      titles: titleList.map(function (x, i) { return { l1: x.l1, l2: x.l2, reason: x.reason, cls: st.titleIdx === i ? 'on' : '', pick: function () { self.touch({ titleIdx: i }); } }; }),
+      toggleMore: function () { self.setState({ moreTitles: !st.moreTitles }); }, moreLabel: st.moreTitles ? '제목 접기' : '다른 제목 더 보기',
+      selL1: t.l1, selL2: t.l2,
+      onL1: function (e) { setTitle('l1', e.target.value); }, onL2: function (e) { setTitle('l2', e.target.value); },
+      cutCount: CUTS.length, dur: dur, voiceLines: st.voiceOn ? CUTS.length : 0,
+      scriptChips: st.scripts[lang].map(function (s, i) { return { label: s.label, cls: st.scriptIdx === i ? 'on' : '', pick: function () { self.touch({ scriptIdx: i }); } }; }),
+      allOrigChips: [{ l: 'ON', v: true }, { l: 'OFF', v: false }].map(function (o) {
+        var all = st.orig.every(function (x) { return x === o.v; });
+        return { label: o.l, cls: all ? 'on' : '', pick: function () { self.touch({ orig: st.orig.map(function () { return o.v; }) }); } };
+      }),
+      cuts: st.order.map(function (ci, pos) {
+        var c = CUTS[ci];
+        return {
+          no: pos + 1, bg: c.bg, scene: c.scene, caption: script.caps[ci], capLabel: (pos + 1) + '번 컷 자막',
+          cls: pos === st.cur ? 'on' : '',
+          origCls: st.orig[ci] ? 'on' : '', origTxt: st.orig[ci] ? 'ON' : 'OFF',
+          toggleOrig: function () { var o = st.orig.slice(); o[ci] = !o[ci]; self.touch({ orig: o }); },
+          voice: st.cutVoice[ci], onVoice: function (e) { var v = st.cutVoice.slice(); v[ci] = e.target.value; self.touch({ cutVoice: v }); },
+          zoomed: c.zoom > 1, zoomTxt: c.zoom + '배',
+          onCaption: function (e) { setCaps(ci, e.target.value); },
+          play: function () { clearTimeout(self.playT); self.setState({ cur: pos, playing: false }); },
+          okCls: st.ok[ci] ? 'on' : '', toggleOk: function () { var o = st.ok.slice(); o[ci] = !o[ci]; self.touch({ ok: o }); },
+          up: function () { moveCut(pos, -1); }, down: function () { moveCut(pos, 1); }
+        };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

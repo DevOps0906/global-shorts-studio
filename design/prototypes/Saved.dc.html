@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>글로벌쇼츠 스튜디오 — 저장 채널</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0B0D}
+a{color:inherit;text-decoration:none}a:hover{color:inherit}
+.app{--bg:#0B0B0D;--panel:#141518;--card:#1C1D21;--card2:#232429;--line:#2A2B31;--text:#F4F4F5;--sub:#A1A1AA;--accent:#FFD83D;--pink:#FF5C9E;--ok:#22C55E;--danger:#E5484D;font-family:'Noto Sans KR',system-ui,sans-serif;color:var(--text);background:radial-gradient(1200px 600px at 20% -10%,#2a2412 0%,rgba(11,11,13,0) 60%),var(--bg);min-height:100vh;font-size:14px;line-height:1.55}
+.util{display:flex;align-items:center;padding:8px 20px;border-bottom:1px solid var(--line);font-size:12px}
+.brand{display:inline-flex;align-items:center;gap:8px}.brand .bm{width:22px;height:22px;flex:none}.brand .bt{display:flex;flex-direction:column;line-height:1.05}.brand .bt b{font-size:12px;font-weight:900;letter-spacing:.4px}.brand .bt i{font-style:normal;font-size:9px;color:var(--sub);letter-spacing:1.2px;text-transform:uppercase}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 20px}
+.logo{font-weight:900;font-size:20px}.logo b{color:var(--accent)}
+.topr{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 12px;border-radius:999px;border:0;background:var(--card);color:var(--text);font:inherit;font-size:12px;font-weight:500;cursor:pointer}
+.pill.on{background:var(--accent);color:#111;font-weight:700}
+.pill .dot{width:7px;height:7px;border-radius:99px;background:var(--ok)}
+.wrap{max-width:1040px;margin:0 auto;padding:12px 20px 60px;display:flex;flex-direction:column;gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px}
+.h1{margin:0 0 6px;font-size:26px;font-weight:900}
+.h2{margin:0;font-size:17px;font-weight:900}.h2 small{font-weight:500;color:var(--sub);font-size:12px;margin-left:8px}
+.lead{margin:0;color:var(--sub);font-size:14px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:0 15px;border-radius:999px;border:1.5px solid transparent;background:var(--card);color:var(--text);font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.chip.on{border-color:var(--accent);background:#1f1c10}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:40px;padding:0 18px;border-radius:12px;border:0;background:linear-gradient(90deg,#FFD24D,#FF5C9E);color:#111;font:inherit;font-weight:900;font-size:13.5px;cursor:pointer}
+.btn2{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:0 12px;border-radius:9px;border:0;background:var(--card2);color:var(--text);font:inherit;font-weight:700;font-size:12px;cursor:pointer}
+.btn2.dg{color:#ff8a8f}
+.in{width:100%;box-sizing:border-box;min-height:42px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font:inherit;font-size:13px;padding:0 12px}
+textarea.in{min-height:96px;padding:10px 12px;resize:vertical}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{background:var(--card);border-radius:14px;padding:14px}.kpi span{display:block;font-size:11.5px;color:var(--sub)}.kpi b{display:block;font-size:24px;font-weight:900;margin-top:2px}.kpi b.a{color:var(--accent)}
+.list{display:flex;flex-direction:column;gap:8px}
+.item{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:14px;padding:12px 14px;flex-wrap:wrap}
+.item .m{flex:1 1 180px;min-width:0}.item .m b{display:block;font-size:14px}.item .m span{display:block;font-size:12px;color:var(--sub)}
+.item .acts{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.item.off{opacity:.55}
+.tag{display:inline-flex;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:#2a2b31;color:var(--sub)}
+.tag.ok{background:#12301c;color:#4ade80}.tag.run{background:#1f1c10;color:var(--accent)}.tag.bad{background:#3a1517;color:#ff8a8f}
+.sw{width:42px;height:24px;border-radius:99px;border:0;background:#3a3b42;position:relative;cursor:pointer;flex:none;padding:0}
+.sw i{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:99px;background:#fff;transition:left .18s}
+.sw.on{background:var(--ok)}.sw.on i{left:21px}
+.tbox{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;font-size:11.5px;color:var(--sub);font-weight:500;padding:8px 10px;border-bottom:1px solid var(--line)}td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.lbl{display:block;font-size:12px;color:var(--sub);margin:12px 0 6px}
+.faq{display:flex;justify-content:space-between;width:100%;text-align:left;min-height:46px;align-items:center;padding:0 14px;border:0;border-radius:12px;background:var(--card);color:var(--text);font:inherit;font-weight:700;font-size:13.5px;cursor:pointer}
+.ans{display:none;margin:6px 6px 8px;color:var(--sub);font-size:13px}.ans.open{display:block}
+.center{max-width:440px;margin:60px auto 0;text-align:center}
+.muted{color:var(--sub);font-size:12px}
+@media (max-width:1199px){.h1{font-size:22px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:767px){.app{font-size:13px}.h1{font-size:18px}.h2{font-size:15px}.card{padding:16px}.two{grid-template-columns:minmax(0,1fr)}.brand .bt{display:none}.kpi b{font-size:20px}.wrap{padding:8px 12px 48px}.top{padding:10px 12px}.util{padding:8px 12px}}
+
+button,.pill,.chip,.tile,.btn2,.mini,.type,.cta,.ghost,.save,.upl,.ring,.seg,.th,.col,.lnk,.run,.hc{transition:transform .15s ease,filter .15s ease,background-color .15s ease,border-color .15s ease,box-shadow .2s ease}
+.pill:hover,.chip:hover,.btn2:hover,.mini:hover,.tile:hover,.th:hover,.col:hover,.ring:hover,.ghost:hover{filter:brightness(1.18);transform:translateY(-1px)}
+.cta:hover,.save:hover,.upl:hover,.run:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 8px 22px rgba(255,92,158,.28)}
+.type:hover,.hc:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(0,0,0,.4)}
+button:active,.pill:active,.cta:active,.chip:active,.tile:active,.btn2:active,.type:active,.save:active,.run:active,.upl:active,.ring:active,.th:active,.col:active{transform:scale(.96)!important;filter:brightness(.95)}
+button:focus-visible,a:focus-visible{outline:2px solid #FFD83D;outline-offset:2px}
+button:disabled{cursor:wait;opacity:.55;transform:none!important}
+.pill.sel{box-shadow:inset 0 0 0 1.5px #FFD83D;color:#FFD83D}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);max-width:calc(100vw - 32px);padding:11px 18px;border-radius:12px;background:#26272d;border:1px solid #3a3b42;color:#F4F4F5;font-size:13px;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,.5);z-index:50;animation:toastin .25s ease}
+@keyframes toastin{from{opacity:0;transform:translate(-50%,12px)}to{opacity:1;transform:translate(-50%,0)}}
+.pg{width:100%;max-width:420px;margin:14px auto 6px;text-align:left}
+.pg .tx{display:flex;justify-content:space-between;font-size:11.5px;color:#A1A1AA;margin-bottom:6px}
+.pg .tx b{color:#FFD83D;font-weight:900}
+.pgr{display:block;width:100%;height:10px;border:0;border-radius:99px;overflow:hidden;appearance:none;-webkit-appearance:none;background:#2a2b31}
+.pgr::-webkit-progress-bar{background:#2a2b31;border-radius:99px}
+.pgr::-webkit-progress-value{border-radius:99px;background:repeating-linear-gradient(135deg,rgba(255,255,255,.3) 0 8px,rgba(255,255,255,0) 8px 16px),linear-gradient(90deg,#FFD24D,#FF5C9E);background-size:32px 32px,100% 100%;animation:pstripe .8s linear infinite;transition:width .5s ease}
+.pgr::-moz-progress-bar{border-radius:99px;background:repeating-linear-gradient(135deg,rgba(255,255,255,.3) 0 8px,rgba(255,255,255,0) 8px 16px),linear-gradient(90deg,#FFD24D,#FF5C9E);background-size:32px 32px,100% 100%;animation:pstripe .8s linear infinite}
+@keyframes pstripe{to{background-position:32px 0,0 0}}
+@media (prefers-reduced-motion:reduce){.pgr::-webkit-progress-value,.pgr::-moz-progress-bar{animation:none}.type:hover,.hc:hover,.pill:hover{transform:none}}
+</style>
+</helmet>
+<div class="app">
+<div class="util"><span class="brand" title="NOMAD AI Factory"><svg class="bm" viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFD24D"/><stop offset="1" stop-color="#FF5C9E"/></linearGradient></defs><rect width="32" height="32" rx="9" fill="url(#bg2)"/><circle cx="16" cy="16" r="8.5" fill="none" stroke="#0B0B0D" stroke-width="1.8"/><ellipse cx="16" cy="16" rx="3.6" ry="8.5" fill="none" stroke="#0B0B0D" stroke-width="1.4"/><path d="M7.5 16h17" stroke="#0B0B0D" stroke-width="1.4"/><path d="M14 12.6v6.8l5.6-3.4z" fill="#0B0B0D"/></svg><span class="bt"><b>NOMAD</b><i>AI Factory</i></span></span></div>
+<header class="top"><a class="logo" href="Main.dc.html">글로벌쇼츠 <b>스튜디오</b></a><nav class="topr" aria-label="상단 메뉴"><a class="pill" href="Main.dc.html">새 영상</a><a class="pill" href="Radar.dc.html">레이더</a><a class="pill on" href="Saved.dc.html" aria-current="page">저장 채널 399</a><a class="pill" href="Support.dc.html">고객문의</a><a class="pill" href="Settings.dc.html">설정<span class="dot"></span></a><a class="pill" href="Admin.dc.html">관리 페이지</a><a class="pill" href="MyPage.dc.html">마이페이지</a><a class="pill" href="Login.dc.html">로그아웃</a></nav></header>
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{ false }}"><div class="toast" role="status">{{toast}}</div></sc-if>
+<main class="wrap">
+<section class="card">
+<div class="row"><div><h1 class="h1">저장 채널 <small class="muted">레퍼런스로 추적하는 채널</small></h1><p class="lead">여기 저장한 채널에서 떡상 영상이 나오면 레이더에 모아 보여줘요.</p></div><a class="btn" href="Radar.dc.html">레이더에서 보기 →</a></div>
+<div class="kpis"><div class="kpi"><span>저장 채널</span><b>{{total}}</b></div><div class="kpi"><span>추적 중</span><b class="a">{{tracking}}</b></div><div class="kpi"><span>일시 중지</span><b>{{paused}}</b></div><div class="kpi"><span>YouTube 쿼터 사용</span><b>{{quota}}</b></div></div>
+</section>
+<section class="card">
+<h2 class="h2">채널 추가<small>주소·@핸들·여러 줄 붙여넣기</small></h2>
+<div class="row" style="margin:12px 0 0"><input class="in" style="flex:1 1 240px" placeholder="https://youtube.com/@handle 또는 @handle" value="{{url}}" onChange="{{onUrl}}"><button type="button" class="btn" onClick="{{add}}" disabled="{{adding}}">{{addLabel}}</button></div>
+<sc-if value="{{hasAdd}}" hint-placeholder-val="{{ false }}"><div class="pg"><div class="tx"><span>채널 정보 확인 중…</span><b>{{addPct}}%</b></div><progress class="pgr" max="100" value="{{addPct}}"></progress></div></sc-if>
+</section>
+<section class="card">
+<div class="row"><h2 class="h2">채널 목록<small>{{shown}}개 표시</small></h2><div class="chips"><sc-for list="{{grpChips}}" as="c" hint-placeholder-count="3"><button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button></sc-for></div></div>
+<div class="list">
+<sc-for list="{{rows}}" as="c" hint-placeholder-count="4"><div class="item {{c.cls}}"><div class="m"><b>{{c.name}}</b><span>구독자 {{c.subs}} · 평균 조회 {{c.avg}} · 마지막 스캔 {{c.scan}}</span></div><span class="tag">{{c.grpName}}</span><div class="acts"><button type="button" class="sw {{c.swCls}}" role="switch" aria-label="추적 켜기/끄기" onClick="{{c.flip}}"><i></i></button><button type="button" class="btn2 dg" onClick="{{c.remove}}">삭제</button></div></div></sc-for>
+</div>
+<sc-if value="{{empty}}" hint-placeholder-val="{{ false }}"><p class="muted">조건에 맞는 채널이 없어요.</p></sc-if>
+</section>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":1200}}'>
+var CH = [
+  { id: 1, name: 'PawTwist', subs: '82만', avg: '1.8만', scan: '오후 9:48', grp: 'ref', on: true },
+  { id: 2, name: 'BugLens', subs: '41만', avg: '9.2천', scan: '오후 9:48', grp: 'ref', on: true },
+  { id: 3, name: 'BounceLab', subs: '12만', avg: '1.6만', scan: '오후 9:48', grp: 'ref200', on: true },
+  { id: 4, name: 'ネコの日常', subs: '25만', avg: '3.4만', scan: '오후 9:48', grp: 'ref200', on: true },
+  { id: 5, name: 'Daily Dose of Fun', subs: '230만', avg: '5.1만', scan: '오후 9:48', grp: 'ref', on: false },
+  { id: 6, name: 'Kitchen Tricks JP', subs: '8.4만', avg: '7.7천', scan: '오후 9:48', grp: 'ref200', on: true }
+];
+var GN = { ref: '레퍼런스채널', ref200: '레퍼런스채널200' };
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { grp: 'all', list: CH.slice(), url: '', add: -1, toast: '', seq: 100 }; this.tt = null; this.ta = null; }
+  componentWillUnmount() { clearTimeout(this.tt); clearInterval(this.ta); }
+  say(m) { var s = this; clearTimeout(this.tt); this.setState({ toast: m }); this.tt = setTimeout(function () { s.setState({ toast: '' }); }, 2200); }
+  renderVals() {
+    var self = this, st = this.state;
+    var rows = st.list.filter(function (c) { return st.grp === 'all' || c.grp === st.grp; });
+    var paused = st.list.filter(function (c) { return !c.on; }).length;
+    var total = 391 + st.list.length;
+    return {
+      total: total, tracking: total - paused, paused: paused, quota: (6420 + st.list.length * 3).toLocaleString() + ' / 10,000',
+      url: st.url, onUrl: function (e) { self.setState({ url: e.target.value }); },
+      adding: st.add >= 0, addLabel: st.add >= 0 ? '확인 중…' : '+ 채널 추가', hasAdd: st.add >= 0, addPct: Math.max(0, st.add),
+      add: function () {
+        var u = self.state.url.trim();
+        if (!u) { self.say('채널 주소나 @핸들을 입력해 주세요.'); return; }
+        var nm = u.replace(/^https?:\/\/(www\.)?youtube\.com\//, '').replace(/^@/, '') || u;
+        clearInterval(self.ta);
+        self.setState({ add: 0 });
+        self.ta = setInterval(function () {
+          var p = Math.min(100, self.state.add + 12 + Math.floor(Math.random() * 18));
+          if (p >= 100) {
+            clearInterval(self.ta);
+            var n = { id: self.state.seq + 1, name: nm, subs: '신규', avg: '집계 중', scan: '방금', grp: 'ref', on: true };
+            self.setState({ add: -1, url: '', seq: self.state.seq + 1, list: [n].concat(self.state.list) });
+            self.say(nm + ' 채널을 저장했어요. 다음 스캔부터 추적해요.');
+          } else self.setState({ add: p });
+        }, 260);
+      },
+      grpChips: [{ l: '전체', v: 'all' }, { l: '레퍼런스채널', v: 'ref' }, { l: '레퍼런스채널200', v: 'ref200' }].map(function (o) { return { label: o.l, cls: st.grp === o.v ? 'on' : '', pick: function () { self.setState({ grp: o.v }); } }; }),
+      shown: rows.length, empty: rows.length === 0,
+      rows: rows.map(function (c) {
+        return Object.assign({}, c, { grpName: GN[c.grp], cls: c.on ? '' : 'off', swCls: c.on ? 'on' : '',
+          flip: function () { self.setState({ list: self.state.list.map(function (x) { return x.id === c.id ? Object.assign({}, x, { on: !x.on }) : x; }) }); self.say(c.name + (c.on ? ' 추적을 멈췄어요.' : ' 추적을 다시 시작해요.')); },
+          remove: function () { self.setState({ list: self.state.list.filter(function (x) { return x.id !== c.id; }) }); self.say(c.name + ' 채널을 삭제했어요.'); } });
+      }),
+      hasToast: !!st.toast, toast: st.toast
+    };
+  }
+}
+</script>
+</body>
+</html>
