@@ -19,7 +19,7 @@
   --color-line: #2a2b31;
   --color-text: #f4f4f5;
   --color-sub: #a1a1aa;
-  --color-accent: #ffd83d;
+  --color-brand: #ffd83d;
   --color-pink: #ff5c9e;
   --color-ok: #22c55e;
   --color-danger: #e5484d;
@@ -36,6 +36,13 @@
   --text-h1--line-height: 1.3;
   --text-h2: var(--fs-h2);
   --text-h2--line-height: 1.4;
+  --text-caption: var(--fs-caption);
+  --text-caption--line-height: 1.4;
+  --text-micro: var(--fs-micro);
+  --text-micro--line-height: 1.1;
+
+  /* 앱 셸 최대 폭 (데스크톱 1040px) */
+  --container-app: 65rem;
 
   --radius-lg: 0.625rem;
 }
@@ -46,6 +53,8 @@
   --fs-body: calc(var(--fs-body-base) * var(--fs-body-scale));
   --fs-h1: 18px;
   --fs-h2: 15px;
+  --fs-caption: 12px; /* 로고 글자(시안 .brand) — 모바일은 숨김, 구간 무관 고정 */
+  --fs-micro: 9px;
 
   /* shadcn/ui 시맨틱 변수 → 디자인 토큰 (다크 단일 테마) */
   --background: var(--color-bg);
@@ -53,17 +62,18 @@
   --card-foreground: var(--color-text);
   --popover: var(--color-card);
   --popover-foreground: var(--color-text);
-  --primary: var(--color-accent);
+  --primary: var(--color-brand);
   --primary-foreground: var(--color-bg);
   --secondary: var(--color-card2);
   --secondary-foreground: var(--color-text);
   --muted: var(--color-card2);
   --muted-foreground: var(--color-sub);
-  --accent-foreground: var(--color-bg);
+  --accent: var(--color-card2);
+  --accent-foreground: var(--color-text);
   --destructive: var(--color-danger);
   --border: var(--color-line);
   --input: var(--color-line);
-  --ring: var(--color-accent);
+  --ring: var(--color-brand);
   --radius: 0.625rem;
 }
 @media (min-width: 768px) {
@@ -95,6 +105,7 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-border: var(--border);
@@ -108,6 +119,11 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+  /* 키보드 포커스 표시 (PLAN 11-3) */
+  :focus-visible {
+    outline: 0.125rem solid var(--color-brand);
+    outline-offset: 0.125rem;
   }
   body {
     background: var(--color-bg);
