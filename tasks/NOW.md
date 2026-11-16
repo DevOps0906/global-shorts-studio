@@ -1,13 +1,13 @@
 # NOW — 재진입 스냅샷 (30줄 이내, 매 작업 끝에 덮어쓴다)
 
 - 갱신: 2026-11-17
-- 현재 작업: task-002 공통 상단 메뉴·3구간 반응형 — 상태: 대기(위험도 낮음 → builder·haiku)
-- 마지막으로 한 일: task-001 완료 — Next.js 16.4.6·React 19.3·Tailwind 4.3.3·shadcn, @theme 토큰·Pretendard, 토큰 견본 페이지. 코드 리뷰 지적(서체 순서·버튼 글자 토큰) 반영
-- 다음 한 걸음: /next → task-002 (shadcn accent 충돌 조정 포함)
-- 열린 결정(사용자 확인 필요): PLAN 13-10 표 (큐·워커 호스팅·BYOK 크레딧·Remotion 라이선스)
-- 주의: pnpm install이 D:에서 느림(수 분). DB 미적용. 큰 글씨 토글 경로 없음(설정 화면에서)
+- 현재 작업: task-004 구글 로그인·역할 — 상태: 대기(위험도 높음 → builder·opus, challenger 먼저)
+- 마지막으로 한 일: task-003 완료 — 원격 프로젝트 rcuqmmupqnmhuxawtdud(서울)에 studio_schema·queues·fk_indexes 적용, 보안 점검 0건, 로컬 파일명 원격 버전과 일치
+- 다음 한 걸음: 사용자 3가지(.env.example·.env.local·Exposed schemas studio/radar) 확인 → pnpm db:types → task-004
+- 열린 결정(사용자 확인 필요): 구글 OAuth 클라이언트 발급(task-004 전), 워커 호스팅·Remotion 라이선스(task-006 전)
+- 주의: src/types/db.ts 미생성(스키마 노출 후). proxy.ts는 task-004. 성능 점검 WARN: 다중 permissive select 정책 4개(own+operator) — 나중에 OR 하나로 합칠지 검토
 - SDLC 단계: 06 구현
 - 담당 모델/역할: 팀장 Opus 5.5
-- 수정 파일: package.json·src/**·next.config.ts 등 (task-001)
-- 테스트 상태: lint·typecheck·build 통과, DB 테스트 5종 통과
+- 수정 파일: supabase/**, src/lib/supabase/**, package.json
+- 테스트 상태: lint·typecheck·build 통과, DB 로컬 테스트 5종 통과, 원격 보안 점검 0건
 - 남은 작업: tasks/README.md 표 참조

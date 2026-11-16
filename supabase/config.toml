@@ -1,0 +1,14 @@
+# Supabase CLI 설정. 원격 프로젝트(ref: rcuqmmupqnmhuxawtdud)는 `supabase link --project-ref`로 연결한다.
+project_id = "global-shorts-studio"
+
+[api]
+enabled = true
+port = 54321
+# Data API로 노출할 스키마. 접근은 각 스키마의 grant·RLS가 막는다. pgmq는 노출하지 않는다.
+schemas = ["public", "studio", "radar"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+major_version = 17

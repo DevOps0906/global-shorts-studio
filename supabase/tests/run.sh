@@ -12,7 +12,8 @@ sleep 2
 P() { docker exec -i "$C" psql -U postgres -v ON_ERROR_STOP=1 -q "$@"; }
 
 P < _stub.sql
-P < ../migrations/20261117000000_studio_schema.sql
+P < ../migrations/20261116184706_studio_schema.sql
+P < ../migrations/20261116184740_fk_indexes.sql
 echo "MIGRATION OK"
 P < 01_rls_isolation.sql
 P < 02_role_tamper.sql
