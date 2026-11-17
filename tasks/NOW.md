@@ -1,7 +1,7 @@
 # NOW — 재진입 스냅샷 (30줄 이내, 매 작업 끝에 덮어쓴다)
 
 - 갱신: 2026-11-18 (task-008~010 추가, 토큰 정본 일원화: globals.css가 design/tokens.css import, tailwind.preset.ts 삭제 — 미커밋)
-- 현재 작업: 시안 9화면 1차 구현 커밋(b2c88c2). 진행: A-3 공통 부품 시안 맞춤(builder·sonnet) → A-4 화면별 시안 대조(시안 :4000, 앱 dev :3311) → 리뷰·커밋. 개발 task-004~010 보류
+- 현재 작업: 시안 UI 단계(task-011~018) 완료 — 9화면 가짜 데이터 UI, 시안 대조·디자인 리뷰 반영. 다음: 개발 단계 재개 여부 사용자 결정(task-004 전 .env.local·스키마 노출·구글 OAuth 필요)
 - 마지막으로 한 일: task-003 완료 — 원격 프로젝트 rcuqmmupqnmhuxawtdud(서울)에 studio_schema·queues·fk_indexes 적용, 보안 점검 0건, 로컬 파일명 원격 버전과 일치
 - 다음 한 걸음: 사용자 3가지(.env.example·.env.local·Exposed schemas studio/radar) 확인 → pnpm db:types → task-004
 - 열린 결정(사용자 확인 필요): 구글 OAuth 클라이언트 발급(task-004 전), 워커 호스팅·Remotion 라이선스(task-006 전)

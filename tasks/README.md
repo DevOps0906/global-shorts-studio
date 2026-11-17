@@ -13,13 +13,13 @@
 | task-009 | 설정: 기본값·알림·큰 글씨 모드(`.big-text` 연결)·자동 저장·변형도 경고, 저장·되돌리기 (PLAN 11-2, 시안 Settings) | W2 | 004 | 보통 | builder·sonnet | 보류 |
 | task-010 | 관리 페이지: 개요 KPI · 작업 큐(재시도·삭제) · 회원·크레딧 지급·정지, 감사 기록 (PLAN 11-2·11-6, 시안 Admin. 정책 감시는 2차) | W4 | 004·006 | 높음 | builder·opus | 보류 |
 | task-011 | 시안 UI 공통: 버튼 반응·진행률 막대·토스트·카드·KPI·빈/로딩/오류 상태 컴포넌트, 가짜 데이터 규칙 (시안 States, PLAN 11-3·13-1) | U1 | 002 | 보통 | builder·sonnet | 완료 |
-| task-012 | 시안 UI: 홈·제작 설정·분석 진행 (`/`, `/studio/new`, `/studio/demo/analyzing`, 시안 Main) | U2 | 011 | 보통 | builder·sonnet | 진행 |
-| task-013 | 시안 UI: 레이더·저장 채널 (`/radar`, `/channels`, 시안 Radar·Saved) | U2 | 011 | 보통 | builder·sonnet | 진행 |
-| task-014 | 시안 UI: 고객문의·설정 (`/support`, `/settings`, 시안 Support·Settings) | U2 | 011 | 보통 | builder·sonnet | 진행 |
-| task-015 | 시안 UI: 로그인 (`/login`, 시안 Login — 화면만, 인증은 task-004) | U2 | 011 | 높음 | builder·opus | 진행 |
-| task-016 | 시안 UI: 관리 페이지 (`/admin`, 시안 Admin — 화면만, 권한은 task-010) | U2 | 011 | 높음 | builder·opus | 진행 |
-| task-017 | 시안 UI: 마이페이지 (`/me`, 시안 MyPage — 충전은 화면만) | U2 | 011 | 높음 | builder·opus | 진행 |
-| task-018 | 시안 UI: 편집 스튜디오 (`/studio/demo`, 시안 Editor) | U2 | 011 | 높음 | builder·opus | 진행 |
+| task-012 | 시안 UI: 홈·제작 설정·분석 진행 (`/`, `/studio/new`, `/studio/demo/analyzing`, 시안 Main) | U2 | 011 | 보통 | builder·sonnet | 완료 |
+| task-013 | 시안 UI: 레이더·저장 채널 (`/radar`, `/channels`, 시안 Radar·Saved) | U2 | 011 | 보통 | builder·sonnet | 완료 |
+| task-014 | 시안 UI: 고객문의·설정 (`/support`, `/settings`, 시안 Support·Settings) | U2 | 011 | 보통 | builder·sonnet | 완료 |
+| task-015 | 시안 UI: 로그인 (`/login`, 시안 Login — 화면만, 인증은 task-004) | U2 | 011 | 높음 | builder·opus | 완료 |
+| task-016 | 시안 UI: 관리 페이지 (`/admin`, 시안 Admin — 화면만, 권한은 task-010) | U2 | 011 | 높음 | builder·opus | 완료 |
+| task-017 | 시안 UI: 마이페이지 (`/me`, 시안 MyPage — 충전은 화면만) | U2 | 011 | 높음 | builder·opus | 완료 |
+| task-018 | 시안 UI: 편집 스튜디오 (`/studio/demo`, 시안 Editor) | U2 | 011 | 높음 | builder·opus | 완료 |
 
 > 2026-11-18 사용자 결정: 시안 UI(task-011~018, 가짜 데이터)를 먼저 완성하고 개발(task-004~010)은 보류. 개발 재개 시 각 작업은 완성된 화면에 데이터·기능만 연결한다.
 

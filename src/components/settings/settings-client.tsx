@@ -111,7 +111,7 @@ export function SettingsClient() {
                   aria-label={t.label}
                   onClick={() => change({ [t.key]: !on })}
                   className={cn(
-                    "relative h-6 w-10.5 flex-none cursor-pointer rounded-full transition-colors",
+                    "relative h-6 w-10.5 flex-none cursor-pointer rounded-full transition-colors after:absolute after:-inset-x-1 after:-inset-y-2.5 after:content-['']",
                     on ? "bg-ok" : "bg-[var(--switch-off)]",
                   )}
                 >

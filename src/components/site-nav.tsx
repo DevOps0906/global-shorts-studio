@@ -65,6 +65,16 @@ export function MobileMenu({ items, accountName }: { items: NavItem[]; accountNa
     dialogRef.current?.close();
   }, [pathname]);
 
+  // 서랍이 열린 채 태블릿 폭(768~)으로 넓어지면 닫는다(숨겨진 모달이 페이지를 막지 않게)
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const onChange = () => {
+      if (mq.matches) dialogRef.current?.close();
+    };
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
   const close = () => dialogRef.current?.close();
 
   return (

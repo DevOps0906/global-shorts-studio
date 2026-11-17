@@ -209,7 +209,7 @@ export function Preview({ ed }: { ed: Editor }) {
         </div>
         {hasBottom && <div className="absolute inset-x-0 bottom-0" style={{ height: `${s.botSize}%`, background: bandBg }} />}
         {st.playing ? (
-          <button type="button" onClick={actions.stop} aria-label="일시정지" className="absolute inset-0 z-5 cursor-pointer opacity-0" />
+          <button type="button" onClick={actions.stop} aria-label="일시정지" className="absolute inset-0 z-5 cursor-pointer opacity-0 focus-visible:opacity-100" />
         ) : (
           <button
             type="button"

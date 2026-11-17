@@ -219,12 +219,12 @@ export function ScriptPanel({ ed }: { ed: Editor }) {
                         <path d="M5 12l5 5 9-10" />
                       </svg>
                     </button>
-                    <button type="button" onClick={() => actions.moveCut(pos, -1)} aria-label="위로" className={cn(IB, "h-5.5 w-6 text-sub")}>
+                    <button type="button" onClick={() => actions.moveCut(pos, -1)} aria-label="위로" className={cn(IB, "relative h-5.5 w-6 text-sub after:absolute after:-inset-2.5 after:content-['']")}>
                       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="size-3">
                         <path d="M12 6l7 10H5z" />
                       </svg>
                     </button>
-                    <button type="button" onClick={() => actions.moveCut(pos, 1)} aria-label="아래로" className={cn(IB, "h-5.5 w-6 text-sub")}>
+                    <button type="button" onClick={() => actions.moveCut(pos, 1)} aria-label="아래로" className={cn(IB, "relative h-5.5 w-6 text-sub after:absolute after:-inset-2.5 after:content-['']")}>
                       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="size-3">
                         <path d="M12 18L5 8h14z" />
                       </svg>

@@ -143,7 +143,7 @@ export function ChannelsView() {
                   aria-checked={c.on}
                   aria-label="추적 켜기/끄기"
                   onClick={() => flip(c)}
-                  className={cn("relative h-6 w-[2.625rem] flex-none cursor-pointer rounded-full border-0 p-0 transition-colors", c.on ? "bg-ok" : "bg-[var(--switch-off)]")}
+                  className={cn("relative h-6 w-[2.625rem] flex-none cursor-pointer rounded-full border-0 p-0 transition-colors after:absolute after:-inset-x-1 after:-inset-y-2.5 after:content-['']", c.on ? "bg-ok" : "bg-[var(--switch-off)]")}
                 >
                   <i className={cn("absolute top-[0.1875rem] size-[1.125rem] rounded-full bg-text transition-[left] duration-200", c.on ? "left-[1.3125rem]" : "left-[0.1875rem]")} />
                 </button>
