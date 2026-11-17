@@ -1,5 +1,5 @@
-import { ComingSoon } from "@/components/coming-soon";
+import { RadarView } from "@/components/radar/radar-view";
 
 export default function Page() {
-  return <ComingSoon title="레이더" />;
+  return <RadarView />;
 }

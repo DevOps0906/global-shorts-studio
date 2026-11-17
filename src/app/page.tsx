@@ -1,5 +1,5 @@
-import { ComingSoon } from "@/components/coming-soon";
+import { HomeScreen } from "@/components/home/home-screen";
 
 export default function Page() {
-  return <ComingSoon title="새 영상" />;
+  return <HomeScreen />;
 }

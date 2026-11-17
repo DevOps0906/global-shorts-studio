@@ -1,5 +1,5 @@
-import { ComingSoon } from "@/components/coming-soon";
+import { ChannelsView } from "@/components/channels/channels-view";
 
 export default function Page() {
-  return <ComingSoon title="저장 채널" />;
+  return <ChannelsView />;
 }
