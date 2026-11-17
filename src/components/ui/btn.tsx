@@ -10,9 +10,11 @@ type BtnProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean;
 };
 
+/** 시안 .btn2(보조)=34·.btn(CTA)=40. md는 variant별로 시안 기본값을 따른다 */
+const ctaMd = "min-h-10 px-[1.125rem] text-sm rounded-xl";
 const sizes = {
-  sm: "min-h-[2.125rem] px-3 text-caption rounded-lg",
-  md: "min-h-9 px-4 text-sm rounded-lg",
+  sm: "min-h-[2.125rem] px-3 text-caption rounded-[0.5625rem]",
+  md: "min-h-[2.125rem] px-3 text-caption rounded-[0.5625rem]",
   lg: "min-h-[2.875rem] px-6 text-base rounded-xl",
 };
 
@@ -37,8 +39,8 @@ export function Btn({
         "disabled:cursor-not-allowed disabled:opacity-55 aria-busy:cursor-wait",
         variant === "cta"
           ? "border-0 bg-cta font-black text-bg enabled:hover:shadow-[0_0.5rem_1.375rem_color-mix(in_srgb,var(--pink)_28%,transparent)]"
-          : "border border-line bg-card2 text-text",
-        sizes[size],
+          : "border-0 bg-card2 text-text",
+        variant === "cta" && size === "md" ? ctaMd : sizes[size],
         className,
       )}
       {...props}

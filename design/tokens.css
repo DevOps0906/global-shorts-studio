@@ -12,6 +12,11 @@
   --ok: #22c55e;
   --danger: #e5484d;
   --cta: linear-gradient(90deg, #ffd24d, #ff5c9e);
+  --tag-run-bg: #1f1c10; /* 시안 .tag.run·.chip.on 노란 채움 배경 */
+  --tag-ok-bg: #12301c;
+  --tag-ok-fg: #4ade80;
+  --tag-bad-bg: #3a1517;
+  --tag-bad-fg: #ff8a8f;
   --stripe: color-mix(in srgb, white 30%, transparent); /* 진행 막대 줄무늬 */
   --shadow-toast: 0 0.625rem 1.875rem color-mix(in srgb, black 50%, transparent);
   --font: 'Pretendard Variable', Pretendard, 'Noto Sans KR', system-ui, sans-serif; /* 앱은 Pretendard(PLAN 8), 캔버스 시안은 Noto Sans KR 대체 */
