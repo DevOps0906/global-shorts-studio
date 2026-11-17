@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 import { Btn } from "@/components/ui/btn";
 import { Card, Chip, Kpi, Tag } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -10,6 +11,13 @@ import { mockChips, mockKpis, mockProgress } from "@/mocks/states";
 export const metadata: Metadata = { title: "화면 상태 · 글로벌쇼츠 스튜디오" };
 
 type Tone = "default" | "err" | "warn";
+
+// 시안 States: 카드 안 오류·경고 태그는 테두리형(투명 배경)
+const tagLine: Record<Tone, string> = {
+  default: "bg-card2",
+  err: "border border-danger bg-transparent text-danger",
+  warn: "border border-brand bg-transparent text-brand",
+};
 
 /** 시안 States의 .card: 태그 + 제목 + 위치 설명 + 점선 demo 영역 */
 function StateCard({
@@ -28,8 +36,10 @@ function StateCard({
   children: ReactNode;
 }) {
   return (
-    <Card aria-label={label} className="flex flex-col gap-2.5 p-4">
-      <Tag tone={tone}>{tag}</Tag>
+    <Card aria-label={label} className="flex flex-col gap-2.5 rounded-2xl p-4 md:p-4">
+      <Tag tone={tone} className={cn("self-start", tagLine[tone])}>
+        {tag}
+      </Tag>
       <h3 className="text-base font-bold">{title}</h3>
       <p className="text-xs text-sub">{where}</p>
       {children}
@@ -48,13 +58,13 @@ function Demo({ children, status }: { children: ReactNode; status?: boolean }) {
   );
 }
 
-const h2 = "mt-9 mb-3 text-h2 font-bold";
+const h2 = "mt-9 mb-3 text-h2 leading-[1.55] font-bold";
 const small = "ml-1.5 text-caption font-medium text-sub";
 
 export default function Page() {
   return (
     <main className="mx-auto w-full max-w-[72.5rem] px-3.5 pb-[3.75rem] md:px-5 md:pb-20">
-      <h1 className="mt-8 mb-1.5 text-h1 font-black">
+      <h1 className="mt-8 mb-1.5 text-h1 leading-[1.55] font-black">
         화면 <b className="text-brand">상태</b> 모음
       </h1>
       <p className="mb-2 text-base text-sub">

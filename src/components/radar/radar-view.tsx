@@ -62,7 +62,7 @@ function ChipGroup<T>({ label, opts, value, onPick }: { label: string; opts: Opt
       <span className="mb-2 block text-caption font-bold text-sub">{label}</span>
       <div className="flex flex-wrap gap-1.5">
         {opts.map((o) => (
-          <Chip key={o.l} selected={value === o.v} className="text-caption" onClick={() => onPick(o.v)}>
+          <Chip key={o.l} selected={value === o.v} className="min-h-9 px-[0.8125rem] text-caption" onClick={() => onPick(o.v)}>
             {o.l}
           </Chip>
         ))}
@@ -120,9 +120,9 @@ export function RadarView() {
   const newCount = rows.filter((v) => (runs > 1 ? false : !v.seen)).length;
 
   return (
-    <main className="mx-auto flex w-full max-w-app flex-1 flex-col gap-4 px-4 pb-20 md:px-6 xl:px-8">
+    <main className="mx-auto flex w-full max-w-[77.5rem] flex-1 flex-col gap-4 px-5 pt-4 pb-20">
       <Card aria-labelledby="rd-h" className="p-4 md:p-5">
-        <h1 id="rd-h" className="text-h1 font-bold">떡상 소재 레이더</h1>
+        <h1 id="rd-h" className="text-md font-bold md:text-lg">떡상 소재 레이더</h1>
         <p className="mt-1 text-sm text-sub">
           저장한 레퍼런스 채널에서 평소보다 크게 터진 영상만 모았어요. 마음에 드는 소재는 바로 스튜디오로 보내세요.
         </p>
@@ -160,7 +160,7 @@ export function RadarView() {
           </h2>
           <div className="flex flex-wrap gap-1.5">
             {SORTS.map((o) => (
-              <Chip key={o.v} selected={sort === o.v} className="text-caption" onClick={() => setSort(o.v)}>
+              <Chip key={o.v} selected={sort === o.v} className="min-h-9 px-[0.8125rem] text-caption" onClick={() => setSort(o.v)}>
                 {o.l}
               </Chip>
             ))}
@@ -197,7 +197,7 @@ export function RadarView() {
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z" /></svg>
                     </span>
                   </div>
-                  <h3 className="mx-0.5 line-clamp-2 min-h-[2.1875rem] text-caption leading-[1.4]">{v.title}</h3>
+                  <h3 className="mx-0.5 line-clamp-2 font-bold min-h-[2.1875rem] text-caption leading-[1.4]">{v.title}</h3>
                   <p className="mx-0.5 text-xs text-sub">{v.channel} · 구독자 {fmt(v.subs)}</p>
                   <div className="grid grid-cols-3 gap-0.5 border-t border-line pt-1.5">
                     <div><b className="block text-sm tabular-nums">{fmt(v.views)}</b><span className="text-2xs text-sub">조회수</span></div>

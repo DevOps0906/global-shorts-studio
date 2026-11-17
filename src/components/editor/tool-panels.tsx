@@ -14,7 +14,7 @@ import {
   type TitleStyle,
   type VoiceId,
 } from "@/mocks/editor";
-import { Box, LinkBtn, Muted, OptionChips, Q, RangeRow, RingBtn, Select, Toggle } from "./bits";
+import { Box, CHIP_SM, LinkBtn, Muted, OptionChips, Q, RangeRow, RingBtn, Select, Toggle } from "./bits";
 import type { Editor, ToolKey } from "./use-editor";
 
 const ICON: Record<ToolKey, ReactNode> = {
@@ -133,7 +133,7 @@ function ToolBody({ ed }: { ed: Editor }) {
           />
           <Muted>템플릿·제목 스타일·색·글씨체·자막을 한 번에 바꿔요. 지금 설정을 새 프리셋으로 저장할 수 있어요.</Muted>
           <div className="mt-2">
-            <Chip className="text-caption" onClick={actions.savePreset}>
+            <Chip className={CHIP_SM} onClick={actions.savePreset}>
               + 지금 설정을 프리셋으로 저장
             </Chip>
           </div>
@@ -161,7 +161,7 @@ function ToolBody({ ed }: { ed: Editor }) {
             <RangeRow id="ed-r4" label="하단 크기" min={8} max={34} value={s.botSize} unit="%" onChange={(botSize) => setStyle({ botSize })} />
           )}
           <div className="mt-2.5 flex flex-wrap gap-2">
-            <Chip className="text-caption" onClick={() => setStyle({ tplSize: 100, tplMove: 0, topSize: 22, botSize: 18 })}>
+            <Chip className={CHIP_SM} onClick={() => setStyle({ tplSize: 100, tplMove: 0, topSize: 22, botSize: 18 })}>
               템플릿 크기·위치 초기화
             </Chip>
             <label
@@ -204,7 +204,7 @@ function ToolBody({ ed }: { ed: Editor }) {
                 >
                   <span
                     className={cn(
-                      "flex aspect-[9/12] w-full flex-col items-center gap-0.5 overflow-hidden rounded-lg border-[0.09375rem] bg-bg pt-2 text-micro font-black text-text",
+                      "flex aspect-[9/12] w-full flex-col items-center gap-0.5 overflow-hidden rounded-lg border-[0.09375rem] bg-bg pt-2 text-[length:var(--text-micro)] font-black text-text",
                       on ? "border-brand" : "border-line",
                     )}
                   >
@@ -394,7 +394,7 @@ function ToolBody({ ed }: { ed: Editor }) {
             ))}
           </ul>
           <div className="mt-2">
-            <Chip className="text-caption" onClick={actions.addComment}>
+            <Chip className={CHIP_SM} onClick={actions.addComment}>
               + 지금 컷({st.cur + 1}번)에 댓글 넣기
             </Chip>
           </div>
@@ -466,10 +466,10 @@ function ToolBody({ ed }: { ed: Editor }) {
           </div>
           <Q>음성 엔진</Q>
           <div className="flex flex-wrap gap-1.5">
-            <Chip selected className="text-caption">
+            <Chip selected className={CHIP_SM}>
               Typecast
             </Chip>
-            <Chip className="text-caption">
+            <Chip className={CHIP_SM}>
               ElevenLabs <small className="font-medium text-sub">일본어·영어</small>
             </Chip>
           </div>
@@ -548,9 +548,9 @@ export function ToolPanels({ ed }: { ed: Editor }) {
               aria-pressed={on}
               onClick={() => actions.set({ tool: t.key })}
               className={cn(
-                "flex min-h-16 cursor-pointer flex-col items-center justify-center gap-1.5 rounded-xl border-[0.09375rem] p-1.5 text-center text-2xs leading-tight font-bold text-text transition-[transform,filter,background-color,border-color] duration-150 md:min-h-18 md:text-xs",
+                "flex min-h-16 cursor-pointer flex-col items-center justify-center gap-1.5 rounded-[0.75rem] border-[0.09375rem] p-1.5 text-center text-[length:var(--text-2xs)] leading-tight font-bold text-text transition-[transform,filter,background-color,border-color] duration-150 md:min-h-18 md:text-xs",
                 "hover:-translate-y-[0.0625rem] hover:brightness-[1.18] active:scale-[0.96]",
-                on ? "border-brand bg-brand/10" : "border-transparent bg-card hover:bg-card2",
+                on ? "border-brand bg-[var(--tag-run-bg)]" : "border-transparent bg-card hover:bg-card2",
               )}
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true" className="size-4.5 text-text/85">

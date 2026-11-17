@@ -61,7 +61,7 @@ export function HomeScreen() {
           {HOT.map((h) => (
             <Card
               key={h.id}
-              className="flex w-[9.375rem] flex-none flex-col gap-2 rounded-[0.875rem] p-1.5 transition-[transform,box-shadow] duration-150 hover:-translate-y-[0.1875rem] md:w-auto motion-reduce:hover:translate-y-0"
+              className="flex w-[9.375rem] flex-none flex-col gap-2 rounded-[0.875rem] p-1.5 md:p-1.5 transition-[transform,box-shadow] duration-150 hover:-translate-y-[0.1875rem] md:w-auto motion-reduce:hover:translate-y-0"
             >
               <div className="relative flex aspect-[9/16] items-center justify-center overflow-hidden rounded-[0.625rem]" style={{ background: h.bg }}>
                 {h.fresh && (
@@ -81,7 +81,7 @@ export function HomeScreen() {
                   </svg>
                 </span>
               </div>
-              <h4 className="mx-0.5 line-clamp-2 min-h-[2.125rem] text-caption leading-[1.4]">{h.title}</h4>
+              <h4 className="mx-0.5 line-clamp-2 font-bold min-h-[2.125rem] text-caption leading-[1.4]">{h.title}</h4>
               <p className="mx-0.5 text-xs text-sub">
                 {h.channel} · {h.views} · {h.hours}
               </p>
@@ -112,8 +112,8 @@ export function HomeScreen() {
                   {j.title}
                   <span
                     className={cn(
-                      "ml-1.5 rounded-full px-2 py-0.5 text-xs font-normal",
-                      j.uploaded ? "bg-ok/15 text-ok" : "bg-card2 text-sub",
+                      "ml-1.5 rounded-full px-2 py-0.5 text-xs font-bold",
+                      j.uploaded ? "bg-ok/15 text-[var(--tag-ok-fg)]" : "bg-card2 text-sub",
                     )}
                   >
                     {j.status}

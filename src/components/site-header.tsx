@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BrandMark } from "@/components/brand-mark";
 import { navItems, type Role } from "@/lib/nav";
-import { SiteNav } from "@/components/site-nav";
+import { MobileMenu, SiteNav } from "@/components/site-nav";
 import { mockSession } from "@/mocks/session";
 
 
@@ -18,13 +18,14 @@ export function SiteHeader({
   return (
     <header className="border-b border-line">
       <div className="mx-auto flex w-full max-w-app flex-wrap items-center gap-3 px-4 py-2.5 md:flex-col md:px-6 xl:grid xl:grid-cols-[1fr_auto_1fr] xl:px-8">
+        <MobileMenu items={items} accountName={accountName} />
         <Link
           href="/"
           aria-label="NOMAD AI Factory 홈"
           className="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-lg xl:justify-self-start"
         >
           <BrandMark />
-          <span className="hidden flex-col leading-none md:flex">
+          <span className="flex flex-col leading-none">
             <b className="text-caption font-black tracking-wider">NOMAD</b>
             <i className="text-micro not-italic uppercase tracking-widest text-sub">AI Factory</i>
           </span>

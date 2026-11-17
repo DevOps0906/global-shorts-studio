@@ -36,11 +36,10 @@ const jobTag: Record<JobStatus, { tone: "warn" | "ok" | "err"; label: string }> 
   fail: { tone: "err", label: "실패" },
 };
 
-const card = "md:p-[1.375rem]";
-const h2 = "text-h2 font-black";
+const h2 = "text-h2 leading-[1.55] font-black";
 const h2Small = "ml-2 text-caption font-medium text-sub";
-const lbl = "mt-3 mb-1.5 block text-caption text-sub";
-const muted = "text-caption text-sub";
+const lbl = "mt-3 mb-1.5 block text-caption leading-[1.55] text-sub";
+const muted = "text-caption leading-[1.55] text-sub";
 const item = "flex flex-wrap items-center gap-3 rounded-[0.875rem] bg-card px-3.5 py-3";
 
 /** 시안 Admin: 개요·작업 큐·회원·정책 탭. 가짜 데이터로만 동작한다. */
@@ -96,7 +95,7 @@ export function AdminConsole({ initialView }: { initialView: AdminView }) {
   let body: ReactNode;
   if (view === "loading") {
     body = (
-      <Card className={card} role="status" aria-label="불러오는 중">
+      <Card role="status" aria-label="불러오는 중">
         <Skeleton className="h-4 w-1/4" />
         <div className="mt-3 grid grid-cols-2 gap-3 xl:grid-cols-4">
           {[0, 1, 2, 3].map((i) => (
@@ -109,7 +108,7 @@ export function AdminConsole({ initialView }: { initialView: AdminView }) {
     );
   } else if (view === "error") {
     body = (
-      <Card className={`${card} flex flex-col gap-3`}>
+      <Card className="flex flex-col gap-3">
         <Banner action={<Btn onClick={() => setView("ready")}>다시 시도</Btn>}>
           관리 데이터를 불러오지 못했어요.
         </Banner>
@@ -120,7 +119,7 @@ export function AdminConsole({ initialView }: { initialView: AdminView }) {
     );
   } else if (tab === "overview") {
     body = (
-      <Card className={card}>
+      <Card>
         <h2 className={h2}>오늘의 현황</h2>
         <div className="mt-3 grid grid-cols-2 gap-3 xl:grid-cols-4">
           <Kpi label="신규 가입" value={mockOverviewKpis.signups} />
@@ -132,14 +131,14 @@ export function AdminConsole({ initialView }: { initialView: AdminView }) {
           <div key={g.label}>
             <span className={lbl}>{g.label}</span>
             <Progress value={g.pct} label={g.label} />
-            <p className={`mt-2 ${muted}`}>{g.note}</p>
+            <p className={`my-3 ${muted}`}>{g.note}</p>
           </div>
         ))}
       </Card>
     );
   } else if (tab === "queue") {
     body = (
-      <Card className={card}>
+      <Card>
         <h2 className={h2}>
           작업 큐<small className={h2Small}>실시간으로 진행돼요</small>
         </h2>
@@ -155,7 +154,7 @@ export function AdminConsole({ initialView }: { initialView: AdminView }) {
                   <b className="block text-base">
                     {j.id} · {j.type}
                   </b>
-                  <span className="block text-caption text-sub">{j.user}</span>
+                  <span className="block text-caption leading-[1.55] text-sub">{j.user}</span>
                   <Progress value={j.pct} label={`${j.id} 진행률`} className="mt-1.5" />
                 </div>
                 <Tag tone={jobTag[j.status].tone} className="self-center">
@@ -165,8 +164,8 @@ export function AdminConsole({ initialView }: { initialView: AdminView }) {
                   <Btn size="sm" onClick={() => retryJob(j.id)}>
                     재시도
                   </Btn>
-                  <Btn size="sm" className="text-danger" onClick={() => deleteJob(j.id)}>
-                    삭제
+                  <Btn size="sm" onClick={() => deleteJob(j.id)}>
+                    <span className="text-[color:var(--tag-bad-fg)]">삭제</span>
                   </Btn>
                 </div>
               </li>
@@ -177,7 +176,7 @@ export function AdminConsole({ initialView }: { initialView: AdminView }) {
     );
   } else if (tab === "members") {
     body = (
-      <Card className={card}>
+      <Card>
         <h2 className={h2}>회원·크레딧</h2>
         <div className="mt-2 overflow-x-auto">
           <table className="w-full border-collapse text-sm">
@@ -206,8 +205,8 @@ export function AdminConsole({ initialView }: { initialView: AdminView }) {
                       <Btn size="sm" className="whitespace-nowrap" onClick={() => giftCredit(m)}>
                         +10 크레딧
                       </Btn>
-                      <Btn size="sm" className="whitespace-nowrap text-danger" onClick={() => toggleMember(m)}>
-                        {m.active ? "정지" : "해제"}
+                      <Btn size="sm" className="whitespace-nowrap" onClick={() => toggleMember(m)}>
+                        <span className="text-[color:var(--tag-bad-fg)]">{m.active ? "정지" : "해제"}</span>
                       </Btn>
                     </div>
                   </td>
@@ -220,7 +219,7 @@ export function AdminConsole({ initialView }: { initialView: AdminView }) {
     );
   } else {
     body = (
-      <Card className={card}>
+      <Card>
         <h2 className={h2}>
           정책·품질 감시<small className={h2Small}>재사용 콘텐츠 위험을 미리 막아요</small>
         </h2>
@@ -234,7 +233,7 @@ export function AdminConsole({ initialView }: { initialView: AdminView }) {
             <li key={f.id} className={item}>
               <div className="min-w-0 flex-[1_1_11.25rem]">
                 <b className="block text-base">{f.title}</b>
-                <span className="block text-caption text-sub">
+                <span className="block text-caption leading-[1.55] text-sub">
                   {f.user} · {f.reason}
                 </span>
               </div>
@@ -253,12 +252,12 @@ export function AdminConsole({ initialView }: { initialView: AdminView }) {
 
   return (
     <main className="mx-auto flex w-full max-w-[67.5rem] flex-col gap-4 px-3 pt-2 pb-12 text-body md:px-5 md:pt-3 md:pb-[3.75rem]">
-      <Card className={card}>
+      <Card>
         <div className="mb-3">
-          <h1 className="mb-1.5 text-h1 font-black">
+          <h1 className="mb-1.5 text-h1 leading-[1.55] font-black">
             관리 페이지 <small className={muted}>운영자 전용</small>
           </h1>
-          <p className="text-body text-sub">작업 큐, 회원·크레딧, 정책 위반 위험을 한곳에서 관리해요.</p>
+          <p className="text-base text-sub">작업 큐, 회원·크레딧, 정책 위반 위험을 한곳에서 관리해요.</p>
         </div>
         <div className="flex flex-wrap gap-2" role="group" aria-label="관리 메뉴">
           {tabs.map((t) => (

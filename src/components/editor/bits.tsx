@@ -21,6 +21,9 @@ export function Q({ children }: { children: ReactNode }) {
   return <p className="mt-3 mb-2 text-caption font-bold">{children}</p>;
 }
 
+/** 시안 Editor .chip(36·12) — 공통 Chip(38)보다 작다. 이름 없는 글자 크기 토큰은 cn이 색으로 오인해 지우므로 length: 표기 */
+export const CHIP_SM = "min-h-9 px-[0.8125rem] text-[length:var(--text-caption)]";
+
 /** 시안 .chip 목록: 하나만 고르는 알약 버튼 묶음 */
 export function OptionChips<T extends string | boolean>({
   options,
@@ -36,7 +39,7 @@ export function OptionChips<T extends string | boolean>({
   return (
     <div className={cn("flex flex-wrap gap-1.5", className)}>
       {options.map((o) => (
-        <Chip key={String(o.value)} selected={o.value === value} className="text-caption" onClick={() => onPick(o.value)}>
+        <Chip key={String(o.value)} selected={o.value === value} className={CHIP_SM} onClick={() => onPick(o.value)}>
           {o.label}
         </Chip>
       ))}
@@ -107,7 +110,7 @@ export function Toggle({
 export function Select({ className, ...props }: SelectHTMLAttributes<HTMLSelectElement>) {
   return (
     <select
-      className={cn("min-h-9 w-full rounded-lg border border-line bg-card px-2 text-caption text-text", className)}
+      className={cn("min-h-9 w-full rounded-lg border border-line bg-card px-2 text-[length:var(--text-caption)] text-text", className)}
       {...props}
     />
   );
@@ -119,7 +122,7 @@ export function RingBtn({ className, type = "button", ...props }: ButtonHTMLAttr
     <button
       type={type}
       className={cn(
-        "inline-flex min-h-9 cursor-pointer items-center rounded-full border-[0.09375rem] border-brand bg-transparent px-3.5 text-caption font-bold text-text transition-[transform,filter] duration-150",
+        "inline-flex min-h-9 cursor-pointer items-center rounded-full border-[0.09375rem] border-brand bg-transparent px-3.5 text-[length:var(--text-caption)] font-bold text-text transition-[transform,filter] duration-150",
         "enabled:hover:-translate-y-[0.0625rem] enabled:hover:brightness-[1.18] enabled:active:scale-[0.96] disabled:cursor-wait disabled:opacity-55",
         className,
       )}
@@ -134,7 +137,7 @@ export function LinkBtn({ className, type = "button", ...props }: ButtonHTMLAttr
     <button
       type={type}
       className={cn(
-        "min-h-8 cursor-pointer bg-transparent px-0.5 text-caption text-sub hover:text-text disabled:cursor-default disabled:opacity-40",
+        "min-h-8 cursor-pointer bg-transparent px-0.5 text-[length:var(--text-caption)] text-sub hover:text-text disabled:cursor-default disabled:opacity-40",
         className,
       )}
       {...props}

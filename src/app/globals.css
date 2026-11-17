@@ -165,3 +165,10 @@
     transition: none !important;
   }
 }
+
+/* 모바일 햄버거 메뉴: 왼쪽에서 밀려 나옴 (모션 줄이기면 끔 — site-nav.tsx) */
+@keyframes drawer-in {
+  from {
+    transform: translateX(-100%);
+  }
+}

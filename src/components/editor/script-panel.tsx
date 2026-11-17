@@ -6,7 +6,7 @@ import { Chip } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/state-blocks";
 import { cn } from "@/lib/utils";
 import { editCost, mockSceneArt, voices, type VoiceId } from "@/mocks/editor";
-import { Box, LinkBtn, Muted, RingBtn, Select, Toggle } from "./bits";
+import { Box, CHIP_SM, LinkBtn, Muted, RingBtn, Select, Toggle } from "./bits";
 import type { Editor } from "./use-editor";
 
 const IB = "flex cursor-pointer items-center justify-center rounded-full p-0 transition-[transform,filter] duration-150 hover:brightness-125 active:scale-[0.96]";
@@ -40,7 +40,7 @@ export function ScriptPanel({ ed }: { ed: Editor }) {
 
   const isJa = st.lang === "ja";
   const langBtn = (on: boolean) =>
-    cn("min-h-[2.125rem] cursor-pointer rounded-lg text-caption font-bold", on ? "bg-card2 text-text" : "bg-transparent text-sub");
+    cn("min-h-[2.125rem] cursor-pointer rounded-[0.5rem] text-[length:var(--text-caption)] font-bold", on ? "bg-card2 text-text" : "bg-transparent text-sub");
 
   return (
     <Box>
@@ -112,7 +112,7 @@ export function ScriptPanel({ ed }: { ed: Editor }) {
         title={
           <>
             대본{" "}
-            <span className="text-xs font-normal text-sub">
+            <span className="text-xs text-sub">
               {derived.cutCount}컷 · {derived.dur}초
             </span>
           </>
@@ -136,7 +136,7 @@ export function ScriptPanel({ ed }: { ed: Editor }) {
           <Muted className="mt-0 mb-2">대본 후보 바꿔도 고친 자막은 후보마다 남아 있어요</Muted>
           <div className="flex flex-wrap gap-1.5">
             {derived.edit.scripts.map((sc, i) => (
-              <Chip key={i} selected={st.scriptIdx === i} className="text-caption" onClick={() => actions.touch({ scriptIdx: i })}>
+              <Chip key={i} selected={st.scriptIdx === i} className={CHIP_SM} onClick={() => actions.touch({ scriptIdx: i })}>
                 {sc.label}
               </Chip>
             ))}
@@ -147,7 +147,7 @@ export function ScriptPanel({ ed }: { ed: Editor }) {
               <Chip
                 key={String(v)}
                 selected={st.orig.every((x) => x === v)}
-                className="bg-card2 text-caption"
+                className={CHIP_SM}
                 onClick={() => actions.setAllOrig(v)}
               >
                 {v ? "ON" : "OFF"}

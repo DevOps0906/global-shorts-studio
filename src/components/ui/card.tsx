@@ -15,8 +15,8 @@ export function Card({ className, ...props }: HTMLAttributes<HTMLElement>) {
 export function Kpi({ label, value, accent = false }: { label: string; value: ReactNode; accent?: boolean }) {
   return (
     <div className="rounded-[0.875rem] bg-card p-3.5">
-      <span className="block text-xs text-sub">{label}</span>
-      <b className={cn("mt-0.5 block whitespace-nowrap text-xl font-black md:text-2xl", accent && "text-brand")}>{value}</b>
+      <span className="block text-xs leading-[1.55] text-sub">{label}</span>
+      <b className={cn("mt-0.5 block text-xl leading-[1.55] font-black md:text-2xl", accent && "text-brand")}>{value}</b>
     </div>
   );
 }

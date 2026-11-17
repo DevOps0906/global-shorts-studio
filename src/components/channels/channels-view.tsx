@@ -67,12 +67,12 @@ export function ChannelsView() {
   };
 
   return (
-    <main className="mx-auto flex w-full max-w-[65rem] flex-1 flex-col gap-4 px-3 pb-12 md:px-5 md:pb-[3.75rem]">
+    <main className="mx-auto flex w-full max-w-[67.5rem] flex-1 flex-col gap-4 px-3 pt-3 pb-12 md:px-5 md:pb-[3.75rem]">
       <Card className="p-4 md:p-[1.375rem]">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2.5">
           <div>
-            <h1 className="mb-1.5 text-lg font-black md:text-xl xl:text-2xl">
-              저장 채널 <small className="text-caption font-normal text-sub">레퍼런스로 추적하는 채널</small>
+            <h1 className="mb-1.5 text-h1 font-black">
+              저장 채널 <small className="text-caption text-sub">레퍼런스로 추적하는 채널</small>
             </h1>
             <p className="text-sub">여기 저장한 채널에서 떡상 영상이 나오면 레이더에 모아 보여줘요.</p>
           </div>
@@ -89,7 +89,7 @@ export function ChannelsView() {
       </Card>
 
       <Card className="p-4 md:p-[1.375rem]">
-        <h2 className="text-md font-black md:text-lg">
+        <h2 className="text-h2 font-black">
           채널 추가<small className="ml-2 text-caption font-medium text-sub">주소·@핸들·여러 줄 붙여넣기</small>
         </h2>
         <div className="mt-3 flex flex-wrap items-center gap-2.5">
@@ -117,7 +117,7 @@ export function ChannelsView() {
 
       <Card className="p-4 md:p-[1.375rem]">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2.5">
-          <h2 className="text-md font-black md:text-lg">
+          <h2 className="text-h2 font-black">
             채널 목록<small className="ml-2 text-caption font-medium text-sub">{rows.length}개 표시</small>
           </h2>
           <div className="flex flex-wrap gap-2">
@@ -143,11 +143,11 @@ export function ChannelsView() {
                   aria-checked={c.on}
                   aria-label="추적 켜기/끄기"
                   onClick={() => flip(c)}
-                  className={cn("relative h-6 w-[2.625rem] flex-none cursor-pointer rounded-full border-0 p-0 transition-colors", c.on ? "bg-ok" : "bg-line")}
+                  className={cn("relative h-6 w-[2.625rem] flex-none cursor-pointer rounded-full border-0 p-0 transition-colors", c.on ? "bg-ok" : "bg-[var(--switch-off)]")}
                 >
                   <i className={cn("absolute top-[0.1875rem] size-[1.125rem] rounded-full bg-text transition-[left] duration-200", c.on ? "left-[1.3125rem]" : "left-[0.1875rem]")} />
                 </button>
-                <Btn size="sm" className="border-0 text-danger" onClick={() => remove(c)}>삭제</Btn>
+                <Btn size="sm" className="border-0 text-[var(--tag-bad-fg)]" onClick={() => remove(c)}>삭제</Btn>
               </div>
             </div>
           ))}

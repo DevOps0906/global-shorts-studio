@@ -7,8 +7,8 @@ import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/components/ui/toast";
 import { mockFaqs, mockKinds, mockTickets, type Ticket } from "@/mocks/support";
 
-const cardCls = "md:p-5.5";
-const h2Cls = "text-lg font-black md:text-h2";
+
+const h2Cls = "text-h2 leading-[1.55] font-black";
 
 export function SupportClient() {
   const [open, setOpen] = useState(0);
@@ -50,7 +50,7 @@ export function SupportClient() {
   return (
     <>
       {toast}
-      <Card className={cardCls}>
+      <Card>
         <h2 className={h2Cls}>자주 묻는 질문</h2>
         <div className="mt-3 flex flex-col gap-2">
           {mockFaqs.map((f, i) => {
@@ -73,9 +73,9 @@ export function SupportClient() {
         </div>
       </Card>
 
-      <Card className={cardCls}>
+      <Card>
         <h2 className={h2Cls}>1:1 문의</h2>
-        <span className="mt-3 mb-1.5 block text-caption text-sub">문의 종류</span>
+        <span className="mt-3 mb-1.5 block text-caption leading-[1.55] text-sub">문의 종류</span>
         <div className="flex flex-wrap gap-2">
           {mockKinds.map((k) => (
             <Chip key={k.value} selected={kind === k.value} onClick={() => setKind(k.value)}>
@@ -83,7 +83,7 @@ export function SupportClient() {
             </Chip>
           ))}
         </div>
-        <label htmlFor="support-text" className="mt-3 mb-1.5 block text-caption text-sub">
+        <label htmlFor="support-text" className="mt-3 mb-1.5 block text-caption leading-[1.55] text-sub">
           내용
         </label>
         <textarea
@@ -94,14 +94,14 @@ export function SupportClient() {
           className="box-border min-h-24 w-full resize-y rounded-[0.625rem] border border-line bg-card px-3 py-2.5 text-sm text-text"
         />
         <div className="mt-3 flex flex-wrap items-center justify-between gap-2.5">
-          <span className="text-caption text-sub">답변은 이메일과 텔레그램으로 보내드려요.</span>
+          <span className="text-caption leading-[1.55] text-sub">답변은 이메일과 텔레그램으로 보내드려요.</span>
           <Btn variant="cta" loading={sending} onClick={submit}>
             {sending ? "접수 중…" : "문의 보내기"}
           </Btn>
         </div>
         {sending && (
           <div className="mt-3.5 mb-1.5 w-full max-w-105">
-            <div className="mb-1.5 flex justify-between text-caption text-sub">
+            <div className="mb-1.5 flex justify-between text-caption leading-[1.55] text-sub">
               <span>문의 접수 중…</span>
               <b className="font-black text-brand">{send}%</b>
             </div>
@@ -110,14 +110,14 @@ export function SupportClient() {
         )}
       </Card>
 
-      <Card className={cardCls}>
+      <Card>
         <h2 className={h2Cls}>내 문의 내역</h2>
         <div className="mt-3 flex flex-col gap-2">
           {tickets.map((t) => (
             <div key={t.id} className="flex flex-wrap items-center gap-3 rounded-[0.875rem] bg-card px-3.5 py-3">
               <div className="min-w-0 flex-[1_1_11.25rem]">
-                <b className="block text-base">{t.title}</b>
-                <span className="block text-caption text-sub">{t.meta}</span>
+                <b className="block text-base leading-[1.55]">{t.title}</b>
+                <span className="block text-caption leading-[1.55] text-sub">{t.meta}</span>
               </div>
               <Tag tone={t.status === "done" ? "ok" : "warn"}>{t.status === "done" ? "답변 완료" : "접수됨"}</Tag>
             </div>

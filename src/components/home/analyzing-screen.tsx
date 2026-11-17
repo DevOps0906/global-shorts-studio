@@ -47,7 +47,7 @@ export function AnalyzingScreen() {
           </div>
           <Progress value={pct} label="전체 진행률" />
         </div>
-        <div className="my-5 flex flex-wrap justify-center gap-[1.375rem] md:gap-14">
+        <div className="mt-7 mb-5 flex flex-wrap justify-center gap-[1.375rem] md:gap-14">
           {STEP_L.map((l, i) => {
             const isDone = finished || i < curG;
             const cur = !isDone && i === curG;
@@ -56,7 +56,7 @@ export function AnalyzingScreen() {
                 <i
                   className={cn(
                     "flex size-7 items-center justify-center rounded-full border-[0.09375rem] border-line bg-card text-caption font-bold not-italic text-sub",
-                    isDone && "border-brand/20 bg-brand/10 text-brand",
+                    isDone && "border-brand/20 bg-[var(--tag-run-bg)] text-brand",
                     cur && "border-brand text-brand",
                   )}
                 >
@@ -85,7 +85,7 @@ export function AnalyzingScreen() {
           {src ? `${src.channel} — ${src.title}.mp4` : "xmas_cat.mp4"}
         </p>
         <p className="mt-2 text-caption text-sub">완성 후 컷·자막·스타일을 자유롭게 고칠 수 있어요.</p>
-        <span className="mt-2.5 inline-flex items-center gap-2 rounded-full bg-ok/10 px-3 py-1.5 text-caption text-ok">
+        <span className="mt-2.5 inline-flex items-center gap-2 rounded-full bg-ok/10 px-3 py-1.5 text-caption text-[var(--tag-ok-fg)]">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
             <path d="M5 12l5 5 9-10" />
           </svg>

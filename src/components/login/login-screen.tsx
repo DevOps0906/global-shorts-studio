@@ -69,7 +69,7 @@ export function LoginScreen() {
         </p>
 
         <section className="mt-5.5 rounded-[1.125rem] border border-line bg-panel p-4 text-left md:p-5.5">
-          <label htmlFor="login-email" className="mb-1.5 block text-caption text-sub">
+          <label htmlFor="login-email" className="mb-1.5 block text-caption leading-[1.55] text-sub">
             이메일
           </label>
           <input
@@ -97,14 +97,13 @@ export function LoginScreen() {
               variant="cta"
               loading={busy}
               onClick={() => start("google")}
-              className="min-h-10 rounded-xl px-[1.125rem] text-sm"
             >
               {busy ? loginCopy.busy : loginCopy.google}
             </Btn>
             <Btn
               disabled={busy}
               onClick={() => start("link")}
-              className="min-h-10.5 rounded-[0.5625rem] px-3 text-caption"
+              className="min-h-10.5"
             >
               {loginCopy.link}
             </Btn>
@@ -130,9 +129,9 @@ export function LoginScreen() {
           )}
         </section>
 
-        <p className="mt-3.5 text-caption text-sub">{loginCopy.note}</p>
+        <p className="mt-3.5 text-caption leading-[1.55] text-sub">{loginCopy.note}</p>
         <p className="mt-3.5">
-          <Link href="/" className="text-caption text-sub">
+          <Link href="/" className="text-caption leading-[1.55] text-sub">
             {loginCopy.browse}
           </Link>
         </p>

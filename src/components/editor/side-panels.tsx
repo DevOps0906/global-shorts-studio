@@ -64,7 +64,7 @@ export function SidePanels({ ed }: { ed: Editor }) {
         <Muted>원본에 더한 내 해설·편집이 많을수록 수익화 심사(재사용 콘텐츠)에 유리해요.</Muted>
       </Box>
 
-      <Btn variant="cta" size="lg" className="min-h-12 w-full" onClick={actions.saveVideo} disabled={busy}>
+      <Btn variant="cta" size="lg" className="min-h-12 w-full rounded-[0.75rem]" onClick={actions.saveVideo} disabled={busy}>
         영상 저장하기
       </Btn>
       <div className="grid grid-cols-2 gap-1.5">
