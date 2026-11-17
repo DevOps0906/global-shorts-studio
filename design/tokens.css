@@ -1,4 +1,4 @@
-/* 글로벌쇼츠 스튜디오 디자인 토큰 — 시안(design/prototypes)과 동일 */
+/* 글로벌쇼츠 스튜디오 디자인 토큰 — 유일한 정본. 앱은 src/app/globals.css에서 import 해 Tailwind 이름에 연결만 한다. */
 :root {
   --bg: #0b0b0d;
   --panel: #141518;
@@ -7,7 +7,7 @@
   --line: #2a2b31;
   --text: #f4f4f5;
   --sub: #a1a1aa;
-  --accent: #ffd83d; /* 앱에서는 --color-brand (shadcn accent와 이름 분리) */
+  --brand: #ffd83d; /* 시안의 --accent (shadcn --accent와 이름 충돌 방지) */
   --pink: #ff5c9e;
   --ok: #22c55e;
   --danger: #e5484d;
@@ -15,17 +15,18 @@
   --font: 'Pretendard Variable', Pretendard, 'Noto Sans KR', system-ui, sans-serif; /* 앱은 Pretendard(PLAN 8), 캔버스 시안은 Noto Sans KR 대체 */
 
   /* 모바일 ~767 */
-  --fs-body: 13px;
+  --fs-body-base: 13px;
+  --fs-body-scale: 1; /* 큰 글씨 모드에서 1.2 */
+  --fs-body: calc(var(--fs-body-base) * var(--fs-body-scale));
   --fs-h1: 18px;
   --fs-h2: 15px;
   --fs-caption: 12px; /* 로고 글자, 구간 무관(모바일은 숨김) */
   --fs-micro: 9px;
 }
 @media (min-width: 768px) {
-  :root { --fs-body: 14px; --fs-h1: 22px; --fs-h2: 17px; } /* 태블릿 768~1199 */
+  :root { --fs-body-base: 14px; --fs-h1: 22px; --fs-h2: 17px; } /* 태블릿 768~1199 */
 }
 @media (min-width: 1200px) {
   :root { --fs-h1: 26px; } /* 데스크탑 1200~ */
 }
-body { background: var(--bg); color: var(--text); font: var(--fs-body)/1.55 var(--font); }
-.big-text { --fs-body: calc(var(--fs-body) * 1.2); } /* 큰 글씨 모드 */
+.big-text { --fs-body-scale: 1.2; } /* 큰 글씨 모드: <html class="big-text"> */

@@ -10,7 +10,7 @@
 | --- | --- |
 | [`docs/PLAN.md`](docs/PLAN.md) | 통합 기획서(요약, 강의 정리, 미호메이트 분석, 화면 명세, AI 파이프라인, 데이터 모델, 정책 리스크, 수익화, 구현 계획) |
 | `design/prototypes/` | 디자인 시안 9화면: 홈, 편집, 레이더, 저장 채널, 관리, 마이페이지, 설정, 고객문의, 로그인 |
-| `design/tokens.css`, `design/tailwind.preset.ts` | 시안과 같은 색·글자 크기·반응형 구간 토큰 |
+| `design/tokens.css` | 시안과 같은 색·글자 크기·반응형 구간 토큰 |
 | `supabase/migrations/0001_studio_schema.sql` | DB 스키마 초안(RLS 포함, 적용 전 검토) |
 
 ## 반응형 기준

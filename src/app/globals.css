@@ -2,34 +2,62 @@
 @import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+/* 토큰 정본: design/tokens.css (값은 그 파일에서만 바꾼다. 여기는 Tailwind 이름 연결만) */
+@import "../../design/tokens.css";
 
 @custom-variant dark (&:is(.dark *));
 
-/* 토큰 정본: design/tokens.css · design/tailwind.preset.ts (값 변경 시 함께 수정) */
 @theme {
-  /* 반응형 3구간: 모바일 ~767 / 태블릿 768~1199(md) / 데스크톱 1200~(xl) */
+  /* 반응형 3구간: 모바일 ~767 / 태블릿 768~1199(md) / 데스크톱 1200~(xl)
+     미디어 쿼리는 변수를 못 쓰므로 tokens.css의 @media 값과 같은 숫자를 둔다 */
   --breakpoint-*: initial;
   --breakpoint-md: 768px;
   --breakpoint-xl: 1200px;
 
-  --color-bg: #0b0b0d;
-  --color-panel: #141518;
-  --color-card: #1c1d21;
-  --color-card2: #232429;
-  --color-line: #2a2b31;
-  --color-text: #f4f4f5;
-  --color-sub: #a1a1aa;
-  --color-brand: #ffd83d;
-  --color-pink: #ff5c9e;
-  --color-ok: #22c55e;
-  --color-danger: #e5484d;
+  /* 앱 셸 최대 폭 (데스크톱 1040px) */
+  --container-app: 65rem;
 
-  --background-image-cta: linear-gradient(90deg, #ffd24d, #ff5c9e);
+  --radius-lg: 0.625rem;
+}
 
-  --font-sans:
-    "Pretendard Variable", Pretendard, "Noto Sans KR", system-ui, sans-serif;
+:root {
+  /* shadcn/ui 시맨틱 변수 → 디자인 토큰 (다크 단일 테마) */
+  --background: var(--bg);
+  --foreground: var(--text);
+  --card-foreground: var(--text);
+  --popover: var(--card);
+  --popover-foreground: var(--text);
+  --primary: var(--brand);
+  --primary-foreground: var(--bg);
+  --secondary: var(--card2);
+  --secondary-foreground: var(--text);
+  --muted: var(--card2);
+  --muted-foreground: var(--sub);
+  --accent: var(--card2);
+  --accent-foreground: var(--text);
+  --destructive: var(--danger);
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--brand);
+  --radius: 0.625rem;
+}
+@theme inline {
+  /* 디자인 토큰 → Tailwind 유틸리티 (bg-bg, text-sub, text-h1 …) */
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-card: var(--card);
+  --color-card2: var(--card2);
+  --color-line: var(--line);
+  --color-text: var(--text);
+  --color-sub: var(--sub);
+  --color-brand: var(--brand);
+  --color-pink: var(--pink);
+  --color-ok: var(--ok);
+  --color-danger: var(--danger);
+  --background-image-cta: var(--cta);
+  --font-sans: var(--font);
 
-  /* 구간별 글자 크기 토큰: 값은 아래 :root 의 --fs-* 가 구간마다 바뀐다 */
+  /* 구간별 글자 크기: 값은 tokens.css의 --fs-* 가 구간마다 바뀐다 */
   --text-body: var(--fs-body);
   --text-body--line-height: 1.55;
   --text-h1: var(--fs-h1);
@@ -41,59 +69,6 @@
   --text-micro: var(--fs-micro);
   --text-micro--line-height: 1.1;
 
-  /* 앱 셸 최대 폭 (데스크톱 1040px) */
-  --container-app: 65rem;
-
-  --radius-lg: 0.625rem;
-}
-
-:root {
-  --fs-body-base: 13px;
-  --fs-body-scale: 1;
-  --fs-body: calc(var(--fs-body-base) * var(--fs-body-scale));
-  --fs-h1: 18px;
-  --fs-h2: 15px;
-  --fs-caption: 12px; /* 로고 글자(시안 .brand) — 모바일은 숨김, 구간 무관 고정 */
-  --fs-micro: 9px;
-
-  /* shadcn/ui 시맨틱 변수 → 디자인 토큰 (다크 단일 테마) */
-  --background: var(--color-bg);
-  --foreground: var(--color-text);
-  --card-foreground: var(--color-text);
-  --popover: var(--color-card);
-  --popover-foreground: var(--color-text);
-  --primary: var(--color-brand);
-  --primary-foreground: var(--color-bg);
-  --secondary: var(--color-card2);
-  --secondary-foreground: var(--color-text);
-  --muted: var(--color-card2);
-  --muted-foreground: var(--color-sub);
-  --accent: var(--color-card2);
-  --accent-foreground: var(--color-text);
-  --destructive: var(--color-danger);
-  --border: var(--color-line);
-  --input: var(--color-line);
-  --ring: var(--color-brand);
-  --radius: 0.625rem;
-}
-@media (min-width: 768px) {
-  :root {
-    --fs-body-base: 14px;
-    --fs-h1: 22px;
-    --fs-h2: 17px;
-  }
-}
-@media (min-width: 1200px) {
-  :root {
-    --fs-h1: 26px;
-  }
-}
-/* 큰 글씨 모드: <html class="big-text"> */
-.big-text {
-  --fs-body-scale: 1.2;
-}
-
-@theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card-foreground: var(--card-foreground);
@@ -122,13 +97,13 @@
   }
   /* 키보드 포커스 표시 (PLAN 11-3) */
   :focus-visible {
-    outline: 0.125rem solid var(--color-brand);
+    outline: 0.125rem solid var(--brand);
     outline-offset: 0.125rem;
   }
   body {
-    background: var(--color-bg);
-    color: var(--color-text);
-    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
     font-size: var(--fs-body);
     line-height: 1.55;
   }

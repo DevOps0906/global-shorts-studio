@@ -7,8 +7,8 @@ function BrandMark() {
     <svg viewBox="0 0 32 32" aria-hidden="true" className="size-5.5 shrink-0 text-bg">
       <defs>
         <linearGradient id="brand-mark" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" style={{ stopColor: "var(--color-brand)" }} />
-          <stop offset="1" style={{ stopColor: "var(--color-pink)" }} />
+          <stop offset="0" style={{ stopColor: "var(--brand)" }} />
+          <stop offset="1" style={{ stopColor: "var(--pink)" }} />
         </linearGradient>
       </defs>
       <rect width="32" height="32" rx="9" fill="url(#brand-mark)" />
