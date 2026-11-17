@@ -5,13 +5,23 @@
 | task-001 | Next.js 앱 생성 · `design/tokens.css`·프리셋 적용 (PLAN 12-1·12-3) | W1 | — | 보통 | builder·sonnet | 완료 |
 | task-002 | 공통 상단 메뉴 · 3구간 반응형 레이아웃 (PLAN 11-1, 시안 Main) | W1 | 001 | 낮음 | builder·haiku | 완료 |
 | task-003 | Supabase 프로젝트 · `20261116184706_studio_schema.sql` 적용·API 노출 (PLAN 13-5) | W1 | — | 높음 | builder·opus | 완료 |
-| task-004 | 구글 로그인 · 역할(RBAC) (PLAN 11-6, 시안 Login) | W1 | 001·003 | 높음 | builder·opus | 대기 |
-| task-005 | 레이더·저장 채널: 스냅샷 수집 · 떡상배율 (PLAN 4-5) | W2 | 003 | 높음 | builder·opus | 대기 |
-| task-006 | 스튜디오 분석 4단계 · 제목/대본 3안 (PLAN 5장) | W3 | 003 | 높음 | builder·opus | 대기 |
-| task-007 | 편집 화면 · 캡컷 ZIP·SRT · 크레딧·마이페이지 (PLAN 4-4·4-7) | W4 | 006 | 높음 | builder·opus | 대기 |
-| task-008 | 고객문의: FAQ 6개 · 문의 접수(진행률) · 내 문의 내역 (PLAN 11-2, 시안 Support) | W2 | 004 | 보통 | builder·sonnet | 대기 |
-| task-009 | 설정: 기본값·알림·큰 글씨 모드(`.big-text` 연결)·자동 저장·변형도 경고, 저장·되돌리기 (PLAN 11-2, 시안 Settings) | W2 | 004 | 보통 | builder·sonnet | 대기 |
-| task-010 | 관리 페이지: 개요 KPI · 작업 큐(재시도·삭제) · 회원·크레딧 지급·정지, 감사 기록 (PLAN 11-2·11-6, 시안 Admin. 정책 감시는 2차) | W4 | 004·006 | 높음 | builder·opus | 대기 |
+| task-004 | 구글 로그인 · 역할(RBAC) (PLAN 11-6, 시안 Login) | W1 | 001·003 | 높음 | builder·opus | 보류 |
+| task-005 | 레이더·저장 채널: 스냅샷 수집 · 떡상배율 (PLAN 4-5) | W2 | 003 | 높음 | builder·opus | 보류 |
+| task-006 | 스튜디오 분석 4단계 · 제목/대본 3안 (PLAN 5장) | W3 | 003 | 높음 | builder·opus | 보류 |
+| task-007 | 편집 화면 · 캡컷 ZIP·SRT · 크레딧·마이페이지 (PLAN 4-4·4-7) | W4 | 006 | 높음 | builder·opus | 보류 |
+| task-008 | 고객문의: FAQ 6개 · 문의 접수(진행률) · 내 문의 내역 (PLAN 11-2, 시안 Support) | W2 | 004 | 보통 | builder·sonnet | 보류 |
+| task-009 | 설정: 기본값·알림·큰 글씨 모드(`.big-text` 연결)·자동 저장·변형도 경고, 저장·되돌리기 (PLAN 11-2, 시안 Settings) | W2 | 004 | 보통 | builder·sonnet | 보류 |
+| task-010 | 관리 페이지: 개요 KPI · 작업 큐(재시도·삭제) · 회원·크레딧 지급·정지, 감사 기록 (PLAN 11-2·11-6, 시안 Admin. 정책 감시는 2차) | W4 | 004·006 | 높음 | builder·opus | 보류 |
+| task-011 | 시안 UI 공통: 버튼 반응·진행률 막대·토스트·카드·KPI·빈/로딩/오류 상태 컴포넌트, 가짜 데이터 규칙 (시안 States, PLAN 11-3·13-1) | U1 | 002 | 보통 | builder·sonnet | 대기 |
+| task-012 | 시안 UI: 홈·제작 설정·분석 진행 (`/`, `/studio/new`, `/studio/demo/analyzing`, 시안 Main) | U2 | 011 | 보통 | builder·sonnet | 대기 |
+| task-013 | 시안 UI: 레이더·저장 채널 (`/radar`, `/channels`, 시안 Radar·Saved) | U2 | 011 | 보통 | builder·sonnet | 대기 |
+| task-014 | 시안 UI: 고객문의·설정 (`/support`, `/settings`, 시안 Support·Settings) | U2 | 011 | 보통 | builder·sonnet | 대기 |
+| task-015 | 시안 UI: 로그인 (`/login`, 시안 Login — 화면만, 인증은 task-004) | U2 | 011 | 높음 | builder·opus | 대기 |
+| task-016 | 시안 UI: 관리 페이지 (`/admin`, 시안 Admin — 화면만, 권한은 task-010) | U2 | 011 | 높음 | builder·opus | 대기 |
+| task-017 | 시안 UI: 마이페이지 (`/me`, 시안 MyPage — 충전은 화면만) | U2 | 011 | 높음 | builder·opus | 대기 |
+| task-018 | 시안 UI: 편집 스튜디오 (`/studio/demo`, 시안 Editor) | U2 | 011 | 높음 | builder·opus | 대기 |
+
+> 2026-11-18 사용자 결정: 시안 UI(task-011~018, 가짜 데이터)를 먼저 완성하고 개발(task-004~010)은 보류. 개발 재개 시 각 작업은 완성된 화면에 데이터·기능만 연결한다.
 
 상태: 대기 / 진행 / 완료 / 보류 · 위험도 = 위험·중요도·난이도 중 최고 → 워커 model: 낮음 haiku · 보통 sonnet · 높음 opus
 
