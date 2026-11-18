@@ -13,9 +13,3 @@ export const mockKinds = [
   { label: "기능 제안", value: "idea" },
   { label: "기타", value: "etc" },
 ] as const;
-
-export type Ticket = { id: number; title: string; meta: string; status: "done" | "wait" };
-
-export const mockTickets: Ticket[] = [
-  { id: 1, title: "[결제·환불] 크레딧 환불 요청", meta: "11.12 접수", status: "done" },
-];

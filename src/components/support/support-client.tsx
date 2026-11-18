@@ -4,47 +4,47 @@ import { useEffect, useRef, useState } from "react";
 import { Btn } from "@/components/ui/btn";
 import { Card, Chip, Tag } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { EmptyState, Message } from "@/components/ui/state-blocks";
 import { useToast } from "@/components/ui/toast";
-import { mockFaqs, mockKinds, mockTickets, type Ticket } from "@/mocks/support";
-
+import { callApi, type ApiError } from "@/lib/radar-format";
+import { mockFaqs, mockKinds } from "@/mocks/support";
+import type { SupportTicket } from "@/server/support";
 
 const h2Cls = "text-h2 leading-[1.55] font-black";
 
-export function SupportClient() {
+export function SupportClient({ tickets: initial }: { tickets: SupportTicket[] | null }) {
   const [open, setOpen] = useState(0);
   const [kind, setKind] = useState<string>("bug");
   const [text, setText] = useState("");
   const [send, setSend] = useState(-1);
-  const [tickets, setTickets] = useState<Ticket[]>(mockTickets);
+  const [tickets, setTickets] = useState<SupportTicket[]>(initial ?? []);
+  const [err, setErr] = useState<ApiError | null>(null);
   const { show, toast } = useToast(2200);
   const timer = useRef<ReturnType<typeof setInterval>>(undefined);
   const sending = send >= 0;
 
   useEffect(() => () => clearInterval(timer.current), []);
 
-  function submit() {
+  async function submit() {
     if (sending) return;
     if (!text.trim()) {
       show("문의 내용을 입력해 주세요.");
       return;
     }
-    const body = text;
-    const label = mockKinds.find((k) => k.value === kind)?.label ?? "";
-    let p = 0;
+    setErr(null);
     setSend(0);
-    timer.current = setInterval(() => {
-      p = Math.min(100, p + 15 + Math.floor(Math.random() * 20));
-      if (p >= 100) {
-        clearInterval(timer.current);
-        setSend(-1);
-        setText("");
-        setTickets((t) => [
-          { id: Date.now(), title: `[${label}] ${body.slice(0, 24)}`, meta: "방금 접수", status: "wait" },
-          ...t,
-        ]);
-        show("문의를 접수했어요. 영업일 기준 1일 안에 답변드려요.");
-      } else setSend(p);
-    }, 240);
+    // 응답 전까지 90%까지만 천천히 채운다(11-3)
+    timer.current = setInterval(() => setSend((p) => Math.min(90, p + 8 + Math.floor(Math.random() * 10))), 240);
+    const r = await callApi<{ ticket: SupportTicket }>("/api/support/tickets", "POST", { kind, body: text });
+    clearInterval(timer.current);
+    setSend(-1);
+    if ("error" in r) {
+      setErr(r.error);
+      return;
+    }
+    setText("");
+    setTickets((t) => [r.data.ticket, ...t]);
+    show("문의를 접수했어요. 영업일 기준 1일 안에 답변드려요.");
   }
 
   return (
@@ -78,7 +78,7 @@ export function SupportClient() {
         <span className="mt-3 mb-1.5 block text-caption leading-[1.55] text-sub">문의 종류</span>
         <div className="flex flex-wrap gap-2">
           {mockKinds.map((k) => (
-            <Chip key={k.value} selected={kind === k.value} onClick={() => setKind(k.value)}>
+            <Chip key={k.value} selected={kind === k.value} disabled={sending} onClick={() => setKind(k.value)}>
               {k.label}
             </Chip>
           ))}
@@ -89,6 +89,7 @@ export function SupportClient() {
         <textarea
           id="support-text"
           value={text}
+          disabled={sending}
           onChange={(e) => setText(e.target.value)}
           placeholder="어떤 화면에서 어떤 일이 있었는지 알려 주세요"
           className="box-border min-h-24 w-full resize-y rounded-[0.625rem] border border-line bg-card px-3 py-2.5 text-sm text-text"
@@ -99,6 +100,13 @@ export function SupportClient() {
             {sending ? "접수 중…" : "문의 보내기"}
           </Btn>
         </div>
+        {err && (
+          <div className="mt-3.5">
+            <Message title="문의를 접수하지 못했어요" code={err.code}>
+              {err.message}
+            </Message>
+          </div>
+        )}
         {sending && (
           <div className="mt-3.5 mb-1.5 w-full max-w-105">
             <div className="mb-1.5 flex justify-between text-caption leading-[1.55] text-sub">
@@ -113,6 +121,12 @@ export function SupportClient() {
       <Card>
         <h2 className={h2Cls}>내 문의 내역</h2>
         <div className="mt-3 flex flex-col gap-2">
+          {initial === null && (
+            <Message title="문의 내역을 불러오지 못했어요" code="UPSTREAM_ERROR">
+              잠시 후 새로 고침해 주세요.
+            </Message>
+          )}
+          {initial !== null && tickets.length === 0 && <EmptyState message="아직 남긴 문의가 없어요." />}
           {tickets.map((t) => (
             <div key={t.id} className="flex flex-wrap items-center gap-3 rounded-[0.875rem] bg-card px-3.5 py-3">
               <div className="min-w-0 flex-[1_1_11.25rem]">
