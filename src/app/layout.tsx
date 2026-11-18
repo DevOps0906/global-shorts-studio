@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import "./globals.css";
 import { SessionHeader, SiteHeader } from "@/components/site-header";
+import { BigTextSync } from "@/components/settings/big-text";
 import { HeaderGate } from "@/components/header-gate";
 
 export const metadata: Metadata = {
@@ -18,6 +19,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <SessionHeader />
           </Suspense>
         </HeaderGate>
+        <Suspense fallback={null}>
+          <BigTextSync />
+        </Suspense>
         <div className="flex flex-1 flex-col">{children}</div>
       </body>
     </html>

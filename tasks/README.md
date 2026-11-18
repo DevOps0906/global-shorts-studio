@@ -10,7 +10,7 @@
 | task-006 | 스튜디오 분석 4단계 · 제목/대본 3안 (PLAN 5장) | W3 | 003 | 높음 | builder·opus | 보류 |
 | task-007 | 편집 화면 · 캡컷 ZIP·SRT · 크레딧·마이페이지 (PLAN 4-4·4-7) | W4 | 006 | 높음 | builder·opus | 보류 |
 | task-008 | 고객문의: FAQ 6개 · 문의 접수(진행률) · 내 문의 내역 (PLAN 11-2, 시안 Support) | W2 | 004 | 보통 | builder·sonnet | 완료 |
-| task-009 | 설정: 기본값·알림·큰 글씨 모드(`.big-text` 연결)·자동 저장·변형도 경고, 저장·되돌리기 (PLAN 11-2, 시안 Settings) | W2 | 004 | 보통 | builder·sonnet | 진행 |
+| task-009 | 설정: 기본값·알림·큰 글씨 모드(`.big-text` 연결)·자동 저장·변형도 경고, 저장·되돌리기 (PLAN 11-2, 시안 Settings) | W2 | 004 | 보통 | builder·sonnet | 완료 |
 | task-010 | 관리 페이지: 개요 KPI · 작업 큐(재시도·삭제) · 회원·크레딧 지급·정지, 감사 기록 (PLAN 11-2·11-6, 시안 Admin. 정책 감시는 2차) | W4 | 004·006 | 높음 | builder·opus | 보류 |
 | task-011 | 시안 UI 공통: 버튼 반응·진행률 막대·토스트·카드·KPI·빈/로딩/오류 상태 컴포넌트, 가짜 데이터 규칙 (시안 States, PLAN 11-3·13-1) | U1 | 002 | 보통 | builder·sonnet | 완료 |
 | task-012 | 시안 UI: 홈·제작 설정·분석 진행 (`/`, `/studio/new`, `/studio/demo/analyzing`, 시안 Main) | U2 | 011 | 보통 | builder·sonnet | 완료 |
@@ -31,7 +31,6 @@
 |---|---|---|---|
 | 2026-11-19 | src/server/support.ts | 문의 접수 응답이 끊긴 뒤 재전송하면 같은 문의가 두 번 저장됨(멱등 키 없음) | support_tickets에 idempotency_key 컬럼·unique 추가(새 마이그레이션) |
 | 2026-11-19 | worker·Storage | service_role·Storage 경로는 RLS 승인 게이트를 건너뜀 | task-006 워커 작업 시작 전 is_approved 재확인, 버킷 정책에 is_approved 조건 |
-| 2026-11-17 | src/app/layout.tsx | 큰 글씨 모드(.big-text) 켜는 경로 없음(CSS만 있음) | task-009에서 user_settings.big_text 연결 |
 
 ## 교훈 (다음 작업에 그대로 적용할 것만, 20줄 이내 유지)
 - 원격 마이그레이션은 MCP apply_migration이 버전을 새로 매긴다 → 적용 후 list_migrations 버전으로 로컬 파일명을 맞춘다.

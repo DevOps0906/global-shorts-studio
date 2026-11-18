@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Btn } from "@/components/ui/btn";
 import { Card, Chip } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
 import {
@@ -39,46 +39,101 @@ function ChipRow({
   );
 }
 
-export function SettingsClient() {
-  const [v, setV] = useState<SettingsValue>(defaultSettings);
-  const [save, setSave] = useState(-1);
-  const [saved, setSaved] = useState("아직 저장하지 않은 변경이 없어요.");
+function applyBig(on: boolean) {
+  document.documentElement.classList.toggle("big-text", on);
+}
+
+export function SettingsClient({ initial }: { initial: SettingsValue | null }) {
+  const router = useRouter();
+  const [lastSaved, setLastSaved] = useState<SettingsValue>(initial ?? defaultSettings);
+  const [v, setV] = useState<SettingsValue>(initial ?? defaultSettings);
+  const [saving, setSaving] = useState(false);
+  const [dirty, setDirty] = useState(false);
+  const [error, setError] = useState("");
   const { show, toast } = useToast(2200);
-  const timer = useRef<ReturnType<typeof setInterval>>(undefined);
-  const saving = save >= 0;
+  const vRef = useRef(v);
+  const savedRef = useRef(lastSaved);
+  const savingRef = useRef(false);
 
-  useEffect(() => () => clearInterval(timer.current), []);
-  // 큰 글씨 모드: 화면에서만 <html class="big-text"> 토글 (저장 없음)
+  // 큰 글씨 모드: 서버 렌더가 html 클래스를 못 정해(cacheComponents) 첫 페인트 뒤 적용돼 잠깐 깜빡일 수 있음.
+  // 고르는 즉시 미리 적용, 화면을 떠나면 마지막 저장값으로 복원
   useEffect(() => {
-    document.documentElement.classList.toggle("big-text", v.big);
-    return () => document.documentElement.classList.remove("big-text");
+    applyBig(v.big);
   }, [v.big]);
+  useEffect(() => () => applyBig(savedRef.current.big), []);
 
-  function change(patch: Partial<SettingsValue>) {
-    setV((s) => ({ ...s, ...patch }));
-    setSaved("저장하지 않은 변경이 있어요.");
+  const doSave = useCallback(
+    async () => {
+      if (savingRef.current) return;
+      const sending = vRef.current;
+      savingRef.current = true;
+      setSaving(true);
+      setError("");
+      try {
+        const res = await fetch("/api/settings", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(sending),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        savedRef.current = sending;
+        setLastSaved(sending);
+        setDirty(vRef.current !== sending);
+        show("설정을 저장했어요.");
+        router.refresh();
+      } catch {
+        setError("저장하지 못했어요. 잠시 후 다시 시도해 주세요.");
+        setDirty(true);
+      } finally {
+        savingRef.current = false;
+        setSaving(false);
+      }
+    },
+    [router, show],
+  );
+
+  // 저장하지 않은 변경이 있으면 브라우저 이탈 시 경고
+  useEffect(() => {
+    if (!dirty) return;
+    const warn = (e: BeforeUnloadEvent) => e.preventDefault();
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [dirty]);
+
+  if (!initial) {
+    return (
+      <Card>
+        <p role="alert" className="text-body">설정을 불러오지 못했어요.</p>
+        <div className="mt-3">
+          <Btn onClick={() => router.refresh()}>다시 불러오기</Btn>
+        </div>
+      </Card>
+    );
   }
 
-  function doSave() {
-    if (saving) return;
-    let p = 0;
-    setSave(0);
-    timer.current = setInterval(() => {
-      p = Math.min(100, p + 14 + Math.floor(Math.random() * 20));
-      if (p >= 100) {
-        clearInterval(timer.current);
-        setSave(-1);
-        setSaved("방금 저장했어요.");
-        show("설정을 저장했어요.");
-      } else setSave(p);
-    }, 240);
+  function change(patch: Partial<SettingsValue>) {
+    const next = { ...vRef.current, ...patch };
+    vRef.current = next;
+    setV(next);
+    setDirty(true);
+    setError("");
   }
 
   function reset() {
-    setV(defaultSettings);
-    setSaved("기본값으로 되돌렸어요. 저장을 눌러 확정하세요.");
-    show("기본값으로 되돌렸어요.");
+    vRef.current = savedRef.current;
+    setV(savedRef.current);
+    setDirty(false);
+    setError("");
+    show("마지막 저장값으로 되돌렸어요.");
   }
+
+  const saved = error
+    ? error
+    : saving
+      ? "저장하는 중이에요."
+      : dirty
+        ? "저장하지 않은 변경이 있어요."
+        : "저장된 설정이에요.";
 
   return (
     <>
@@ -137,24 +192,15 @@ export function SettingsClient() {
       <Card>
         <div className="flex flex-wrap items-center justify-between gap-2.5">
           <div className="flex flex-wrap gap-2">
-            <Btn variant="cta" loading={saving} onClick={doSave}>
+            <Btn variant="cta" loading={saving} onClick={() => void doSave()}>
               {saving ? "저장 중…" : "설정 저장"}
             </Btn>
-            <Btn onClick={reset}>
-              기본값으로 되돌리기
+            <Btn onClick={reset} disabled={!dirty || saving}>
+              저장값으로 되돌리기
             </Btn>
           </div>
-          <span className="text-caption leading-[1.55] text-sub">{saved}</span>
+          <span role="status" className={cn("text-caption leading-[1.55]", error ? "text-danger" : "text-sub")}>{saved}</span>
         </div>
-        {saving && (
-          <div className="mt-3.5 mb-1.5 w-full max-w-105">
-            <div className="mb-1.5 flex justify-between text-caption leading-[1.55] text-sub">
-              <span>설정 저장 중…</span>
-              <b className="font-black text-brand">{save}%</b>
-            </div>
-            <Progress value={save} label="설정 저장 진행률" />
-          </div>
-        )}
       </Card>
     </>
   );

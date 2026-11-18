@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Card } from "@/components/ui/card";
 import { SettingsClient } from "@/components/settings/settings-client";
+import { loadSettings } from "@/server/settings";
 import { Protected } from "@/components/protected";
 
 export const metadata: Metadata = { title: "설정 · 글로벌쇼츠 스튜디오" };
+
+async function SettingsLoader() {
+  const r = await loadSettings();
+  return <SettingsClient initial={r.ok ? r.value : null} />;
+}
 
 export default function Page() {
   return (
@@ -13,7 +20,9 @@ export default function Page() {
           <h1 className="mb-1.5 text-h1 leading-[1.55] font-black">설정</h1>
           <p className="text-body text-sub">기본값을 정해 두면 새 영상을 만들 때마다 다시 고르지 않아도 돼요.</p>
         </Card>
-        <SettingsClient />
+        <Suspense fallback={<Card><p role="status" className="text-body text-sub">설정을 불러오는 중이에요…</p></Card>}>
+          <SettingsLoader />
+        </Suspense>
       </main>
     </Protected>
   );
