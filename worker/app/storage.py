@@ -46,10 +46,21 @@ class Storage:
         return h.hexdigest()
 
     def upload(self, path: str, src: Path, content_type: str = "video/mp4") -> None:
-        headers = {**self._headers, "Content-Type": content_type, "x-upsert": "true"}
-        try:
+        """스트리밍 업로드(파일 전체를 메모리에 올리지 않는다)."""
+        size = src.stat().st_size
+        headers = {**self._headers, "Content-Type": content_type, "x-upsert": "true", "Content-Length": str(size)}
+
+        def chunks():
             with src.open("rb") as f:
-                r = self._client.post(self._url(path), headers=headers, content=f.read())
+                yield from iter(lambda: f.read(1 << 20), b"")
+
+        try:
+            r = self._client.post(self._url(path), headers=headers, content=chunks())
             r.raise_for_status()
         except httpx.HTTPError as e:
             raise StepError(errors.MEDIA_PROCESSING_FAILED, f"storage upload {type(e).__name__}") from e
+
+    def delete(self, path: str) -> None:
+        r = self._client.delete(self._url(path), headers=self._headers)
+        if r.status_code not in (200, 204, 404):
+            r.raise_for_status()

@@ -78,3 +78,16 @@
 
 - Realtime(`supabase_realtime`): `studio.jobs`(status·step_name·finished_at)와 `studio.job_steps`(started_at·done_at·error_code), RLS로 본인 행만. 끊기면 2초 폴링(같은 두 테이블 select).
 - 소요 초 = `done_at - started_at`. 실패 단계 = `error_code`가 있는 step.
+
+## 7. 워커(006b) 운영 보강 — 리뷰 반영
+
+- **lease(중복 점유 방지)**: 소유 토큰 = 워커가 읽은 큐 메시지 `(msg_id, read_ct)`. 처리 중 vt/3마다 별도 연결로 `q_analyze.vt`를 연장(`read_ct` 일치할 때만). vt가 만료돼 다른 워커가 다시 읽으면 `read_ct`가 늘어 옛 워커는 소유권을 잃고 **쓰기·실패·환불·archive를 하지 않는다**(새 소유 워커가 running 작업을 이어서 처리). jobs 컬럼 추가 없음.
+- **잠금 순서**(cancel_analyze와 같음, 교착 방지): 사용자 advisory lock(환불·반복 원본 판정만) → `jobs for update` → 큐 메시지 행 `for update`. 반복 원본(30일 3번째) 판정은 사용자 lock으로 직렬화.
+- **취소**: 매 단계 시작·완료와 완료 저장 때 jobs가 running이 아니면 멈추고 메시지만 archive. canceled를 done·failed로 덮어쓰거나 다시 환불하지 않는다. 4단계에서 올린 프록시는 실패·중단 시 지운다(lease 상실 때는 새 소유 워커 파일일 수 있어 두고 간다).
+- **미디어 입력 고정**: 형식은 Content-Type·확장자가 아니라 ffprobe 내용으로만 판정. 모든 ffmpeg/ffprobe에 `-protocol_whitelist file,pipe`, ffprobe `-format_whitelist mov,matroska`, 이후 `-f mov|matroska` 고정. OpenCV `OPENCV_FFMPEG_CAPTURE_OPTIONS=protocol_whitelist;file`. 받아쓰기는 ffmpeg로 PCM을 뽑아 넘긴다(PyAV가 원본을 직접 열지 않음).
+- **리소스 한도**: 해상도 한 변 ≤4096·총 픽셀 ≤4096×2304, 디코딩 `-t 185`·`-threads 2`, 장면 분석 180초·받아쓰기 300초 벽시계 타임아웃(자식 프로세스 종료), 프록시 ≤200MB(`-fs`)·스트리밍 업로드.
+- **프록시**: `sources/{uid}/{project_id}/proxy.mp4`(본인 select 정책으로 읽힘). edit_state(5-3)에는 넣지 않는다.
+- **comments.cut**: 기본안 `scripts[0]`의 컷 번호. 4단계 컷 정리 후 다시 매기고 버려진 컷의 댓글은 뺀 뒤 최종 재검증.
+- **job_steps.error_code**(006d 문구 매핑): `NOT_APPROVED` · `RIGHTS_NOT_CONFIRMED` · `INVALID_SOURCE` · `SOURCE_MISSING` · `FILE_TOO_LARGE` · `UNSUPPORTED_FORMAT` · `DURATION_TOO_LONG` · `RESOLUTION_TOO_HIGH` · `MEDIA_PROCESSING_FAILED` · `LLM_REFUSED` · `LLM_SCHEMA_INVALID` · `LLM_UPSTREAM` · `MAX_ATTEMPTS` · `INTERNAL_ERROR`.
+- **DB 연결**: `DATABASE_URL`은 워커 전용 롤(pgmq `analyze` 읽기·archive, studio jobs·job_steps·projects·drafts·policy_flags 쓰기, `refund_credits` 실행만) + `sslmode=require` 권장. 롤 생성은 별도 마이그레이션(팀장 결정).
+- **라이선스 예외**: FFmpeg(Debian GPL 빌드·libx264)는 사용자 승인으로 허용 — 서버 내부 실행만, 이미지·바이너리 비배포. psycopg는 LGPL-3.0(동적 링크).

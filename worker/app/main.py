@@ -14,6 +14,7 @@ from psycopg.rows import dict_row
 
 from . import llm
 from .config import Settings
+from .lease import LeaseKeeper
 from .pipeline import Media, Pipeline
 from .repo import PgRepo
 from .storage import Storage
@@ -27,7 +28,7 @@ def _on_signal(*_: object) -> None:
     _stop = True
 
 
-def build(settings: Settings, conn: psycopg.Connection) -> Pipeline:
+def build(settings: Settings, conn: psycopg.Connection, lease_conn: psycopg.Connection) -> Pipeline:
     client = anthropic.Anthropic(api_key=settings.anthropic_api_key.get_secret_value())
 
     def generate(duration: float, build_content):  # noqa: ANN001
@@ -37,15 +38,20 @@ def build(settings: Settings, conn: psycopg.Connection) -> Pipeline:
         )
 
     os.makedirs(settings.work_dir, exist_ok=True)
+    lease_repo = PgRepo(lease_conn, settings.queue_name)  # 갱신 전용 연결(백그라운드 스레드만 사용)
+
+    def lease_factory(msg):  # noqa: ANN001, ANN202
+        return LeaseKeeper(lease_repo.renew, msg, settings.queue_vt_seconds, settings.queue_vt_seconds / 3)
+
     return Pipeline(
         repo=PgRepo(conn, settings.queue_name),
         storage=Storage(settings.supabase_url, settings.supabase_service_role_key.get_secret_value(),
                         settings.source_bucket, settings.max_source_bytes),
-        media=Media(settings.whisper_model),
+        media=Media(settings.whisper_model, settings.scenes_timeout_seconds, settings.transcribe_timeout_seconds),
         generate=generate,
-        vt_seconds=settings.queue_vt_seconds,
         max_read_ct=settings.max_read_ct,
         work_dir=settings.work_dir,
+        lease_factory=lease_factory,
     )
 
 
@@ -59,8 +65,8 @@ def main() -> None:
                       row_factory=dict_row, prepare_threshold=None)
     while not _stop:
         try:
-            with connect() as conn:
-                pipeline = build(settings, conn)
+            with connect() as conn, connect() as lease_conn:
+                pipeline = build(settings, conn, lease_conn)
                 repo: PgRepo = pipeline.repo  # type: ignore[assignment]
                 log.info("worker started (queue=%s)", settings.queue_name)
                 while not _stop:

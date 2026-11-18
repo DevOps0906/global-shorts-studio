@@ -1,8 +1,12 @@
-# 직접 의존성(버전 고정). 잠금 파일: requirements.txt (uv pip compile --generate-hashes)
+# 직접 의존성(버전 고정). 잠금 파일: requirements.txt (uv pip compile --generate-hashes --no-emit-package opencv-python)
 anthropic==2.10.0
 psycopg[binary]==3.3.9
 pydantic==2.14.3
 pydantic-settings==2.16.3
 httpx==0.28.1
 scenedetect==0.7.3
+# scenedetect가 요구하는 opencv-python(GUI·libGL) 대신 headless 휠. 잠금에서 opencv-python을 빼고(--no-emit-package) --no-deps로 설치
+opencv-python-headless==5.1.0.95
 faster-whisper==1.2.1
+# faster-whisper 1.2.1이 av 19에서 없어진 open(metadata_errors=)를 쓴다 → 18.x 고정
+av==18.1.0
