@@ -7,7 +7,7 @@
 | task-003 | Supabase 프로젝트 · `20261116184706_studio_schema.sql` 적용·API 노출 (PLAN 13-5) | W1 | — | 높음 | builder·opus | 완료 |
 | task-004 | 구글 로그인 · 역할(RBAC) (PLAN 11-6, 시안 Login) | W1 | 001·003 | 높음 | builder·opus | 완료 |
 | task-005 | 레이더·저장 채널: 스냅샷 수집 · 떡상배율 (PLAN 4-5) | W2 | 003 | 높음 | builder·opus | 완료 |
-| task-006 | 스튜디오 분석 4단계 · 제목/대본 3안 (PLAN 5장) | W3 | 003 | 높음 | builder·opus | 진행 |
+| task-006 | 스튜디오 분석 4단계 · 제목/대본 3안 (PLAN 5장) | W3 | 003 | 높음 | builder·opus | 완료 |
 | task-007 | 편집 화면 · 캡컷 ZIP·SRT · 크레딧·마이페이지 (PLAN 4-4·4-7) | W4 | 006 | 높음 | builder·opus | 보류 |
 | task-008 | 고객문의: FAQ 6개 · 문의 접수(진행률) · 내 문의 내역 (PLAN 11-2, 시안 Support) | W2 | 004 | 보통 | builder·sonnet | 완료 |
 | task-009 | 설정: 기본값·알림·큰 글씨 모드(`.big-text` 연결)·자동 저장·변형도 경고, 저장·되돌리기 (PLAN 11-2, 시안 Settings) | W2 | 004 | 보통 | builder·sonnet | 완료 |

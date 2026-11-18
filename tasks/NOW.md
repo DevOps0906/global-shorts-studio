@@ -1,10 +1,11 @@
 # NOW — 재진입 스냅샷 (30줄 이내, 매 작업 끝에 덮어쓴다)
 
-- 갱신: 2026-11-19
-- 현재 작업: task-006 스튜디오 분석 (높음, 하위 006a~d) — 계획 검토(challenger), 계획 tasks/task-006.md. 사용자: "다음 단계도 자동으로 계속"
-- 마지막으로 한 일: 고객문의 접수·내역 실데이터(POST /api/support/tickets), 설정 저장·되돌리기(PUT /api/settings, 화이트리스트), 큰 글씨 모드 <html> 연결. 자동 저장은 편집 초안용 선호값(설정 화면은 저장 버튼만)
-- 다음 한 걸음(사용자): task-006 전 결정 — 워커 호스팅·Remotion 라이선스. 그 전에 .env.local·OAuth·운영자 SQL 후 수동 확인(로그인 4건, 레이더 채널 추가→스캔, 문의 접수, 설정 저장·큰 글씨, 3구간 화면)
-- 후속(발견한 문제 표): 문의 멱등 키, 워커 승인 재확인(task-006), Storage 버킷 is_approved
-- 주의: 큰 글씨는 첫 페인트 후 적용(깜빡임, cacheComponents 제약). YouTube 파생 지표 금지(III.E.4.h)로 떡상배율 '준비 중'. .env.example에 YOUTUBE_API_KEY 추가 필요(권한상 팀장 불가). src/types/db.ts 미생성
-- SDLC 단계: 06 구현 · 담당: 팀장 Opus 5.5 · builder sonnet(008·009) · 리뷰 codex
-- 테스트 상태: web test 23 · lint · typecheck · build 통과, run.sh 01~08 통과(DB 변경 없음)
+- 갱신: 2026-11-19 (세션 종료)
+- 현재 작업: task-006 스튜디오 분석 완료(006a DB·API 원격 적용 20261118193428_studio_analyze, 006b·c 워커, 006d 화면). 다음: task-007 편집(Remotion 라이선스 결정 필요) → task-010 관리
+- 마지막으로 한 일: create_project·start_analyze·cancel_analyze definer, sources 버킷·Storage 정책, 파이썬 워커(pgmq lease·ffmpeg 고정·한도·Claude Sonnet 5.5 구조화 출력·환불), 업로드·진행 화면. 계약: tasks/task-006-contract.md
+- 다음 한 걸음(사용자): .env.local·.env.example(YOUTUBE_API_KEY)·OAuth·운영자 SQL → 수동 확인. Supabase 플랜 확인(Free 업로드 50MB). Railway 워커 배포(ANTHROPIC_API_KEY·DATABASE_URL 워커 전용 롤·sslmode=require·service_role). worker/.env.example 주석 2줄(전용 롤·WHISPER_MODEL=/opt/whisper-small)은 권한상 팀장 불가
+- 후속(발견한 문제 표): 문의 멱등 키, 업로드 원본 정리 크론, 레이더→작업물, 워커 전용 DB 롤 마이그레이션, 분석 자동 재시도 2회, 제목·대본 선택 저장(task-007)
+- 결정 기록: FFmpeg GPL 예외(서버 내부·비배포, AGENTS.md), YouTube 파생 지표 금지(떡상배율 준비 중), 한도(작업물 30/일·분석 20/일·동시 2)
+- 주의: 4dec097 커밋에 리뷰 전 워커 초안이 섞임(248e836이 최종). Storage 정책은 원격 생성 확인, 실제 업로드는 미검증. src/types/db.ts 미생성(pnpm db:types)
+- SDLC 단계: 06 구현 · 담당: 팀장 Opus 5.5 · builder opus/sonnet · 리뷰 codex·reviewer
+- 테스트 상태: run.sh 01~09 · web test · lint · typecheck · build · worker pytest 166 통과

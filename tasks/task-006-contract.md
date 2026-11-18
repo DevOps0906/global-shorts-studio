@@ -1,6 +1,6 @@
 # task-006 계약 — 작업물·분석 시작·취소 API, DB 함수, 큐 메시지
 
-> 정본(006b 워커·006d 화면 근거). 구현: `supabase/migrations/20261119100000_studio_analyze.sql` · `src/server/projects*.ts` · `src/app/api/{projects,jobs}/**`.
+> 정본(006b 워커·006d 화면 근거). 구현: `supabase/migrations/20261118193428_studio_analyze.sql` · `src/server/projects*.ts` · `src/app/api/{projects,jobs}/**`.
 > 모든 API: 로그인 쿠키 세션, `Content-Type: application/json` 필수(아니면 400 `INVALID_REQUEST`). 오류 본문 `{ error: { code, message, ...extra } }`.
 > 공통 오류: 401 `UNAUTHENTICATED` · 403 `NOT_APPROVED` · 400 `INVALID_REQUEST` · 500/502 `UPSTREAM_ERROR`.
 

@@ -28,7 +28,7 @@ SCHEMA_FILES = [
     ROOT / "supabase/migrations/20261116184740_fk_indexes.sql",
     ROOT / "supabase/migrations/20261118152240_approval_gate.sql",
     ROOT / "supabase/migrations/20261118160922_radar_videos.sql",
-    ROOT / "supabase/migrations/20261119100000_studio_analyze.sql",
+    ROOT / "supabase/migrations/20261118193428_studio_analyze.sql",
 ]
 CONTAINER = "gss-worker-dbtest"
 
