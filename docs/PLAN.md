@@ -186,6 +186,8 @@ MVP는 홈·설정·분석·편집·내보내기 5개 화면과 레이더 핵심
 - "국내 미등장" 배지: 같은 영상의 한국어·일본어 재가공본이 아직 없다면 표시(제목 검색 기반 추정)
 - "제작함" 상태: 이미 만든 소재는 회색 처리해 중복 제작 방지
 
+**1차 구현(task-005, 원본 지표만).** YouTube Data API v3 서버 공용 키로 Next.js 서버가 스캔한다. 조회수·구독자·게시 경과(시간)만 표시·정렬·필터하고(정렬: 조회수·최신순·구독자순), "새 영상"은 처음 발견 후 24시간 이내다. 떡상배율 필터·칸, 채널 평균 조회, "국내 미등장"·"제작함", 예약 스캔·알림은 "준비 중"(비활성)이다(사유 7-2). 화면 하단에 YouTube 서비스 약관·Google 개인정보처리방침 링크를 둔다. 한도: 사용자 채널 50개, 채널 확인 하루 50회, 수동 스캔 10분 간격, 사용자 하루 1,000유닛·서비스 하루 8,000유닛(LA 자정 초기화).
+
 ### 4-6. 성과 추적 (`/performance`, 신규)
 
 - 내 채널 업로드 영상을 레이더 추적 대상에 자동 등록
@@ -315,6 +317,7 @@ MVP는 홈·설정·분석·편집·내보내기 5개 화면과 레이더 핵심
 
 - **다운로드**: 유튜브 영상을 내려받는 기능은 유튜브 약관에 어긋난다. 제품에는 다운로더를 넣지 않고, 사용자가 권리를 가진 파일만 업로드하게 한다.
 - **저작권**: 타인의 영상을 재가공해 올리는 것은 변형 정도와 무관하게 저작권 침해가 될 수 있다. Content ID 클레임과 저작권 경고(3회 시 채널 삭제)는 수익화 정책과 별개다.
+- **YouTube API 데이터**: 개발자 정책 III.E.4.h에 따라 API 데이터로 새 지표(떡상배율·채널 평균 조회수 등)를 계산하지 않는다. 원본 값만 보여 주고, 저장한 API 데이터는 30일 안에 갱신하거나 지운다(`radar.purge_stale()`, pg_cron 매일). 떡상배율은 다른 근거가 확인될 때까지 보류한다.
 - **음원**: 상업 음원은 넣지 않는다. 로열티 프리 라이브러리만 제공한다.
 - **인물**: 어린이·일반인이 나오는 영상은 초상권 문제가 걸린다. 강의 사례 중 아이가 나오는 영상이 여럿 있어, 얼굴 모자이크 제안을 기본값으로 둔다.
 
@@ -691,7 +694,7 @@ task-006·007은 착수 때 세부 작업으로 나누고, 나눈 작업마다 �
 | 자동 저장 | `PATCH /api/drafts/:id` (`version` 일치할 때만) | — |
 | 재구성·번역·TTS | `POST /api/drafts/:id/{rebuild,translate,tts}` | `analyze` · `translate` · `tts` |
 | 내보내기 | `POST /api/drafts/:id/render` (`kind`: mp4 / capcut_zip / srt) | `render` |
-| 레이더 | `POST /api/radar/channels`, `POST /api/radar/scan` | `scan` (예약 스캔은 크론) |
+| 레이더 | `POST /api/radar/channels`, `PATCH·DELETE /api/radar/channels/:id`, `POST /api/radar/scan` — Next 서버가 YouTube API를 직접 호출(공용 키 `YOUTUBE_API_KEY`, 서버 전용). 쿼터는 DB 함수 `radar.claim_lookup`·`claim_scan`이 먼저 확보 | — (예약 스캔은 준비 중) |
 | 관리 | `POST /api/admin/credits`, `POST /api/admin/jobs/:id/retry` (감사 로그 필수) | — |
 
 큐 메시지: `{ job_id, project_id, kind, idempotency_key }`. 워커만 service_role을 쓴다.
@@ -706,6 +709,11 @@ task-006·007은 착수 때 세부 작업으로 나누고, 나눈 작업마다 �
 | `YT_QUOTA_EXCEEDED` | 유튜브 API 쿼터 소진 | 초기화 시각 표시 |
 | `CONCURRENCY_LIMIT` | 동시 작업 한도 | 대기열 순번 표시 |
 | `UPSTREAM_ERROR` | 외부 API·서버 일시 오류 | 해당 영역만 오류 + 다시 시도 |
+| `UNAUTHENTICATED` · `NOT_APPROVED` | API 비로그인(401)·미승인(403) | 로그인·승인 대기 화면 |
+| `INVALID_REQUEST` · `INVALID_CHANNEL_INPUT` | 요청 형식 오류 · 채널 입력이 @핸들·youtube.com/@핸들·youtube.com/channel/UC… 아님 | 입력란 오류(입력 유지) |
+| `CHANNEL_NOT_FOUND` · `CHANNEL_DUPLICATE` · `CHANNEL_LIMIT` | 없는 채널 · 이미 저장 · 50개 초과 | 입력란 오류 |
+| `RATE_LIMITED` | 스캔 10분 간격·사용자 하루 사용량·채널 확인 하루 50회 초과 | 사유와 초기화 시각 표시 |
+| `NO_CHANNELS` | 추적 중인 저장 채널 없음 | 채널 추가로 안내 |
 
 ### 13-5. 데이터 모델 보강
 
@@ -715,11 +723,13 @@ task-006·007은 착수 때 세부 작업으로 나누고, 나눈 작업마다 �
 | --- | --- | --- |
 | `studio.profiles` | user\_id, display\_name, role(member/instructor/operator), plan, approved\_at | 역할·플랜(11-6) |
 | `studio.cohort_members` | cohort\_id, user\_id, role(student/instructor) | 강사가 볼 수 있는 수강생 범위 |
-| `radar.videos` | id, channel\_id, yt\_video\_id(고유), title, published\_at, duration\_s, thumbnail\_url | 추적 영상 |
-| `radar.video_snapshots` | video\_id, captured\_at, views, likes, comments | 조회수 추이·떡상배율 |
+| `radar.videos` | id, user\_id, channel\_id, yt\_video\_id(채널 안 고유), title, published\_at, duration\_s, thumbnail\_url, views, likes, comments, first\_seen\_at, updated\_at | 추적 쇼츠(원본 지표만, 180초 이하) |
+| `radar.quota_usage` · `radar.quota_global` | 날짜(LA)별 사용자·전체 유닛 | YouTube 쿼터 한도(사용자 쓰기 불가) |
+| `radar.video_snapshots` | (보류) | 조회수 추이 — 파생 지표 금지(7-2)로 성과 추적 task에서 다시 정한다 |
 
 - `studio.jobs.kind`는 작업 종류(analyze/tts/render/translate/scan)다. 초안 마이그레이션의 `kind(video/script)`는 `projects.type`으로 옮긴다(task-003).
-- 떡상배율은 「숏츠레이더 기획서」 정의를 따른다. 그 문서가 없으면 "영상 조회수 ÷ 같은 채널 최근 10개 영상 조회수 중앙값"으로 한다.
+- 떡상배율은 YouTube 개발자 정책 III.E.4.h(파생 지표 금지)로 보류한다(7-2). 계산하지 않는다.
+- `radar.channels`는 직접 추가·수정 불가(추적·그룹 컬럼만 수정, 삭제 가능). 추가·영상 저장은 definer 함수(`add_channel`·`upsert_videos`)만, `videos`는 `(channel_id, user_id)` 복합 FK로 본인 채널에만 붙는다. `projects.source_video_id`는 영상 삭제 시 null(출처는 `source_url`).
 - OAuth 토큰(YouTube·Threads)과 BYOK 키는 Supabase Vault에 저장하고, 테이블에는 참조(`token_ref`)만 둔다. 꺼낼 때 비밀 이름(`oauth:<user_id>:<provider>`)으로 소유자를 다시 확인하고, 연결 해제·탈퇴 시 트리거로 Vault 비밀도 지운다.
 - 운영자·강사 판정은 `profiles.role`(service_role만 수정)로 한다. 사용자 메타데이터로 판정하지 않는다.
 - 원본 삭제 기준은 `coalesce(finished_at, created_at) + 7일`, 삭제는 워커가 Storage API로 한다. 반복 원본 판정(13-6)은 파일이 지워져도 남는 `source_sha256`·`source_url`로 한다.
@@ -727,8 +737,8 @@ task-006·007은 착수 때 세부 작업으로 나누고, 나눈 작업마다 �
 
 | 접근 규칙(RLS) | 대상 |
 | --- | --- |
-| 본인 행만 읽기·쓰기 | projects, drafts, variants, tts\_clips, renders, uploads, style\_presets, user\_settings, support\_tickets, radar.channels |
-| 본인 행 읽기만(쓰기는 서버·DB 함수) | credit\_ledger, jobs, job\_steps(행에 user\_id 보관), analysis, homework\_progress, linked\_accounts(토큰 참조 위조 방지), profiles(역할·플랜 자기 변경 방지) |
+| 본인 행만 읽기·쓰기 | projects, drafts, variants, tts\_clips, renders, uploads, style\_presets, user\_settings, support\_tickets, radar.channels(추가는 DB 함수, 수정은 추적·그룹만) |
+| 본인 행 읽기만(쓰기는 서버·DB 함수) | credit\_ledger, jobs, job\_steps(행에 user\_id 보관), analysis, homework\_progress, linked\_accounts(토큰 참조 위조 방지), profiles(역할·플랜 자기 변경 방지), radar.videos·quota\_usage |
 | 강사: 자기 코호트 수강생 읽기 | homework\_progress, 작업 큐 뷰 `instructor_job_queue`(id·user\_id·kind·status·created\_at만) |
 | 운영자만 읽기(쓰기는 서버) | policy\_flags, admin\_audit\_log, 전체 회원·크레딧 |
 

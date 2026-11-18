@@ -27,7 +27,8 @@ insert into studio.linked_accounts (user_id, provider) values ('aaaaaaaa-0000-00
 insert into studio.homework_progress (user_id, lesson_no, rule_key) values ('aaaaaaaa-0000-0000-0000-000000000001', 1, 'r');
 insert into studio.support_tickets (user_id, kind, body) values ('aaaaaaaa-0000-0000-0000-000000000001', 'bug', 'x');
 insert into studio.user_settings (user_id) values ('aaaaaaaa-0000-0000-0000-000000000001');
-insert into radar.channels (user_id, handle) values ('aaaaaaaa-0000-0000-0000-000000000001', '@a');
+insert into radar.channels (user_id, handle, yt_channel_id, uploads_playlist_id)
+  values ('aaaaaaaa-0000-0000-0000-000000000001', '@a', 'UC' || repeat('a', 22), 'UU' || repeat('a', 22));
 insert into studio.policy_flags (user_id, type) values ('aaaaaaaa-0000-0000-0000-000000000001', 'low_score');
 insert into studio.admin_audit_log (admin_id, action) values ('cccccccc-0000-0000-0000-000000000003', 'x');
 
@@ -94,7 +95,7 @@ begin
   if not studio.is_approved() then raise exception 'FAIL approved is_approved'; end if;
   select count(*) into n from studio.projects;
   if n <> 1 then raise exception 'FAIL approved projects=%', n; end if;
-  insert into radar.channels (user_id, handle) values (auth.uid(), '@b');
+  if radar.add_channel('@b', 'B', 'UC' || repeat('b', 22), 'UU' || repeat('b', 22), 1) <> 'ok' then raise exception 'FAIL approved add_channel'; end if;
   update studio.projects set lang = 'ja' where user_id = auth.uid();
   get diagnostics n = row_count;
   if n <> 1 then raise exception 'FAIL approved project update=%', n; end if;
@@ -162,7 +163,7 @@ begin
   if n <> 1 then raise exception 'FAIL approved A projects=%', n; end if;
   select count(*) into n from studio.credit_ledger;
   if n <> 1 then raise exception 'FAIL approved A ledger=%', n; end if;
-  insert into radar.channels (user_id, handle) values (auth.uid(), '@a2');
+  if radar.add_channel('@a2', 'A2', 'UC' || repeat('c', 22), 'UU' || repeat('c', 22), 1) <> 'ok' then raise exception 'FAIL approved A add_channel'; end if;
 end $$;
 reset role;
 update studio.profiles set approved_at = null where user_id = 'aaaaaaaa-0000-0000-0000-000000000001';

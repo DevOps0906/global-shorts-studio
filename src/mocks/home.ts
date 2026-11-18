@@ -5,17 +5,16 @@ export type HotItem = {
   channel: string;
   views: string;
   hours: string;
-  mult: string;
   bg: string;
   fresh: boolean;
 };
 
 export const HOT: HotItem[] = [
-  { id: "h1", title: "Cat refuses to leave the Christmas tree", channel: "PawTwist", views: "278만", hours: "60시간", mult: "571.5x", bg: "linear-gradient(160deg,#7a5b3a,#2b2016)", fresh: true },
-  { id: "h2", title: "Mom lines the family up against the wall", channel: "HomeLaughs", views: "404만", hours: "41시간", mult: "149.6x", bg: "linear-gradient(160deg,#b7a99a,#4a4038)", fresh: false },
-  { id: "h3", title: "Tiny glasses made for a doll", channel: "MiniMaker", views: "20만", hours: "22시간", mult: "48.2x", bg: "linear-gradient(160deg,#7d8f5a,#2d3520)", fresh: true },
-  { id: "h4", title: "Girl finds her lost bird at the pet shop", channel: "FeatherNest", views: "31만", hours: "35시간", mult: "27.4x", bg: "linear-gradient(160deg,#c88aa0,#3f2a33)", fresh: true },
-  { id: "h5", title: "Rhino beetle opens its wings", channel: "BugLens", views: "96만", hours: "58시간", mult: "13.7x", bg: "linear-gradient(160deg,#8a5a2b,#231509)", fresh: false },
+  { id: "h1", title: "Cat refuses to leave the Christmas tree", channel: "PawTwist", views: "278만", hours: "60시간", bg: "linear-gradient(160deg,#7a5b3a,#2b2016)", fresh: true },
+  { id: "h2", title: "Mom lines the family up against the wall", channel: "HomeLaughs", views: "404만", hours: "41시간", bg: "linear-gradient(160deg,#b7a99a,#4a4038)", fresh: false },
+  { id: "h3", title: "Tiny glasses made for a doll", channel: "MiniMaker", views: "20만", hours: "22시간", bg: "linear-gradient(160deg,#7d8f5a,#2d3520)", fresh: true },
+  { id: "h4", title: "Girl finds her lost bird at the pet shop", channel: "FeatherNest", views: "31만", hours: "35시간", bg: "linear-gradient(160deg,#c88aa0,#3f2a33)", fresh: true },
+  { id: "h5", title: "Rhino beetle opens its wings", channel: "BugLens", views: "96만", hours: "58시간", bg: "linear-gradient(160deg,#8a5a2b,#231509)", fresh: false },
 ];
 
 export type Job = { id: number; title: string; meta: string; status: string; uploaded: boolean };

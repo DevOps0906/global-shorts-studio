@@ -129,8 +129,36 @@ erDiagram
     text target
     timestamptz at
   }
+  videos {
+    bigint id PK
+    uuid user_id FK
+    bigint channel_id
+    text yt_video_id
+    text title
+    timestamptz published_at
+    int duration_s
+    text thumbnail_url
+    bigint views
+    bigint likes
+    bigint comments
+    timestamptz first_seen_at
+    string more_1_cols
+  }
+  quota_usage {
+    uuid user_id PK,FK
+    date day PK
+    int units
+    int channel_lookups
+    timestamptz last_scan_at
+  }
+  quota_global {
+    date day PK
+    int units
+  }
   projects ||--o{ drafts : "project_id"
   projects ||--o{ jobs : "project_id"
   jobs ||--o{ job_steps : "job_id"
   jobs ||--o{ credit_ledger : "job_id"
   jobs ||--o{ policy_flags : "job_id"
+  channels ||--o{ videos : "channel_id"
+  videos ||--o{ projects : "source_video_id"

@@ -4,13 +4,38 @@ import Link from "next/link";
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Hero } from "@/components/home/hero";
-import { HOT, JOBS, TYPE_CARDS } from "@/mocks/home";
+import { EmptyState, Message, Skeleton } from "@/components/ui/state-blocks";
+import { fmtCount, fmtDuration } from "@/lib/radar-format";
+import { JOBS, TYPE_CARDS } from "@/mocks/home";
+import type { RadarItem } from "@/server/radar";
 import { cn } from "@/lib/utils";
 
 const mini =
   "inline-flex min-h-8 items-center justify-center rounded-lg bg-card2 text-xs font-bold text-text transition-[filter,transform] hover:-translate-y-[0.0625rem] hover:brightness-[1.18] active:scale-[0.96]";
 
-export function HomeScreen() {
+/** 오늘의 소재: 최근 3일 쇼츠 조회수 상위 5개(원본 지표). null이면 이 영역만 오류(13-1) */
+export type HomeHot = { items: RadarItem[]; channelCount: number; lastScanLabel: string | null } | null;
+
+/** 로딩 스켈레톤(13-1): 유형 카드 2개 + 소재 카드 격자 모양 */
+export function HomeSkeleton() {
+  return (
+    <main aria-busy="true" className="mx-auto w-full max-w-[60rem] px-5 pb-20">
+      <Skeleton className="mx-auto mt-10 h-8 w-64" />
+      <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+        <Skeleton className="h-[13rem] w-full rounded-[1.125rem]" />
+        <Skeleton className="h-[13rem] w-full rounded-[1.125rem]" />
+      </div>
+      <Skeleton className="mt-10 h-6 w-72" />
+      <div className="mt-3 flex gap-2.5 overflow-hidden md:grid md:grid-cols-3 md:gap-3 xl:grid-cols-5">
+        {Array.from({ length: 5 }, (_, i) => (
+          <Skeleton key={i} className="aspect-[9/16] w-[9.375rem] flex-none md:w-full" />
+        ))}
+      </div>
+    </main>
+  );
+}
+
+export function HomeScreen({ hot }: { hot: HomeHot }) {
   const [jobs, setJobs] = useState(JOBS);
 
   return (
@@ -51,39 +76,61 @@ export function HomeScreen() {
         <div className="mb-3 flex items-baseline justify-between gap-3">
           <h2 id="hot-h" className="text-h2 font-bold">
             레이더가 찾은 오늘의 떡상 소재
-            <small className="ml-1.5 text-caption font-medium text-sub">저장 채널 299개 · 오후 9:00 스캔</small>
+            {hot && (
+              <small className="ml-1.5 text-caption font-medium text-sub">
+                저장 채널 {hot.channelCount}개{hot.lastScanLabel ? ` · ${hot.lastScanLabel} 스캔` : ""}
+              </small>
+            )}
           </h2>
           <Link href="/radar" className="text-sm font-medium text-brand">
             전체 보기 →
           </Link>
         </div>
+        {!hot ? (
+          <Message title="레이더 결과를 불러오지 못했어요" code="UPSTREAM_ERROR">잠시 후 새로고침해 주세요.</Message>
+        ) : hot.items.length === 0 ? (
+          <EmptyState
+            message={hot.channelCount === 0 ? "저장 채널이 없어 소재를 찾지 못했어요." : "최근 3일 안에 올라온 소재가 없어요. 레이더에서 추적을 시작해 보세요."}
+            action={
+              <Link href={hot.channelCount === 0 ? "/channels" : "/radar"} className={cn(mini, "px-3 text-sm")}>
+                {hot.channelCount === 0 ? "저장 채널 추가" : "레이더로 가기"}
+              </Link>
+            }
+          />
+        ) : (
         <div className="flex gap-2.5 overflow-x-auto md:grid md:grid-cols-3 md:gap-3 md:overflow-visible xl:grid-cols-5">
-          {HOT.map((h) => (
+          {hot.items.map((h) => (
             <Card
               key={h.id}
               className="flex w-[9.375rem] flex-none flex-col gap-2 rounded-[0.875rem] p-1.5 md:p-1.5 transition-[transform,box-shadow] duration-150 hover:-translate-y-[0.1875rem] md:w-auto motion-reduce:hover:translate-y-0"
             >
-              <div className="relative flex aspect-[9/16] items-center justify-center overflow-hidden rounded-[0.625rem]" style={{ background: h.bg }}>
-                {h.fresh && (
+              <div
+                className="relative flex aspect-[9/16] items-center justify-center overflow-hidden rounded-[0.625rem] bg-card2 bg-cover bg-center"
+                style={h.thumbnailUrl ? { backgroundImage: `url("${h.thumbnailUrl}")` } : undefined}
+              >
+                {h.isNew && (
                   <span className="absolute top-1.5 left-1.5 rounded-md bg-pink px-1.5 py-0.5 text-2xs font-bold text-text">
-                    국내 미등장
+                    NEW
                   </span>
                 )}
-                <span className="absolute top-1.5 right-1.5 inline-flex items-center gap-[0.1875rem] rounded-md bg-brand px-1.5 py-0.5 text-xs font-bold text-bg">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                    <path d="M12 2c1 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3 0-3-1-6 1-9.5z" />
-                  </svg>
-                  {h.mult}
+                <span className="absolute top-1.5 right-1.5 inline-flex items-center gap-[0.1875rem] rounded-md bg-bg/70 px-1.5 py-0.5 text-xs font-bold text-text">
+                  {fmtDuration(h.durationS)}
                 </span>
-                <span aria-hidden className="flex size-[1.875rem] items-center justify-center rounded-full bg-text/90 text-bg">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <a
+                  href={`https://www.youtube.com/shorts/${h.ytVideoId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`YouTube에서 보기: ${h.title}`}
+                  className="flex size-[1.875rem] items-center justify-center rounded-full bg-text/90 text-bg after:absolute after:inset-0 after:content-['']"
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
                     <path d="M7 4l13 8-13 8z" />
                   </svg>
-                </span>
+                </a>
               </div>
               <h4 className="mx-0.5 line-clamp-2 font-bold min-h-[2.125rem] text-caption leading-[1.4]">{h.title}</h4>
               <p className="mx-0.5 text-xs text-sub">
-                {h.channel} · {h.views} · {h.hours}
+                {h.channel} · {fmtCount(h.views)} · {h.hours}시간
               </p>
               <div className="grid grid-cols-2 gap-1">
                 <Link href={`/studio/new?type=video&src=${h.id}`} className={mini}>
@@ -96,6 +143,7 @@ export function HomeScreen() {
             </Card>
           ))}
         </div>
+        )}
       </section>
 
       <section className="mt-10" aria-labelledby="job-h">

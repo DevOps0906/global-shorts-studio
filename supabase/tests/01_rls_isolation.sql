@@ -23,8 +23,9 @@ insert into studio.homework_progress (user_id, lesson_no, rule_key) values
   ('aaaaaaaa-0000-0000-0000-000000000001', 1, 'r'), ('bbbbbbbb-0000-0000-0000-000000000002', 1, 'r');
 insert into studio.support_tickets (user_id, kind, body) values
   ('aaaaaaaa-0000-0000-0000-000000000001', 'bug', 'x'), ('bbbbbbbb-0000-0000-0000-000000000002', 'bug', 'x');
-insert into radar.channels (user_id, handle) values
-  ('aaaaaaaa-0000-0000-0000-000000000001', '@a'), ('bbbbbbbb-0000-0000-0000-000000000002', '@b');
+insert into radar.channels (user_id, handle, yt_channel_id, uploads_playlist_id) values
+  ('aaaaaaaa-0000-0000-0000-000000000001', '@a', 'UC' || repeat('a', 22), 'UU' || repeat('a', 22)),
+  ('bbbbbbbb-0000-0000-0000-000000000002', '@b', 'UC' || repeat('b', 22), 'UU' || repeat('b', 22));
 insert into studio.policy_flags (job_id, user_id, project_id, type) values ('22222222-0000-0000-0000-00000000000b', 'bbbbbbbb-0000-0000-0000-000000000002', '11111111-0000-0000-0000-00000000000b', 'low_score');
 
 -- 승인된 사용자 기준(task-019 승인제)

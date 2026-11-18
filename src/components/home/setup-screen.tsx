@@ -49,7 +49,7 @@ export function SetupScreen() {
             <div>
               <b className="block text-sm">레이더 소재 · {src.title}</b>
               <span className="text-xs text-sub">
-                {src.channel} · {src.views} · 떡상 {src.mult} · 원본 댓글 20개를 불러왔어요
+                {src.channel} · {src.views} · 원본 댓글 20개를 불러왔어요
               </span>
             </div>
           </div>

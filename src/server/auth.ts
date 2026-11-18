@@ -45,6 +45,22 @@ export const getSession = cache(async (): Promise<Session | null> => {
   return { user, role, approved, displayName: displayNameOf(user) };
 });
 
+/** API 오류 응답 본문(PLAN 13-4): `{ error: { code, message, ... } }` */
+export function apiError(status: number, code: string, message: string, extra?: Record<string, unknown>) {
+  return Response.json({ error: { code, message, ...extra } }, { status });
+}
+
+/**
+ * Route Handler용 세션 검사(redirect 없음). 비로그인 → 401 UNAUTHENTICATED, 미승인 → 403 NOT_APPROVED 응답을 돌려준다.
+ * 사용: `const s = await getApiSession(); if (s instanceof Response) return s;`
+ */
+export async function getApiSession(): Promise<Session | Response> {
+  const session = await getSession();
+  if (!session) return apiError(401, "UNAUTHENTICATED", "로그인이 필요해요.");
+  if (!session.approved) return apiError(403, "NOT_APPROVED", "승인된 회원만 쓸 수 있어요.");
+  return session;
+}
+
 /**
  * 보호 화면 진입 검사(proxy 다음 2차 관문). 비로그인 → /login, 미승인 → /pending,
  * roles를 주면 그 밖의 역할은 404.
