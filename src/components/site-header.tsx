@@ -2,17 +2,16 @@ import Link from "next/link";
 import { BrandMark } from "@/components/brand-mark";
 import { navItems, type Role } from "@/lib/nav";
 import { MobileMenu, SiteNav } from "@/components/site-nav";
-import { mockSession } from "@/mocks/session";
+import { getSession } from "@/server/auth";
 
+/** 서버 세션의 역할·이름으로 그린 상단 메뉴. 세션 없음(로그인 전·/states) → member 메뉴, 이름 없음 */
+export async function SessionHeader() {
+  const session = await getSession();
+  return <SiteHeader role={session?.role ?? "member"} accountName={session?.displayName} />;
+}
 
-/** 모든 화면 공통 상단 메뉴. role 기본값 member → 관리 페이지 숨김 (인증 전) */
-export function SiteHeader({
-  role = mockSession.role,
-  accountName = mockSession.displayName,
-}: {
-  role?: Role;
-  accountName?: string;
-}) {
+/** 모든 화면 공통 상단 메뉴. 역할에 없는 메뉴(관리 페이지 등)는 숨긴다 */
+export function SiteHeader({ role, accountName }: { role: Role; accountName?: string }) {
   const items = navItems.filter((item) => !item.roles || item.roles.includes(role));
 
   return (

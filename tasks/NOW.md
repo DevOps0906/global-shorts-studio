@@ -1,13 +1,12 @@
 # NOW — 재진입 스냅샷 (30줄 이내, 매 작업 끝에 덮어쓴다)
 
-- 갱신: 2026-11-18 (세션 종료)
-- 현재 작업: 시안 UI 단계(task-011~018) 완료 — 9화면 가짜 데이터 UI, 시안 대조·디자인 리뷰 반영. 다음: 개발 단계 재개 여부 사용자 결정(task-004 전 .env.local·스키마 노출·구글 OAuth 필요)
-- 마지막으로 한 일: 시안 9화면 UI(가짜 데이터) 구현·시안 대조·디자인 리뷰 반영, 모바일 햄버거 메뉴·GNB 가운데 정렬·계정명, cn 글자 크기 병합 수정. 확인용: pnpm dev 후 /states 등, 시안은 design/prototypes(support.js 미리보기)
-- 다음 한 걸음: 사용자 결정 후 개발 재개 — .env.local·Exposed schemas(studio/radar)·구글 OAuth 준비 → pnpm db:types → task-004. 미검증: 모바일 서랍 연 상태·포커스 복귀, 큰 글씨 켠 화면
-- 열린 결정(사용자 확인 필요): 구글 OAuth 클라이언트 발급(task-004 전), 워커 호스팅·Remotion 라이선스(task-006 전)
-- 주의: src/types/db.ts 미생성(스키마 노출 후). proxy.ts는 task-004. 성능 점검 WARN: 다중 permissive select 정책 4개(own+operator) — 나중에 OR 하나로 합칠지 검토
+- 갱신: 2026-11-18
+- 현재 작업: task-004 구글 로그인·승인제·RBAC 완료(자동 검증). 다음 대기 작업 없음 — task-005~010 보류, 재개 순서 사용자 결정
+- 마지막으로 한 일: proxy.ts(세션 갱신·비로그인 차단·/api 401), auth/callback(safeNext), /pending 승인 대기, Protected 감싸개(requireSession), /admin member→404, 로그아웃 form POST, /states 개발 전용, .env.example. 계획·결정: tasks/task-004.md
+- 다음 한 걸음: 사용자 .env.local(URL·publishable 키·SITE_URL) 작성 → Supabase Redirect URLs에 <SITE_URL>/auth/callback 정확히 등록 → 구글 OAuth 등록 → 수동 확인 4건(비로그인→/login, 미승인→/pending, member /admin 404, 로그아웃 쿠키 삭제) → 첫 운영자 SQL(README)
+- 후속 후보(높음): 승인제 DB RLS 반영(studio.is_approved, 새 마이그레이션) — tasks/README.md 발견한 문제
+- 열린 결정: 워커 호스팅·Remotion 라이선스(task-006 전), 다음 개발 작업 순서
+- 주의: /admin member 404는 Suspense 스트리밍이라 HTTP 200일 수 있음. 미승인 API 403(NOT_APPROVED)은 API 라우트 생길 때 구현. 이메일 링크 로그인·"둘러보기(샘플)" 링크는 아직 가짜. src/types/db.ts 미생성(pnpm db:types). .env.example 내용은 권한상 팀장 미확인(이름만 작성 지시)
 - SDLC 단계: 06 구현
-- 담당 모델/역할: 팀장 Opus 5.5
-- 수정 파일: src/** (화면·ui·mocks), design/tokens.css, docs/PLAN.md, tasks/**
-- 테스트 상태: lint·typecheck·build 통과(3069399 기준)
-- 남은 작업: tasks/README.md 표 참조
+- 담당 모델/역할: 팀장 Opus 5.5 · builder opus · 리뷰 codex(code)·reviewer(security)
+- 테스트 상태: test 18/18 · lint · typecheck · build 통과

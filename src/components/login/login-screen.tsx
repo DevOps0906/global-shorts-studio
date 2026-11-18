@@ -3,14 +3,33 @@
 import Link from "next/link";
 import { BrandMark } from "@/components/brand-mark";
 import { useEffect, useRef, useState } from "react";
+import { useFormStatus } from "react-dom";
 import { Btn } from "@/components/ui/btn";
 import { Progress } from "@/components/ui/progress";
+import { Message } from "@/components/ui/state-blocks";
 import { useToast } from "@/components/ui/toast";
 import { loginCopy, loginProgress, loginTick, type LoginMode } from "@/mocks/login";
+import { signInWithGoogle } from "@/server/auth-actions";
 
+/** /login?error= 코드별 안내 (콜백·OAuth 시작 실패) */
+const loginErrors: Record<string, string> = {
+  auth_callback: "로그인 링크가 만료됐거나 확인하지 못했어요. 다시 시도해 주세요.",
+  oauth_start: "구글 로그인을 시작하지 못했어요. 잠시 후 다시 시도해 주세요.",
+  signout_failed: "로그아웃 처리 중 문제가 있었어요. 이 브라우저에서는 로그아웃됐어요.",
+};
 
-/** 시안 Login: 가짜 로그인. 진행률을 보여 준 뒤 스튜디오(/)로 가는 버튼만 연다 */
-export function LoginScreen() {
+/** 구글 로그인 버튼: Server Action 제출 중에는 잠근다 */
+function GoogleButton({ disabled }: { disabled: boolean }) {
+  const { pending } = useFormStatus();
+  return (
+    <Btn type="submit" variant="cta" loading={pending} disabled={disabled}>
+      {pending ? loginCopy.busy : loginCopy.google}
+    </Btn>
+  );
+}
+
+/** 시안 Login. 구글 로그인은 실제 OAuth(Server Action), 이메일 링크는 아직 가짜 */
+export function LoginScreen({ next, error }: { next?: string; error?: string }) {
   const [email, setEmail] = useState("");
   const [pct, setPct] = useState(-1);
   const [mode, setMode] = useState<LoginMode>("google");
@@ -19,6 +38,8 @@ export function LoginScreen() {
   const timer = useRef<ReturnType<typeof setInterval>>(undefined);
   const { toast, show } = useToast(2200);
   const busy = pct >= 0;
+  // 주소의 error 값은 그대로 보여 주지 않고 아는 코드로만 바꾼다
+  const errorCode = error ? (Object.hasOwn(loginErrors, error) ? error : "auth_callback") : undefined;
 
   useEffect(() => () => clearInterval(timer.current), []);
 
@@ -93,13 +114,10 @@ export function LoginScreen() {
           )}
 
           <div className="mt-3.5 flex flex-col gap-2.5">
-            <Btn
-              variant="cta"
-              loading={busy}
-              onClick={() => start("google")}
-            >
-              {busy ? loginCopy.busy : loginCopy.google}
-            </Btn>
+            <form action={signInWithGoogle} className="flex flex-col">
+              <input type="hidden" name="next" value={next ?? ""} />
+              <GoogleButton disabled={busy} />
+            </form>
             <Btn
               disabled={busy}
               onClick={() => start("link")}
@@ -108,6 +126,14 @@ export function LoginScreen() {
               {loginCopy.link}
             </Btn>
           </div>
+
+          {errorCode && (
+            <div className="mt-3.5">
+              <Message title="로그인하지 못했어요" code={errorCode.toUpperCase()}>
+                {loginErrors[errorCode]}
+              </Message>
+            </div>
+          )}
 
           {busy && (
             <div className="mt-3.5 mb-1.5 w-full max-w-[26.25rem]">

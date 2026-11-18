@@ -5,6 +5,8 @@ export type NavItem = {
   href: string;
   /** 보이는 역할. 없으면 모든 역할에 보인다 (PLAN 11-6) */
   roles?: Role[];
+  /** true면 링크가 아니라 로그아웃 form(Server Action, POST). href는 로그아웃 후 가는 곳 */
+  signOut?: true;
 };
 
 /** 상단 메뉴 순서·경로 정본: docs/PLAN.md 11-1 */
@@ -16,5 +18,5 @@ export const navItems: NavItem[] = [
   { label: "설정", href: "/settings" },
   { label: "관리 페이지", href: "/admin", roles: ["instructor", "operator"] },
   { label: "마이페이지", href: "/me" },
-  { label: "로그아웃", href: "/login" },
+  { label: "로그아웃", href: "/login", signOut: true },
 ];

@@ -4,6 +4,7 @@ import { Fragment, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { NavItem } from "@/lib/nav";
+import { signOut } from "@/server/auth-actions";
 
 function isCurrent(pathname: string, href: string) {
   return pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
@@ -31,7 +32,13 @@ export function SiteNav({ items, accountName }: { items: NavItem[]; accountName?
   return (
     <nav aria-label="주 메뉴" className="hidden min-w-0 items-center gap-1.5 md:flex md:flex-wrap md:justify-center">
       {items.map((item) => {
-        const link = (
+        const link = item.signOut ? (
+          <form key={item.href} action={signOut} className="contents">
+            <button type="submit" className={`${pillClass} cursor-pointer`}>
+              {item.label}
+            </button>
+          </form>
+        ) : (
           <Link
             key={item.href}
             href={item.href}
@@ -43,7 +50,7 @@ export function SiteNav({ items, accountName }: { items: NavItem[]; accountName?
         );
 
         // 로그아웃 앞에 계정명 표시
-        if (item.href !== "/login" || !accountName) return link;
+        if (!item.signOut || !accountName) return link;
         return (
           <Fragment key={item.href}>
             <AccountName name={accountName} />
@@ -115,19 +122,28 @@ export function MobileMenu({ items, accountName }: { items: NavItem[]; accountNa
             </button>
           </div>
           <nav aria-label="주 메뉴" className="flex flex-1 flex-col gap-1">
-            {items.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={close}
-                aria-current={isCurrent(pathname, item.href) ? "page" : undefined}
-                className={`flex min-h-11 items-center rounded-lg px-3 text-base font-medium hover:bg-card aria-[current=page]:bg-card aria-[current=page]:text-brand ${
-                  item.href === "/login" ? "mt-auto text-sub" : ""
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {items.map((item) =>
+              item.signOut ? (
+                <form key={item.href} action={signOut} className="mt-auto flex flex-col">
+                  <button
+                    type="submit"
+                    className="flex min-h-11 cursor-pointer items-center rounded-lg px-3 text-base font-medium text-sub hover:bg-card"
+                  >
+                    {item.label}
+                  </button>
+                </form>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={close}
+                  aria-current={isCurrent(pathname, item.href) ? "page" : undefined}
+                  className="flex min-h-11 items-center rounded-lg px-3 text-base font-medium hover:bg-card aria-[current=page]:bg-card aria-[current=page]:text-brand"
+                >
+                  {item.label}
+                </Link>
+              ),
+            )}
           </nav>
         </div>
       </dialog>

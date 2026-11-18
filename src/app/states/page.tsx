@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { notFound } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Btn } from "@/components/ui/btn";
 import { Card, Chip, Kpi, Tag } from "@/components/ui/card";
@@ -61,7 +62,9 @@ function Demo({ children, status }: { children: ReactNode; status?: boolean }) {
 const h2 = "mt-9 mb-3 text-h2 leading-[1.55] font-bold";
 const small = "ml-1.5 text-caption font-medium text-sub";
 
+/** 개발 전용 화면: 운영 빌드에서는 404, 개발에서는 로그인 없이 연다(proxy 예외) */
 export default function Page() {
+  if (process.env.NODE_ENV === "production") notFound();
   return (
     <main className="mx-auto w-full max-w-[72.5rem] px-3.5 pb-[3.75rem] md:px-5 md:pb-20">
       <h1 className="mt-8 mb-1.5 text-h1 leading-[1.55] font-black">

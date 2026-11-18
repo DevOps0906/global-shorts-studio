@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import "./globals.css";
-import { SiteHeader } from "@/components/site-header";
+import { SessionHeader, SiteHeader } from "@/components/site-header";
 import { HeaderGate } from "@/components/header-gate";
 
 export const metadata: Metadata = {
@@ -13,7 +14,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="ko" className="h-full antialiased">
       <body className="min-h-full flex flex-col">
         <HeaderGate>
-          <SiteHeader />
+          <Suspense fallback={<SiteHeader role="member" />}>
+            <SessionHeader />
+          </Suspense>
         </HeaderGate>
         <div className="flex flex-1 flex-col">{children}</div>
       </body>

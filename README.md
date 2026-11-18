@@ -13,6 +13,17 @@
 | `design/tokens.css` | 시안과 같은 색·글자 크기·반응형 구간 토큰 |
 | `supabase/migrations/0001_studio_schema.sql` | DB 스키마 초안(RLS 포함, 적용 전 검토) |
 
+### 로그인 설정 (task-004)
+
+1. `.env.example`을 `.env.local`로 복사해 값을 채운다(`NEXT_PUBLIC_SITE_URL`은 이 앱의 주소, 예: `http://localhost:3000`).
+2. Supabase 대시보드 › Authentication › URL Configuration › Redirect URLs에 콜백 주소를 **정확한 URL로만** 넣는다(와일드카드 `*`·`**` 금지). 예: `http://localhost:3000/auth/callback`, `https://<운영 도메인>/auth/callback`.
+3. Authentication › Providers에서 Google을 켠다. 신규 가입자는 승인 전까지 '승인 대기' 화면만 본다.
+4. 첫 운영자는 SQL Editor에서 직접 지정한다(본인이 한 번 로그인해 프로필이 생긴 뒤):
+
+```sql
+update studio.profiles set role = 'operator', approved_at = now() where user_id = (select id from auth.users where email = '<운영자 이메일>');
+```
+
 ## 반응형 기준
 
 | 구간 | 폭 | 본문 | h1 |

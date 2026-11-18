@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
+    "test": "node --test \"src/**/*.test.mjs\"",
     "db:types": "node -e \"require('fs').mkdirSync('src/types',{recursive:true})\" && npx supabase gen types typescript --project-id rcuqmmupqnmhuxawtdud --schema public,studio,radar > src/types/db.ts"
   },
   "dependencies": {
