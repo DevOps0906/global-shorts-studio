@@ -688,7 +688,7 @@ task-006·007은 착수 때 세부 작업으로 나누고, 나눈 작업마다 �
 
 | 기능 | 웹 서버 | 워커 큐 |
 | --- | --- | --- |
-| 작업물 생성·원본 업로드 | `POST /api/projects` → Storage 서명 URL(10분) 발급 | — |
+| 작업물 생성·원본 업로드 | `POST /api/projects` → Storage 서명 업로드 URL 발급(유효시간은 Supabase 고정 2시간, 덮어쓰기 불가) | — |
 | 분석 시작 | `POST /api/projects/:id/analyze` (권리 확인·크레딧 확인) | `analyze` |
 | 진행 상황 | Realtime 구독, 끊기면 2초 폴링(11-3) | `job_steps` 기록 |
 | 자동 저장 | `PATCH /api/drafts/:id` (`version` 일치할 때만) | — |

@@ -16,6 +16,7 @@ P < ../migrations/20261116184706_studio_schema.sql
 P < ../migrations/20261116184740_fk_indexes.sql
 P < ../migrations/20261118152240_approval_gate.sql
 P < ../migrations/20261118160922_radar_videos.sql
+P < ../migrations/20261119100000_studio_analyze.sql
 echo "MIGRATION OK"
 P < 01_rls_isolation.sql
 P < 02_role_tamper.sql
@@ -23,6 +24,7 @@ P < 04_idempotency.sql
 P < 05_review_fixes.sql
 P < 06_approval_gate.sql
 P < 07_radar.sql
+P < 09_studio_analyze.sql
 
 # 테스트 3: 잔액 1, 두 세션 동시 차감 -> 1건만 ok
 P -c "insert into auth.users (id) values ('aaaaaaaa-0000-0000-0000-000000000001');
@@ -66,4 +68,30 @@ U=$(P -t -A -c "select units from radar.quota_global")
 [ "$U" = "5" ] || { echo "FAIL global units=$U"; exit 1; }
 rm -f "$OUT1" "$OUT2"
 echo "PASS 08_concurrent_claim (global units=$U)"
+# 테스트 9 경쟁: 같은 작업물 start_analyze 동시 2건 -> 1건만 ok(나머지 already_running), 차감·잡·큐 각 1건
+P -c "insert into auth.users (id) values ('abababab-0000-0000-0000-00000000000a');
+      update studio.profiles set approved_at = now() where user_id = 'abababab-0000-0000-0000-00000000000a';
+      select studio.grant_credits('abababab-0000-0000-0000-00000000000a', 5, 'gift', 't9c');
+      insert into studio.projects (id, user_id, type, source_path) values ('abababab-1111-0000-0000-00000000000a',
+        'abababab-0000-0000-0000-00000000000a', 'video', 'abababab-0000-0000-0000-00000000000a/abababab-1111-0000-0000-00000000000a/source.mp4');
+      insert into storage.objects (bucket_id, name) values ('sources', 'abababab-0000-0000-0000-00000000000a/abababab-1111-0000-0000-00000000000a/source.mp4');" >/dev/null
+OUT1=$(mktemp); OUT2=$(mktemp)
+P -t -A -v waiter=1 < 09_concurrent_start.sql > "$OUT1" &
+PID1=$!
+for _ in $(seq 1 200); do grep -q "RESULT ok" "$OUT1" && break; sleep 0.1; done
+grep -q "RESULT ok" "$OUT1" || { echo "FAIL start session1 did not take lock"; exit 1; }
+P -t -A -v waiter=0 < 09_concurrent_start.sql > "$OUT2" &
+PID2=$!
+wait $PID1 $PID2
+grep -q WAITER_SEEN "$OUT1" || { echo "FAIL start waiter not observed"; exit 1; }
+R=$(cat "$OUT1" "$OUT2" | grep RESULT | sort | tr '
+' ' ')
+echo "concurrent start: $R"
+[ "$R" = "RESULT already_running RESULT ok " ] || { echo "FAIL concurrent start"; exit 1; }
+N=$(P -t -A -c "select (select count(*) from studio.jobs where project_id = 'abababab-1111-0000-0000-00000000000a')
+  || ':' || (select sum(delta) from studio.credit_ledger where user_id = 'abababab-0000-0000-0000-00000000000a')
+  || ':' || (select count(*) from pgmq.q_analyze)")
+[ "$N" = "1:4:1" ] || { echo "FAIL concurrent start jobs:balance:msgs=$N"; exit 1; }
+rm -f "$OUT1" "$OUT2"
+echo "PASS 09_concurrent_start (jobs:balance:msgs=$N)"
 echo "ALL PASS"

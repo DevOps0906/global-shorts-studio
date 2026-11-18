@@ -7,7 +7,7 @@
 | task-003 | Supabase 프로젝트 · `20261116184706_studio_schema.sql` 적용·API 노출 (PLAN 13-5) | W1 | — | 높음 | builder·opus | 완료 |
 | task-004 | 구글 로그인 · 역할(RBAC) (PLAN 11-6, 시안 Login) | W1 | 001·003 | 높음 | builder·opus | 완료 |
 | task-005 | 레이더·저장 채널: 스냅샷 수집 · 떡상배율 (PLAN 4-5) | W2 | 003 | 높음 | builder·opus | 완료 |
-| task-006 | 스튜디오 분석 4단계 · 제목/대본 3안 (PLAN 5장) | W3 | 003 | 높음 | builder·opus | 보류 |
+| task-006 | 스튜디오 분석 4단계 · 제목/대본 3안 (PLAN 5장) | W3 | 003 | 높음 | builder·opus | 진행 |
 | task-007 | 편집 화면 · 캡컷 ZIP·SRT · 크레딧·마이페이지 (PLAN 4-4·4-7) | W4 | 006 | 높음 | builder·opus | 보류 |
 | task-008 | 고객문의: FAQ 6개 · 문의 접수(진행률) · 내 문의 내역 (PLAN 11-2, 시안 Support) | W2 | 004 | 보통 | builder·sonnet | 완료 |
 | task-009 | 설정: 기본값·알림·큰 글씨 모드(`.big-text` 연결)·자동 저장·변형도 경고, 저장·되돌리기 (PLAN 11-2, 시안 Settings) | W2 | 004 | 보통 | builder·sonnet | 완료 |
@@ -29,6 +29,8 @@
 ## 발견한 문제 (범위 밖 — 나중 작업 후보)
 | 날짜 | 위치 | 내용 | 제안 |
 |---|---|---|---|
+| 2026-11-19 | storage sources | 분석을 시작하지 않은 업로드·삭제된 작업물의 원본이 남음(하루 30×500MB 가능), 원본 7일 보관 정리 없음 | 정리 크론(draft 미시작 N일·soft delete·완료 7일) |
+| 2026-11-19 | studio.create_project | 레이더 영상(source_video_id)에서 바로 작업물 만드는 경로 없음(직접 insert 회수) | create_project에 본인 radar 영상 id 인자 추가 |
 | 2026-11-19 | src/server/support.ts | 문의 접수 응답이 끊긴 뒤 재전송하면 같은 문의가 두 번 저장됨(멱등 키 없음) | support_tickets에 idempotency_key 컬럼·unique 추가(새 마이그레이션) |
 | 2026-11-19 | worker·Storage | service_role·Storage 경로는 RLS 승인 게이트를 건너뜀 | task-006 워커 작업 시작 전 is_approved 재확인, 버킷 정책에 is_approved 조건 |
 

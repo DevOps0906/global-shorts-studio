@@ -36,6 +36,7 @@ erDiagram
     timestamptz source_deleted_at
     text status
     timestamptz rights_confirmed_at
+    text license_type
     string more_4_cols
   }
   drafts {
@@ -68,7 +69,9 @@ erDiagram
     uuid user_id
     int step_no
     text label
+    timestamptz started_at
     timestamptz done_at
+    text error_code
   }
   user_settings {
     uuid user_id PK,FK
