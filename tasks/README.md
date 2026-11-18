@@ -20,7 +20,7 @@
 | task-016 | 시안 UI: 관리 페이지 (`/admin`, 시안 Admin — 화면만, 권한은 task-010) | U2 | 011 | 높음 | builder·opus | 완료 |
 | task-017 | 시안 UI: 마이페이지 (`/me`, 시안 MyPage — 충전은 화면만) | U2 | 011 | 높음 | builder·opus | 완료 |
 | task-018 | 시안 UI: 편집 스튜디오 (`/studio/demo`, 시안 Editor) | U2 | 011 | 높음 | builder·opus | 완료 |
-| task-019 | 승인제 DB 반영: `studio.is_approved()` + 본인 쓰기 테이블에 승인 조건 RLS(새 마이그레이션), DB 테스트 (task-004 후속, PLAN 11-6) | W1 | 004 | 높음 | builder·opus | 진행 |
+| task-019 | 승인제 DB 반영: `studio.is_approved()` + 본인 쓰기 테이블에 승인 조건 RLS(새 마이그레이션), DB 테스트 (task-004 후속, PLAN 11-6) | W1 | 004 | 높음 | builder·opus | 완료 |
 
 > 2026-11-18 사용자 결정: 시안 UI(task-011~018, 가짜 데이터)를 먼저 완성하고 개발(task-004~010)은 보류. 개발 재개 시 각 작업은 완성된 화면에 데이터·기능만 연결한다.
 
