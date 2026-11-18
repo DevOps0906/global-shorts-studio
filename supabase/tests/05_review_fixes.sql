@@ -66,6 +66,9 @@ insert into studio.projects (id, user_id, type) values ('11111111-0000-0000-0000
 insert into studio.jobs (id, user_id, project_id, kind) values
   ('22222222-0000-0000-0000-00000000000d', 'dddddddd-0000-0000-0000-000000000004', '11111111-0000-0000-0000-00000000000d', 'tts');
 
+-- 승인된 사용자 기준(task-019 승인제)
+update studio.profiles set approved_at = now();
+
 -- M1: 강사는 뷰로 코호트 수강생 작업만(최소 컬럼), jobs 직접 열람 불가
 set local role authenticated;
 select set_config('request.jwt.claim.sub', 'cccccccc-0000-0000-0000-000000000003', true);

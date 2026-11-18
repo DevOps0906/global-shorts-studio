@@ -20,6 +20,7 @@
 | task-016 | 시안 UI: 관리 페이지 (`/admin`, 시안 Admin — 화면만, 권한은 task-010) | U2 | 011 | 높음 | builder·opus | 완료 |
 | task-017 | 시안 UI: 마이페이지 (`/me`, 시안 MyPage — 충전은 화면만) | U2 | 011 | 높음 | builder·opus | 완료 |
 | task-018 | 시안 UI: 편집 스튜디오 (`/studio/demo`, 시안 Editor) | U2 | 011 | 높음 | builder·opus | 완료 |
+| task-019 | 승인제 DB 반영: `studio.is_approved()` + 본인 쓰기 테이블에 승인 조건 RLS(새 마이그레이션), DB 테스트 (task-004 후속, PLAN 11-6) | W1 | 004 | 높음 | builder·opus | 진행 |
 
 > 2026-11-18 사용자 결정: 시안 UI(task-011~018, 가짜 데이터)를 먼저 완성하고 개발(task-004~010)은 보류. 개발 재개 시 각 작업은 완성된 화면에 데이터·기능만 연결한다.
 
@@ -28,7 +29,7 @@
 ## 발견한 문제 (범위 밖 — 나중 작업 후보)
 | 날짜 | 위치 | 내용 | 제안 |
 |---|---|---|---|
-| 2026-11-18 | supabase/migrations (own_rows 정책) | 승인제가 화면·proxy 수준만. 미승인 가입자가 publishable 키+본인 JWT로 PostgREST를 직접 부르면 본인 행 읽기·쓰기 가능(타인 행은 불가) | 새 마이그레이션으로 studio.is_approved()를 만들어 own_rows 정책에 and 조건 추가(높음) |
+| 2026-11-19 | worker·Storage | service_role·Storage 경로는 RLS 승인 게이트를 건너뜀 | task-006 워커 작업 시작 전 is_approved 재확인, 버킷 정책에 is_approved 조건 |
 | 2026-11-17 | src/app/layout.tsx | 큰 글씨 모드(.big-text) 켜는 경로 없음(CSS만 있음) | task-009에서 user_settings.big_text 연결 |
 
 ## 교훈 (다음 작업에 그대로 적용할 것만, 20줄 이내 유지)

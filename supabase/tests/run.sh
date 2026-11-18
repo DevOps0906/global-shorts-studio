@@ -14,11 +14,13 @@ P() { docker exec -i "$C" psql -U postgres -v ON_ERROR_STOP=1 -q "$@"; }
 P < _stub.sql
 P < ../migrations/20261116184706_studio_schema.sql
 P < ../migrations/20261116184740_fk_indexes.sql
+P < ../migrations/20261119090000_approval_gate.sql
 echo "MIGRATION OK"
 P < 01_rls_isolation.sql
 P < 02_role_tamper.sql
 P < 04_idempotency.sql
 P < 05_review_fixes.sql
+P < 06_approval_gate.sql
 
 # 테스트 3: 잔액 1, 두 세션 동시 차감 -> 1건만 ok
 P -c "insert into auth.users (id) values ('aaaaaaaa-0000-0000-0000-000000000001');

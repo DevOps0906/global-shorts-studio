@@ -27,6 +27,9 @@ insert into radar.channels (user_id, handle) values
   ('aaaaaaaa-0000-0000-0000-000000000001', '@a'), ('bbbbbbbb-0000-0000-0000-000000000002', '@b');
 insert into studio.policy_flags (job_id, user_id, project_id, type) values ('22222222-0000-0000-0000-00000000000b', 'bbbbbbbb-0000-0000-0000-000000000002', '11111111-0000-0000-0000-00000000000b', 'low_score');
 
+-- 승인된 사용자 기준(task-019 승인제)
+update studio.profiles set approved_at = now();
+
 set local role authenticated;
 select set_config('request.jwt.claim.sub', 'aaaaaaaa-0000-0000-0000-000000000001', true);
 

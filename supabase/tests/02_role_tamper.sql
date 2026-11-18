@@ -1,6 +1,7 @@
 -- 테스트 2: 자기 role 수정 거부.
 begin;
 insert into auth.users (id, email) values ('aaaaaaaa-0000-0000-0000-000000000001', 'a@t');
+update studio.profiles set approved_at = now();   -- 승인된 회원 기준(task-019)
 
 set local role authenticated;
 select set_config('request.jwt.claim.sub', 'aaaaaaaa-0000-0000-0000-000000000001', true);
@@ -26,9 +27,9 @@ end $$;
 select set_config('request.jwt.claims', '{"user_metadata":{"role":"operator"},"app_metadata":{"role":"operator"}}', true);
 do $$ begin if studio.is_operator() then raise exception 'FAIL metadata honored'; end if; end $$;
 
--- service_role이 올리면 운영자가 된다(대조군)
+-- service_role이 올리면 운영자가 된다(대조군, 승인 상태 유지)
 reset role;
-update studio.profiles set role = 'operator' where user_id = 'aaaaaaaa-0000-0000-0000-000000000001';
+update studio.profiles set role = 'operator', approved_at = now() where user_id = 'aaaaaaaa-0000-0000-0000-000000000001';
 set local role authenticated;
 do $$ begin if not studio.is_operator() then raise exception 'FAIL operator not recognized'; end if; end $$;
 rollback;

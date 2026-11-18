@@ -1,7 +1,7 @@
 # NOW — 재진입 스냅샷 (30줄 이내, 매 작업 끝에 덮어쓴다)
 
 - 갱신: 2026-11-18
-- 현재 작업: task-004 구글 로그인·승인제·RBAC 완료(자동 검증). 다음 대기 작업 없음 — task-005~010 보류, 재개 순서 사용자 결정
+- 현재 작업: task-019 승인제 DB RLS 반영 (높음) — 구현 단계(builder·opus), 계획 tasks/task-019.md
 - 마지막으로 한 일: proxy.ts(세션 갱신·비로그인 차단·/api 401), auth/callback(safeNext), /pending 승인 대기, Protected 감싸개(requireSession), /admin member→404, 로그아웃 form POST, /states 개발 전용, .env.example. 계획·결정: tasks/task-004.md
 - 다음 한 걸음: 사용자 .env.local(URL·publishable 키·SITE_URL) 작성 → Supabase Redirect URLs에 <SITE_URL>/auth/callback 정확히 등록 → 구글 OAuth 등록 → 수동 확인 4건(비로그인→/login, 미승인→/pending, member /admin 404, 로그아웃 쿠키 삭제) → 첫 운영자 SQL(README)
 - 후속 후보(높음): 승인제 DB RLS 반영(studio.is_approved, 새 마이그레이션) — tasks/README.md 발견한 문제
